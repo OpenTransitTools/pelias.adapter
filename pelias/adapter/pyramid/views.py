@@ -1,6 +1,5 @@
 from pyramid.response import Response
 from pyramid.view import view_config
-from sqlalchemy.orm.exc import NoResultFound
 
 from ott.utils.parse import StopParamParser
 from ott.utils.parse import GeoParamParser
@@ -9,27 +8,20 @@ from ott.utils.parse import RouteParamParser
 from ott.utils import json_utils
 from ott.utils import object_utils
 
-from ott.geocoder.geosolr import GeoSolr
-from ott.geocoder.geo_dao import GeoListDao
-
-from app import DB
-from app import CONFIG
+#from ott.geocoder.geosolr import GeoSolr
+#from ott.geocoder.geo_dao import GeoListDao
 
 import logging
 log = logging.getLogger(__file__)
 
 
-### cache time - affects how long varnish cache will hold a copy of the data
-cache_long=36000  # 10 hours
-cache_short=600   # 10 minutes
-
-system_err_msg = ServerError()
-data_not_found = DatabaseNotFound()
+cache_long = 500
 
 
 def do_view_config(cfg):
     cfg.add_route('solr_json',  '/solr')
     cfg.add_route('solr_xml',   '/solrxml')
+
 
 @view_config(route_name='solr_json', renderer='json', http_cache=cache_long)
 def solr_json(request):
@@ -65,7 +57,6 @@ def solr_xml(request):
     finally:
         pass
     return ret_val
-
 
 
 def url_response(host, service, id, agency_id=None, extra="&detailed"):

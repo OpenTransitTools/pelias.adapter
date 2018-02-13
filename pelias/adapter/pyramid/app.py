@@ -8,6 +8,7 @@ log = logging.getLogger(__file__)
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
+    # import pdb; pdb.set_trace()
     config = Configurator(settings=settings)
 
     # logging config for pserve / wsgi
@@ -17,6 +18,6 @@ def main(global_config, **settings):
 
     import views
     config.include(views.do_view_config)
-    #config.scan('ott.services.pyramid')
+    config.scan('pelias.adapter.pyramid')
 
     return config.make_wsgi_app()

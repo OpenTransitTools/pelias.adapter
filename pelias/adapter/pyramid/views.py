@@ -5,6 +5,7 @@ from ott.utils.parse import StopParamParser
 from ott.utils.parse import GeoParamParser
 from ott.utils.parse import RouteParamParser
 
+from ott.utils.dao import base
 from ott.utils import json_utils
 from ott.utils import object_utils
 
@@ -16,22 +17,27 @@ log = logging.getLogger(__file__)
 
 
 cache_long = 500
+system_err_msg = base.ServerError()
 
 
 def do_view_config(cfg):
-    cfg.add_route('solr_json',  '/solr')
-    cfg.add_route('solr_xml',   '/solrxml')
+    cfg.add_route('solr_txt',  '/txt')
+    cfg.add_route('solr_json', '/solr')
+    cfg.add_route('solr_xml',  '/solrxml')
 
 
-@view_config(route_name='solr_json', renderer='json', http_cache=cache_long)
+@view_config(route_name='solr_txt', renderer='string', http_cache=cache_long)
+def solr_txt(request):
+    return "HI"
+
+
+@view_config(route_name='solr_json', renderer='json')
 def solr_json(request):
+    # import pdb; pdb.set_trace()
     ret_val = None
-    session = None
     try:
+        d = k
         pass
-    except NoResultFound, e:
-        log.warn(e)
-        ret_val = data_not_found
     except Exception, e:
         log.warn(e)
         ret_val = system_err_msg
@@ -48,9 +54,6 @@ def solr_xml(request):
         rows = request.params.get('rows')
         s = get_solr().solr(place, rows)
         ret_val = s
-    except IndexError, e:
-        log.warn(e)
-        ret_val = dao_response(data_not_found)
     except Exception, e:
         log.warn(e)
         ret_val = dao_response(system_err_msg)

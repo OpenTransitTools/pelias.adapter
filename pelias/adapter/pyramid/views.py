@@ -21,13 +21,24 @@ system_err_msg = base.ServerError()
 
 
 def do_view_config(cfg):
-    cfg.add_route('solr_txt',  '/txt')
-    cfg.add_route('solr_json', '/solr')
-    cfg.add_route('solr_xml',  '/solrxml')
+    cfg.add_route('solr_stops', '/solr/stops')
+    cfg.add_route('solr_json',  '/solr/select')
+    cfg.add_route('solr_xml',   '/solr/xml')
+    cfg.add_route('solr_txt',   '/solr/txt')
 
 
 @view_config(route_name='solr_txt', renderer='string', http_cache=cache_long)
 def solr_txt(request):
+    return "HI"
+
+
+@view_config(route_name='solr_stops', renderer='json', http_cache=cache_long)
+def solr_stops(request):
+    """
+    STOP QUERY:
+    replicate this SOLR interface: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type%3Astop (type:stop)
+    8th and lambert
+    """
     return "HI"
 
 

@@ -9,6 +9,8 @@ from ott.utils.dao import base
 from ott.utils import json_utils
 from ott.utils import object_utils
 
+from .app import CONFIG
+
 #from ott.geocoder.geosolr import GeoSolr
 #from ott.geocoder.geo_dao import GeoListDao
 
@@ -21,23 +23,34 @@ system_err_msg = base.ServerError()
 
 
 def do_view_config(cfg):
-    cfg.add_route('solr_stops', '/solr/stops')
-    cfg.add_route('solr_json',  '/solr/select')
-    cfg.add_route('solr_xml',   '/solr/xml')
-    cfg.add_route('solr_txt',   '/solr/txt')
+    cfg.add_route('solr_stops',   '/solr/stops')
+    cfg.add_route('solr_json',    '/solr/select')
+    cfg.add_route('solr_xml',     '/solr/xml')
+    cfg.add_route('solr_txt',     '/solr/txt')
+    cfg.add_route('pelias_proxy', '/proxy')
 
 
 @view_config(route_name='solr_txt', renderer='string', http_cache=cache_long)
 def solr_txt(request):
-    return "HI"
+    return CONFIG.get('pelias_search_url')
+
+
+@view_config(route_name='pelias_proxy', renderer='json', http_cache=cache_long)
+def pelias_proxy(request):
+    url = CONFIG.get('pelias_autocomplete_url')
+    ret_val = proxy_json(url, request.query_string)
+    return ret_val
 
 
 @view_config(route_name='solr_stops', renderer='json', http_cache=cache_long)
 def solr_stops(request):
     """
     STOP QUERY:
-    replicate this SOLR interface: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type%3Astop (type:stop)
-    8th and lambert
+    replicate this SOLR interface:
+       https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type%3Astop (type:stop)
+       8th and lambert
+
+    todo: have to pull route stops from /data/ service, and append that to SOLR response
     """
     return "HI"
 

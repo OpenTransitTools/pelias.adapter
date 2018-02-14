@@ -47,7 +47,7 @@ def solr_stops(request):
     """
     STOP QUERY:
     replicate this SOLR interface:
-       https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type%3Astop (type:stop)
+       https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type:stop (type%3Astop)
        8th and lambert
 
     todo: have to pull route stops from /data/ service, and append that to SOLR response

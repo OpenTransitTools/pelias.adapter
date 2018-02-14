@@ -1,15 +1,15 @@
-from ott.utils.dao.base import BaseDao
-
+from ott.utils.dao.base import MinimalDao
 
 TYPE_NAMES = {}
 TYPE_NAMES["address"] = "Address"
 TYPE_NAMES["stop"] = "Stop ID"
 
 
-class SolrRecord(BaseDao):
+class SolrRecord(MinimalDao):
     """
     :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=
     """
+
     def __init__(self):
         super(SolrRecord, self).__init__()
         # import pdb; pdb.set_trace()

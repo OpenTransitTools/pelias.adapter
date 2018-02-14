@@ -10,7 +10,7 @@ from ott.utils import json_utils
 from ott.utils import object_utils
 
 from .app import CONFIG
-from pelias.adapter.model import solr_stop_record
+from pelias.adapter.model.solr_response import SolrResponse
 
 #from ott.geocoder.geosolr import GeoSolr
 #from ott.geocoder.geo_dao import GeoListDao
@@ -61,7 +61,7 @@ def solr_json(request):
     # import pdb; pdb.set_trace()
     ret_val = None
     try:
-        ret_val = solr_stop_record.SolrStopRecord()
+        ret_val = SolrResponse()
         pass
     except Exception, e:
         log.warn(e)

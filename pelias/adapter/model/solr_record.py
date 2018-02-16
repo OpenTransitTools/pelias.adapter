@@ -35,5 +35,5 @@ class SolrRecord(MinimalDao):
         self.timestamp = "2018-02-03T07:47:45.045Z"
         self.score = 1.11
 
-
-
+    def pelias_to_solr(self, pelias_doc):
+        print "base"

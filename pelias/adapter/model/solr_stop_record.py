@@ -22,3 +22,7 @@ class SolrStopRecord(SolrRecord):
         self.providers = None # "Transportation Reaching People (TRP);Friends of Estacada Community Center"
         self.routes = None # "30:30:Estacada:"
         self.route_stops = None # "30,\"Estacada\",0,\"To Estacada\",false,false,false",
+
+    def pelias_to_solr(self, pelias_doc):
+        super(SolrStopRecord, self).pelias_to_solr(pelias_doc)
+        print "stop"

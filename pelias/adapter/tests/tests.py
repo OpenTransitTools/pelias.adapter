@@ -8,14 +8,19 @@ import json
 PORT="45454"
 
 
-class TestMyView(unittest.TestCase):
+class TestPeliasToSolr(unittest.TestCase):
     def setUp(self):
         pass
 
     def tearDown(self):
         pass
 
-    def test_solr(self):
+    def test_pelias_to_solr(self):
+        print "Hi"
+        pass
+
+
+    def ztest_solr(self):
         url = get_url('solr', 'limit=30&query=2')
         j = call_url(url)
         s = json.dumps(j)

@@ -1,11 +1,13 @@
-from ott.utils.dao.base import MinimalDao
-
-TYPE_NAMES = {}
-TYPE_NAMES["address"] = "Address"
-TYPE_NAMES["stop"] = "Stop ID"
+from pelias.adapter.model.solr.solr_response import SolrResponse
 
 
-class SolrRecord(MinimalDao):
+class PeliasToSolr(object):
     """
     :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=
     """
+
+    @classmethod
+    def run(cls, url):
+        ret_val = None
+        ret_val = SolrResponse()
+        return ret_val

@@ -5,6 +5,8 @@ import urllib
 import contextlib
 import json
 
+from pelias.adapter.control.pelias_to_solr import PeliasToSolr
+
 PORT="45454"
 
 
@@ -16,15 +18,8 @@ class TestPeliasToSolr(unittest.TestCase):
         pass
 
     def test_pelias_to_solr(self):
-        print "Hi"
-        pass
-
-
-    def ztest_solr(self):
-        url = get_url('solr', 'limit=30&query=2')
-        j = call_url(url)
-        s = json.dumps(j)
-        self.assertEqual(j['status_code'], 200)
+        p = PeliasToSolr.run(None)
+        self.assertTrue(len(p.response.docs) > 0)
 
 
 def get_url(svc_name, params=None):

@@ -10,7 +10,7 @@ from ott.utils import json_utils
 from ott.utils import object_utils
 
 from .app import CONFIG
-from pelias.adapter.model.solr_response import SolrResponse
+from pelias.adapter.model.solr.solr_response import SolrResponse
 
 #from ott.geocoder.geosolr import GeoSolr
 #from ott.geocoder.geo_dao import GeoListDao

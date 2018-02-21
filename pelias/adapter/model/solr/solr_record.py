@@ -40,8 +40,17 @@ class SolrRecord(MinimalDao):
 
     def parse_pelias(self, json):
         try:
+            # import pdb; pdb.set_trace()
+
+            # step 1: parse props
             properties = json.get('properties')
+
+            # step 2: parse / calculate geometry
             geometry = json.get('geometry')
+            x, y = self.parse_geojson(geometry)
+            self.lon = x
+            self.lat = y
+
         except Exception, e:
             log.warn(e)
 
@@ -49,7 +58,7 @@ class SolrRecord(MinimalDao):
     def pelias_to_solr(cls, json):
         ret_val = None
         try:
-            rec = cls()
+            rec = cls()  # inheritance polymorphism constructor call
             rec.parse_pelias(json)
             ret_val = rec
         except Exception, e:

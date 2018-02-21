@@ -6,7 +6,7 @@ log = logging.getLogger(__file__)
 
 TYPE_NAMES = {}
 TYPE_NAMES["address"] = "Address"
-TYPE_NAMES["stop"] = "Stop ID"
+TYPE_NAMES["stops"] = "Stop ID"
 
 
 class SolrRecord(MinimalDao):
@@ -16,16 +16,16 @@ class SolrRecord(MinimalDao):
 
     def __init__(self):
         super(SolrRecord, self).__init__()
-        self.id = "Address-1"
-        self.type = "address"
-        self.type_name = TYPE_NAMES[self.type]
+        self.id = ""
+        self.type = ""
+        self.type_name = ""
         self.vtype = "1"
-        self.name = None
+        self.name = ""
 
-        self.neighborhood = "Sellwood"
-        self.city = "PORTLAND"
-        self.county = "Multnomah"
-        self.zip_code = "97202"
+        self.city = ""
+        self.county = ""
+        self.neighborhood = ""
+        self.zip_code = ""
 
         self.ada_boundary = True
         self.trimet_boundary = True
@@ -36,7 +36,7 @@ class SolrRecord(MinimalDao):
         self.lat = 45.523335
 
         self.timestamp = "2018-02-03T07:47:45.045Z"
-        self.score = 1.11
+        self.score = 0.0
 
     def parse_pelias(self, json):
         try:
@@ -44,6 +44,17 @@ class SolrRecord(MinimalDao):
 
             # step 1: parse props
             properties = json.get('properties')
+            self.id = properties.get('id')
+            self.type = properties.get('layer')
+            self.type_name = TYPE_NAMES.get(self.type, "")
+            # self.vtype
+
+            self.name = properties.get('name')
+            self.city = properties.get('locality')
+            self.neighborhood = properties.get('neighborhood')
+            self.county = properties.get('county')
+            self.score = properties.get('confidence')
+
 
             # step 2: parse / calculate geometry
             geojson = json.get('geometry')

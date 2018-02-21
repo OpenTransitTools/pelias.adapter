@@ -1,5 +1,9 @@
 from .solr_record import SolrRecord
 
+import logging
+log = logging.getLogger(__file__)
+
+
 
 class SolrStopRecord(SolrRecord):
     """
@@ -23,6 +27,9 @@ class SolrStopRecord(SolrRecord):
         self.routes = None # "30:30:Estacada:"
         self.route_stops = None # "30,\"Estacada\",0,\"To Estacada\",false,false,false",
 
-    def pelias_to_solr(self, pelias_doc):
-        super(SolrStopRecord, self).pelias_to_solr(pelias_doc)
-        print "stop"
+    def parse_pelias(self, json):
+        super(SolrStopRecord, self).parse_pelias(json)
+        try:
+            properties = json.get('properties')
+        except Exception, e:
+            log.warn(e)

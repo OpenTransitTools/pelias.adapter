@@ -136,12 +136,3 @@ def proxy_json(url, query_string):
         pass
 
     return ret_val
-
-
-SOLR = None
-def get_solr():
-    global SOLR
-    if SOLR is None:
-        SOLR = GeoSolr(CONFIG.get('solr_url'))
-    return SOLR
-

@@ -1,5 +1,9 @@
 from ott.utils.dao.base import MinimalDao
 
+import logging
+log = logging.getLogger(__file__)
+
+
 TYPE_NAMES = {}
 TYPE_NAMES["address"] = "Address"
 TYPE_NAMES["stop"] = "Stop ID"
@@ -12,7 +16,6 @@ class SolrRecord(MinimalDao):
 
     def __init__(self):
         super(SolrRecord, self).__init__()
-        # import pdb; pdb.set_trace()
         self.id = "Address-1"
         self.type = "address"
         self.type_name = TYPE_NAMES[self.type]
@@ -35,5 +38,20 @@ class SolrRecord(MinimalDao):
         self.timestamp = "2018-02-03T07:47:45.045Z"
         self.score = 1.11
 
-    def pelias_to_solr(self, pelias_doc):
-        print "base"
+    def parse_pelias(self, json):
+        try:
+            properties = json.get('properties')
+            geometry = json.get('geometry')
+        except Exception, e:
+            log.warn(e)
+
+    @classmethod
+    def pelias_to_solr(cls, json):
+        ret_val = None
+        try:
+            rec = cls()
+            rec.parse_pelias(json)
+            ret_val = rec
+        except Exception, e:
+            log.warn(e)
+        return ret_val

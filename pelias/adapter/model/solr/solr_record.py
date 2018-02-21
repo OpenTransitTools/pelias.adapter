@@ -46,8 +46,8 @@ class SolrRecord(MinimalDao):
             properties = json.get('properties')
 
             # step 2: parse / calculate geometry
-            geometry = json.get('geometry')
-            x, y = self.parse_geojson(geometry)
+            geojson = json.get('geometry')
+            x, y = self.parse_geojson(geojson)
             self.lon = x
             self.lat = y
 

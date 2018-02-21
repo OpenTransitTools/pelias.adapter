@@ -7,7 +7,14 @@ class PeliasToSolr(object):
     """
 
     @classmethod
-    def run(cls, url):
+    def run(cls):
         ret_val = None
         ret_val = SolrResponse()
+        return ret_val
+
+    @classmethod
+    def parse_json(cls, json):
+        ret_val = None
+        ret_val = SolrResponse()
+        ret_val.parse_pelias(json)
         return ret_val

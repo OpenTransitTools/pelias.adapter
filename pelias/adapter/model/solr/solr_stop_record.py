@@ -4,7 +4,6 @@ import logging
 log = logging.getLogger(__file__)
 
 
-
 class SolrStopRecord(SolrRecord):
     """
     :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type:stop
@@ -23,6 +22,17 @@ class SolrStopRecord(SolrRecord):
         self.begin_date = "2018-01-31"
         self.end_date = "9999-12-31"
 
+    def query_stop_information(self):
+        """
+        will grab detailed stop data from service, if needed...
+        """
+        stop_json = query_stop(self.stop_id)
+        self.amenities = stop_json.get('amenities')
+        self.providers = stop_json.get('')
+        self.routes = stop_json.get('')
+        self.route_stops = stop_json.get('')
+        self.begin_date  = stop_json.get('')
+        self.end_date = stop_json.get('')
 
     def parse_pelias(self, json):
         super(SolrStopRecord, self).parse_pelias(json)

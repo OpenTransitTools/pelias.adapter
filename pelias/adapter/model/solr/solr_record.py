@@ -61,6 +61,8 @@ class SolrRecord(MinimalDao):
             x, y = self.parse_geojson(geojson)
             self.lon = x
             self.lat = y
+            self.x = x
+            self.y = y
 
         except Exception, e:
             log.warn(e)

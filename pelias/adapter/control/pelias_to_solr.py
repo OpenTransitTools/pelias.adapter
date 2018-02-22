@@ -12,7 +12,7 @@ class PeliasToSolr(object):
         :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type:stop
         :see: https://ws-st.trimet.org/pelias/v1/autocomplete?text=13135&size=1&layers=address&sources=osm
         """
-        # import pdb; pdb.set_trace()
+        import pdb; pdb.set_trace()
 
         ret_val = {}
 

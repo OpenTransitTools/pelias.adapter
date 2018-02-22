@@ -20,6 +20,17 @@ class TestPeliasToSolr(unittest.TestCase):
         p = self.parse('./data/search13135.json')
         self.assertTrue(len(p.response.docs) > 0)
 
+    def test_stops(self):
+        p = self.parse('./data/search13135.json')
+        num_stops = 0
+        for d in p.response.docs:
+            if isinstance(d, SolrStopRecord):
+                num_stops += 1
+                self.assertTrue(len(d.stop_id) > 0)
+                self.assertTrue(len(d.agency_id) > 0)
+                # print d.stop_id
+        self.assertTrue(num_stops > 0)
+
     def test_unique_coords(self):
         p = self.parse('./data/autocomplete-hop-fastpass.json')
         coords = []
@@ -31,16 +42,19 @@ class TestPeliasToSolr(unittest.TestCase):
             coords.append(d.lat)
             coords.append(d.lon)
 
-    def test_stops(self):
-        p = self.parse('./data/search13135.json')
-        num_stops = 0
+    def test_names_labels(self):
+        p = self.parse('./data/autocomplete-hop-fastpass.json')
         for d in p.response.docs:
-            if isinstance(d, SolrStopRecord):
-                num_stops += 1
-                self.assertTrue(len(d.stop_id) > 0)
-                self.assertTrue(len(d.agency_id) > 0)
-                # print d.stop_id
-        self.assertTrue(num_stops > 0)
+            self.assertTrue("HOP Fastpass" in d.name)
+
+    def test_solr_to_pelias_params(self):
+        solr_params = {}
+        solr_params['q'] = 'val'
+        solr_params['rows'] = '6'
+        pelias_params_str = PeliasToSolr.solr_to_pelias_param_str(solr_params)
+        self.assertTrue("text=val" in pelias_params_str)
+        self.assertTrue("size=6" in pelias_params_str)
+
 
     def test_no_results(self):
         p = self.parse('./data/autocomplete_no_results.json')

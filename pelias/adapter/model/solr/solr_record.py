@@ -40,8 +40,6 @@ class SolrRecord(MinimalDao):
 
     def parse_pelias(self, json):
         try:
-            # import pdb; pdb.set_trace()
-
             # step 1: parse props
             properties = json.get('properties')
             self.id = properties.get('id')
@@ -69,6 +67,7 @@ class SolrRecord(MinimalDao):
 
     @classmethod
     def pelias_to_solr(cls, json):
+        # import pdb; pdb.set_trace()
         ret_val = None
         try:
             rec = cls()  # inheritance polymorphism constructor call

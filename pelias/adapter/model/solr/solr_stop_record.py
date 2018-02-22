@@ -12,7 +12,8 @@ class SolrStopRecord(SolrRecord):
     def __init__(self):
         super(SolrStopRecord, self).__init__()
 
-        self.stop_id = None # "3720"
+        self.agency_id = None  # "TRIMET" / "C-TRAN" / etc...
+        self.stop_id = None  # "3720"
         self.street_direction = ""
         self.zone_id = 0
         self.amenities = None # "Crosswalk near stop;Curbcut;Front-door Landing Paved;Sidewalk;;Back-door Landing Paved"
@@ -42,6 +43,6 @@ class SolrStopRecord(SolrRecord):
             # parse the id into parts <stop_code>::<agency_id>::<layer_id>
             id_parts = properties.get('id').split('::')
             self.stop_id = id_parts[0]
-
+            self.agency_id = id_parts[1]
         except Exception, e:
             log.warn(e)

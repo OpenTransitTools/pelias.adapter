@@ -78,7 +78,9 @@ class TestPeliasToSolr(unittest.TestCase):
         """
         solr_params = {}
         solr_params['q'] = '888 SE Lambert St'
-        PeliasToSolr.call_pelias(solr_params, self.auto_url, self.search_url)
+        res = PeliasToSolr.call_pelias(solr_params, self.auto_url, self.search_url)
+        self.assertTrue(res.num_records() > 0)
+        self.assertTrue("888 SE Lambert" in res.response.docs[0].name)
 
     def test_no_results(self):
         p = self.parse('./data/autocomplete_no_results.json')

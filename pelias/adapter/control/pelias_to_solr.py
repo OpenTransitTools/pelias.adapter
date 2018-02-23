@@ -40,7 +40,6 @@ class PeliasToSolr(object):
         """
         convert SOLR dict params to string of params for calling Pelias via url
         """
-        # import pdb; pdb.set_trace()
         pelias_params = cls.solr_to_pelias_param(solr_params)
         ret_val = html_utils.dict_to_param_str(pelias_params)
         return ret_val
@@ -70,6 +69,7 @@ class PeliasToSolr(object):
 
     @classmethod
     def call_pelias(cls, solr_params, auto_url=None, search_url=None):
+        #import pdb; pdb.set_trace()
         pelias = None
         if auto_url:
             pelias = cls.call_pelias_autocomplete(solr_params, auto_url)

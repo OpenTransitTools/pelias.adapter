@@ -16,6 +16,9 @@ def add_cors_headers_response_callback(event):
     :param event:
 
     :see config.add_subscriber(add_cors_headers_response_callback, NewRequest):
+
+    :see credit goes to https://stackoverflow.com/users/211490/wichert-akkerman
+    :see https://stackoverflow.com/questions/21107057/pyramid-cors-for-ajax-requests
     """
     def cors_headers(request, response):
         response.headers.update({

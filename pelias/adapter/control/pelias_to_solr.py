@@ -49,3 +49,16 @@ class PeliasToSolr(object):
         ret_val = SolrResponse()
         ret_val.parse_pelias(json)
         return ret_val
+
+
+    @classmethod
+    def call_pelias_autocomplete(cls, solr_params, auto_url):
+        ret_val = None
+
+    @classmethod
+    def call_pelias_search(cls, solr_params, search_url):
+        ret_val = None
+
+    @classmethod
+    def call_pelias_search(cls, solr_params, auto_url, search_url):
+        ret_val = None

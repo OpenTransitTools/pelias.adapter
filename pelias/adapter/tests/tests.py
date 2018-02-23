@@ -55,6 +55,25 @@ class TestPeliasToSolr(unittest.TestCase):
         self.assertTrue("text=val" in pelias_params_str)
         self.assertTrue("size=6" in pelias_params_str)
 
+    def test_call_live_pelias_server(self):
+        """
+        https://ws-st.trimet.org/pelias/v1/autocomplete?text=888%20SE%20Lambert%20St
+        :return:
+        """
+        solr_params = {}
+        solr_params['q'] = 'val'
+        solr_params['rows'] = '6'
+        pelias_params_str = PeliasToSolr.solr_to_pelias_param_str(solr_params)
+        self.assertTrue("text=val" in pelias_params_str)
+        self.assertTrue("size=6" in pelias_params_str)
+
+    def test_switch_autocomplete_to_search_service(self):
+        """
+        send an interpolated address to the query, and expect that
+
+        https://ws-st.trimet.org/pelias/v1/autocomplete?text=888%20SE%20Lambert%20St
+        https://ws-st.trimet.org/pelias/v1/search?text=888%20SE%20Lambert%20St
+        """
 
     def test_no_results(self):
         p = self.parse('./data/autocomplete_no_results.json')

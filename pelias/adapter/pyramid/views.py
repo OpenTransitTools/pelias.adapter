@@ -11,6 +11,7 @@ from ott.utils import object_utils
 
 from .app import CONFIG
 from pelias.adapter.model.solr.solr_response import SolrResponse
+from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 
 #from ott.geocoder.geosolr import GeoSolr
 #from ott.geocoder.geo_dao import GeoListDao
@@ -26,6 +27,7 @@ system_err_msg = base.ServerError()
 def do_view_config(cfg):
     cfg.add_route('solr_stops',   '/solr/stops')
     cfg.add_route('solr_json',    '/solr/select')
+    cfg.add_route('solr',         '/solr')
     cfg.add_route('solr_xml',     '/solr/xml')
     cfg.add_route('solr_txt',     '/solr/txt')
     cfg.add_route('pelias_proxy', '/proxy')
@@ -56,13 +58,17 @@ def solr_stops(request):
     return "HI"
 
 
+@view_config(route_name='solr', renderer='json')
 @view_config(route_name='solr_json', renderer='json')
 def solr_json(request):
     # import pdb; pdb.set_trace()
     ret_val = None
     try:
-        ret_val = SolrResponse()
-        pass
+        auto_url = CONFIG.get('pelias_autocomplete_url')
+        search_url = CONFIG.get('pelias_search_url')
+        solr_params = {}
+        solr_params['q'] = request.params.get('q')
+        ret_val = PeliasToSolr.call_pelias(solr_params, auto_url, search_url)
     except Exception, e:
         log.warn(e)
         ret_val = system_err_msg

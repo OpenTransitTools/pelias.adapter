@@ -69,3 +69,6 @@ class SolrResponse(BaseDao):
     def parse_pelias(self, json):
         self.responseHeader.parse_pelias(json)
         self.response.parse_pelias(json)
+
+    def num_records(self):
+        return len(self.response.docs)

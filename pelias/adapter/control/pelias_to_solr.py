@@ -1,4 +1,5 @@
 from pelias.adapter.model.solr.solr_response import SolrResponse
+from ott.utils import json_utils
 from ott.utils import html_utils
 
 class PeliasToSolr(object):
@@ -50,15 +51,32 @@ class PeliasToSolr(object):
         ret_val.parse_pelias(json)
         return ret_val
 
+    @classmethod
+    def call_pelias_parse_results(cls, solr_params, url):
+        param_str = cls.solr_to_pelias_param_str(solr_params)
+        json = json_utils.stream_json(url, param_str)
+        ret_val = cls.parse_json(json)
+        return ret_val
 
     @classmethod
     def call_pelias_autocomplete(cls, solr_params, auto_url):
-        ret_val = None
+        ret_val = cls.call_pelias_parse_results(solr_params, auto_url)
+        return ret_val
 
     @classmethod
     def call_pelias_search(cls, solr_params, search_url):
-        ret_val = None
+        ret_val = cls.call_pelias_parse_results(solr_params, search_url)
+        return ret_val
 
     @classmethod
-    def call_pelias_search(cls, solr_params, auto_url, search_url):
-        ret_val = None
+    def call_pelias(cls, solr_params, auto_url=None, search_url=None):
+        pelias = None
+        if auto_url:
+            pelias = cls.call_pelias_autocomplete(solr_params, auto_url)
+
+        if search_url and (pelias is None or pelias.num_records() < 1):
+            pelias = cls.call_pelias_search(solr_params, search_url)
+
+        return pelias
+
+

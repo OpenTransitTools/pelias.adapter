@@ -9,9 +9,6 @@ from .app import CONFIG
 from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 
-#from ott.geocoder.geosolr import GeoSolr
-#from ott.geocoder.geo_dao import GeoListDao
-
 import logging
 log = logging.getLogger(__file__)
 

@@ -1,10 +1,6 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from ott.utils.parse import StopParamParser
-from ott.utils.parse import GeoParamParser
-from ott.utils.parse import RouteParamParser
-
 from ott.utils.dao import base
 from ott.utils import json_utils
 from ott.utils import object_utils

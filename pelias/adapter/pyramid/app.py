@@ -22,12 +22,14 @@ def add_cors_headers_response_callback(event):
     """
     def cors_headers(request, response):
         response.headers.update({
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
-        'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization',
-        'Access-Control-Allow-Credentials': 'true',
-        'Access-Control-Max-Age': '1728000',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
+            'Access-Control-Allow-Headers': 'Origin, Content-Type, Accept, Authorization',
+            'Access-Control-Allow-Credentials': 'true',
+            'Access-Control-Max-Age': '1728000',
         })
+
+    # set the function above to be called for each response, where we'll set the CORS headers
     event.request.add_response_callback(cors_headers)
 
 
@@ -49,7 +51,9 @@ def main(global_config, **settings):
     config.include(views.do_view_config)
     config.scan('pelias.adapter.pyramid')
 
+    import pdb;    pdb.set_trace()
     # CORS -- might not make this call in production (eliminate a bit of overheads, as CORS is handled by Apache)
-    config.add_subscriber(add_cors_headers_response_callback, NewRequest)
+    if settings and settings.get('enable_cors_headers') == 'true':
+        config.add_subscriber(add_cors_headers_response_callback, NewRequest)
 
     return config.make_wsgi_app()

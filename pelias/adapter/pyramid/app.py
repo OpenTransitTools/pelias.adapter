@@ -51,7 +51,6 @@ def main(global_config, **settings):
     config.include(views.do_view_config)
     config.scan('pelias.adapter.pyramid')
 
-    import pdb;    pdb.set_trace()
     # CORS -- might not make this call in production (eliminate a bit of overheads, as CORS is handled by Apache)
     if settings and settings.get('enable_cors_headers') == 'true':
         config.add_subscriber(add_cors_headers_response_callback, NewRequest)

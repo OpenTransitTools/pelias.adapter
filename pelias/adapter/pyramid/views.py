@@ -28,7 +28,8 @@ def do_view_config(cfg):
 
 @view_config(route_name='solr_txt', renderer='string', http_cache=cache_long)
 def solr_txt(request):
-    return CONFIG.get('pelias_search_url')
+    #return CONFIG.get('pelias_search_url')
+    return "HI I"
 
 
 @view_config(route_name='pelias_proxy', renderer='json', http_cache=cache_long)

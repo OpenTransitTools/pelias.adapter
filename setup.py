@@ -7,7 +7,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'ott.utils',
-    #'ott.boundary',
+    #l'ott.boundary',
 
     'pyramid < 1.8',
     'pyramid_tm',

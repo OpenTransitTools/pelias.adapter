@@ -18,27 +18,27 @@ system_err_msg = base.ServerError()
 
 
 def do_view_config(cfg):
-    cfg.add_route('solr_stops',   '/solr/stops')
-    cfg.add_route('solr_json',    '/solr/select')
-    cfg.add_route('solr',         '/solr')
-    cfg.add_route('solr_xml',     '/solr/xml')
-    cfg.add_route('solr_txt',     '/solr/txt')
+    cfg.add_route('solr', '/solr')
+    cfg.add_route('solrselect', '/solr/select')
+    cfg.add_route('solr_json', '/solr_json')
+    cfg.add_route('solr_txt', '/solr_txt')
+    cfg.add_route('solrtxt', '/solr/txt')
+    cfg.add_route('solr_xml', '/solr/xml')
+    cfg.add_route('solrxml', '/solr/xml')
+    cfg.add_route('solr_stops', '/solr_stops')
+    cfg.add_route('solrstops', '/solr/stops')
     cfg.add_route('pelias_proxy', '/proxy')
 
 
+@view_config(route_name='solrtxt', renderer='string', http_cache=cache_long)
 @view_config(route_name='solr_txt', renderer='string', http_cache=cache_long)
 def solr_txt(request):
+    # import pdb;    pdb.set_trace()
     #return CONFIG.get('pelias_search_url')
     return "HI I"
 
 
-@view_config(route_name='pelias_proxy', renderer='json', http_cache=cache_long)
-def pelias_proxy(request):
-    url = CONFIG.get('pelias_autocomplete_url')
-    ret_val = proxy_json(url, request.query_string)
-    return ret_val
-
-
+@view_config(route_name='solrstops', renderer='json', http_cache=cache_long)
 @view_config(route_name='solr_stops', renderer='json', http_cache=cache_long)
 def solr_stops(request):
     """
@@ -53,6 +53,7 @@ def solr_stops(request):
 
 
 @view_config(route_name='solr', renderer='json')
+@view_config(route_name='solrselect', renderer='json')
 @view_config(route_name='solr_json', renderer='json')
 def solr_json(request):
     # import pdb; pdb.set_trace()
@@ -72,6 +73,7 @@ def solr_json(request):
 
 
 @view_config(route_name='solr_xml', renderer='json', http_cache=cache_long)
+@view_config(route_name='solrxml', renderer='json', http_cache=cache_long)
 def solr_xml(request):
     ret_val = None
     try:
@@ -84,6 +86,13 @@ def solr_xml(request):
         ret_val = dao_response(system_err_msg)
     finally:
         pass
+    return ret_val
+
+
+@view_config(route_name='pelias_proxy', renderer='json', http_cache=cache_long)
+def pelias_proxy(request):
+    url = CONFIG.get('pelias_autocomplete_url')
+    ret_val = proxy_json(url, request.query_string)
     return ret_val
 
 

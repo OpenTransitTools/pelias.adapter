@@ -39,7 +39,7 @@ def main(global_config, **settings):
     global CONFIG
     CONFIG = settings
 
-    # import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
     config = Configurator(settings=settings)
 
     # logging config for pserve / wsgi

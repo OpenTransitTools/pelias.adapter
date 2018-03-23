@@ -5,6 +5,8 @@ from ott.utils.dao import base
 from ott.utils import json_utils
 from ott.utils import object_utils
 
+from ott.boundary.pyramid import views as boundary_views
+
 from .app import CONFIG
 from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
@@ -33,9 +35,7 @@ def do_view_config(cfg):
 @view_config(route_name='solrtxt', renderer='string', http_cache=cache_long)
 @view_config(route_name='solr_txt', renderer='string', http_cache=cache_long)
 def solr_txt(request):
-    # import pdb;    pdb.set_trace()
-    #return CONFIG.get('pelias_search_url')
-    return "HI I"
+    return boundary_views.distance_txt(request)
 
 
 @view_config(route_name='solrstops', renderer='json', http_cache=cache_long)

@@ -5,9 +5,9 @@ from ott.utils.dao import base
 from ott.utils import json_utils
 from ott.utils import object_utils
 
+from .app import CONFIG
 from ott.boundary.pyramid import views as boundary_views
 
-from .app import CONFIG
 from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 

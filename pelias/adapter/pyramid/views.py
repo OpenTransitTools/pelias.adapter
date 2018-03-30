@@ -31,15 +31,16 @@ def do_view_config(cfg):
     cfg.add_route('solrstops', '/solr/stops')
     cfg.add_route('pelias_proxy', '/proxy')
 
-
+BOUNDARIES
 pelias_autocomplete_url = None
 pelias_search_url = None
 def config_globals(cfg):
     global pelias_autocomplete_url
     global pelias_search_url
+    global BOUNDARIES
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
-    boundary_views.make_boundaries_global(cfg)
+    BOUNDARIES = boundary_views.make_boundaries_global(cfg)
 
 
 def call_pelias(request):
@@ -49,12 +50,20 @@ def call_pelias(request):
     return ret_val
 
 
+def call_boundary(response):
+    # ret_val.response.docs[0].trimet_boundary = False
+    # import pdb; pdb.set_trace()
+    if response and response.docs:
+        pass
+
+
 @view_config(route_name='solr_boundary', renderer='json', http_cache=cache_long)
 def solr_boundary(request):
     ret_val = None
     try:
-        import pdb; pdb.set_trace()
         ret_val = call_pelias(request)
+        if ret_val and ret_val.response:
+            call_boundary(ret_val.response)
     except Exception, e:
         log.warn(e)
         ret_val = system_err_msg

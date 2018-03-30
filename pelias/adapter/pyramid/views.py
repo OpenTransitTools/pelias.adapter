@@ -24,8 +24,7 @@ def do_view_config(cfg):
     cfg.add_route('solr', '/solr')
     cfg.add_route('solrselect', '/solr/select')
     cfg.add_route('solr_json', '/solr_json')
-    cfg.add_route('solr_txt', '/solr_txt')
-    cfg.add_route('solrtxt', '/solr/txt')
+    cfg.add_route('solr_boundary', '/solr/boundary')
     cfg.add_route('solr_xml', '/solr/xml')
     cfg.add_route('solrxml', '/solr/xml')
     cfg.add_route('solr_stops', '/solr_stops')
@@ -40,13 +39,28 @@ def config_globals(cfg):
     global pelias_search_url
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
-    #make_boundaries_global(cfg)
+    boundary_views.make_boundaries_global(cfg)
 
 
-@view_config(route_name='solrtxt', renderer='string', http_cache=cache_long)
-@view_config(route_name='solr_txt', renderer='string', http_cache=cache_long)
-def solr_txt(request):
-    return boundary_views.distance_txt(request)
+def call_pelias(request):
+    solr_params = {}
+    solr_params['q'] = request.params.get('q')
+    ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
+    return ret_val
+
+
+@view_config(route_name='solr_boundary', renderer='json', http_cache=cache_long)
+def solr_boundary(request):
+    ret_val = None
+    try:
+        import pdb; pdb.set_trace()
+        ret_val = call_pelias(request)
+    except Exception, e:
+        log.warn(e)
+        ret_val = system_err_msg
+    finally:
+        pass
+    return dao_response(ret_val)
 
 
 @view_config(route_name='solrstops', renderer='json', http_cache=cache_long)
@@ -63,15 +77,15 @@ def solr_stops(request):
     return "HI"
 
 
+
+
 @view_config(route_name='solr', renderer='json')
 @view_config(route_name='solrselect', renderer='json')
 @view_config(route_name='solr_json', renderer='json')
 def solr_json(request):
     ret_val = None
     try:
-        solr_params = {}
-        solr_params['q'] = request.params.get('q')
-        ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
+        ret_val = call_pelias(request)
     except Exception, e:
         log.warn(e)
         ret_val = system_err_msg

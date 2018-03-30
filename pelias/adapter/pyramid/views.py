@@ -5,11 +5,10 @@ from ott.utils.dao import base
 from ott.utils import json_utils
 from ott.utils import object_utils
 
-from .app import CONFIG
-from ott.boundary.pyramid import views as boundary_views
-
 from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
+
+from ott.boundary.pyramid import views as boundary_views
 
 import logging
 log = logging.getLogger(__file__)
@@ -20,6 +19,8 @@ system_err_msg = base.ServerError()
 
 
 def do_view_config(cfg):
+    # import pdb; pdb.set_trace()
+    config_globals(cfg)
     cfg.add_route('solr', '/solr')
     cfg.add_route('solrselect', '/solr/select')
     cfg.add_route('solr_json', '/solr_json')
@@ -30,6 +31,16 @@ def do_view_config(cfg):
     cfg.add_route('solr_stops', '/solr_stops')
     cfg.add_route('solrstops', '/solr/stops')
     cfg.add_route('pelias_proxy', '/proxy')
+
+
+pelias_autocomplete_url = None
+pelias_search_url = None
+def config_globals(cfg):
+    global pelias_autocomplete_url
+    global pelias_search_url
+    pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
+    pelias_search_url = cfg.registry.settings.get('pelias_search_url')
+    #make_boundaries_global(cfg)
 
 
 @view_config(route_name='solrtxt', renderer='string', http_cache=cache_long)
@@ -56,14 +67,11 @@ def solr_stops(request):
 @view_config(route_name='solrselect', renderer='json')
 @view_config(route_name='solr_json', renderer='json')
 def solr_json(request):
-    # import pdb; pdb.set_trace()
     ret_val = None
     try:
-        auto_url = CONFIG.get('pelias_autocomplete_url')
-        search_url = CONFIG.get('pelias_search_url')
         solr_params = {}
         solr_params['q'] = request.params.get('q')
-        ret_val = PeliasToSolr.call_pelias(solr_params, auto_url, search_url)
+        ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
     except Exception, e:
         log.warn(e)
         ret_val = system_err_msg
@@ -91,8 +99,7 @@ def solr_xml(request):
 
 @view_config(route_name='pelias_proxy', renderer='json', http_cache=cache_long)
 def pelias_proxy(request):
-    url = CONFIG.get('pelias_autocomplete_url')
-    ret_val = proxy_json(url, request.query_string)
+    ret_val = proxy_json(pelias_autocomplete_url, request.query_string)
     return ret_val
 
 

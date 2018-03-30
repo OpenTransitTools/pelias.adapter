@@ -5,9 +5,6 @@ import ott.utils.object_utils as obj
 import logging
 log = logging.getLogger(__file__)
 
-# globals the config/*.ini file
-CONFIG = None
-
 
 def add_cors_headers_response_callback(event):
     """
@@ -36,9 +33,6 @@ def add_cors_headers_response_callback(event):
 def main(global_config, **settings):
     """ This function returns a Pyramid WSGI application.
     """
-    global CONFIG
-    CONFIG = settings
-
     #import pdb; pdb.set_trace()
     config = Configurator(settings=settings)
 

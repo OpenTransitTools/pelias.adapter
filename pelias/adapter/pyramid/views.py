@@ -8,7 +8,7 @@ from ott.utils import object_utils
 from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 
-from ott.boundary.pyramid import views as boundary_views
+from ott.boundary.control.boundaries import Boundaries
 
 import logging
 log = logging.getLogger(__file__)
@@ -31,16 +31,28 @@ def do_view_config(cfg):
     cfg.add_route('solrstops', '/solr/stops')
     cfg.add_route('pelias_proxy', '/proxy')
 
-BOUNDARIES
+
+ADA_BOUNDARY = None
+DISTRICT_BOUNDARY = None
 pelias_autocomplete_url = None
 pelias_search_url = None
 def config_globals(cfg):
     global pelias_autocomplete_url
     global pelias_search_url
-    global BOUNDARIES
+    global ADA_BOUNDARY
+    global DISTRICT_BOUNDARY
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
-    BOUNDARIES = boundary_views.make_boundaries_global(cfg)
+
+    #  TODO: we have to refactor this ... add a factory / controller to model objects?
+    import pdb; pdb.set_trace()
+    db_url = cfg.registry.settings.get('db_url')
+    schema = cfg.registry.settings.get('schema')
+    b = Boundaries(db_url, schema)
+    boundaries = b.get_boundaries()
+    if boundaries:
+        ADA_BOUNDARY = boundaries.get('ada')
+        DISTRICT_BOUNDARY = boundaries.get('district')
 
 
 def call_pelias(request):
@@ -51,10 +63,16 @@ def call_pelias(request):
 
 
 def call_boundary(response):
-    # ret_val.response.docs[0].trimet_boundary = False
     # import pdb; pdb.set_trace()
     if response and response.docs:
-        pass
+        for d in response.docs:
+            d.ada_boundary = False
+            if ADA_BOUNDARY:
+                d.ada_boundary = ADA_BOUNDARY.is_within_xy(d.lon, d.lat)
+
+            d.trimet_boundary = False
+            if DISTRICT_BOUNDARY:
+                d.trimet_boundary = DISTRICT_BOUNDARY.is_within_xy(d.lon, d.lat)
 
 
 @view_config(route_name='solr_boundary', renderer='json', http_cache=cache_long)

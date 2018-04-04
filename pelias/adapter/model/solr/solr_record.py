@@ -35,6 +35,10 @@ class SolrRecord(MinimalDao):
         self.timestamp = "2018-02-03T07:47:45.045Z"
         self.score = 0.0
 
+    def set_value(self, name, val):
+        pass
+
+
     def parse_pelias(self, json):
         try:
             # step 1: parse props

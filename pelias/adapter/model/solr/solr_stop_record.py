@@ -32,7 +32,7 @@ class SolrStopRecord(SolrRecord):
         self.providers = stop_json.get('')
         self.routes = stop_json.get('')
         self.route_stops = stop_json.get('')
-        self.begin_date  = stop_json.get('')
+        self.begin_date = stop_json.get('')
         self.end_date = stop_json.get('')
 
     def parse_pelias(self, json):

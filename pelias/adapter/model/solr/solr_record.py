@@ -27,9 +27,6 @@ class SolrRecord(MinimalDao):
         self.neighborhood = ""
         self.zip_code = ""
 
-        self.ada_boundary = True
-        self.trimet_boundary = True
-
         self.x = 7645053.5
         self.y = 684388.9
         self.lon = -122.67371

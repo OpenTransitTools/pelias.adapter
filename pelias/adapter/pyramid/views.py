@@ -45,7 +45,7 @@ def config_globals(cfg):
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
 
     #  TODO: we have to refactor this ... add a factory / controller to model objects?
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
     db_url = cfg.registry.settings.get('db_url')
     schema = cfg.registry.settings.get('schema')
     b = Boundaries(db_url, schema)

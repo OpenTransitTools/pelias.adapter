@@ -77,6 +77,10 @@ def call_boundary(response):
 
 @view_config(route_name='solr_boundary', renderer='json', http_cache=cache_long)
 def solr_boundary(request):
+    """
+    This query has a good variety of hits for both in and out of ADA and DISTRICT
+    http://localhost:45454/solr/boundary?q=8
+    """
     ret_val = None
     try:
         ret_val = call_pelias(request)

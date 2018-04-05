@@ -11,8 +11,8 @@ build:
 
 run:
   1. rm nohup.out; nohup bin/pserve config/development.ini --reload PELIAS_SOLR=1 &
-  1. http://localhost:45454/solr?q=2
-  1. http://localhost:45454/solr/boundary?q=8
+  1. http://localhost:45454/solr/select?q=2
+  1. http://localhost:45454/solr/boundary/select?q=8
 
 test:
   1. run the server (see above)

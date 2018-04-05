@@ -22,13 +22,11 @@ def do_view_config(cfg):
     # import pdb; pdb.set_trace()
     config_globals(cfg)
     cfg.add_route('solr', '/solr')
-    cfg.add_route('solrselect', '/solr/select')
-    cfg.add_route('solr_json', '/solr_json')
+    cfg.add_route('solr_select', '/solr/select')
     cfg.add_route('solr_boundary', '/solr/boundary')
-    cfg.add_route('solr_xml', '/solr/xml')
-    cfg.add_route('solrxml', '/solr/xml')
-    cfg.add_route('solr_stops', '/solr_stops')
-    cfg.add_route('solrstops', '/solr/stops')
+    cfg.add_route('solr_boundary_select', '/solr/boundary/select')
+    cfg.add_route('solr_stops', '/solr/stops')
+    cfg.add_route('solr_stops_select', '/solr/stops')
     cfg.add_route('pelias_proxy', '/proxy')
 
 
@@ -76,6 +74,7 @@ def call_boundary(response):
 
 
 @view_config(route_name='solr_boundary', renderer='json', http_cache=cache_long)
+@view_config(route_name='solr_boundary_select', renderer='json', http_cache=cache_long)
 def solr_boundary(request):
     """
     This query has a good variety of hits for both in and out of ADA and DISTRICT
@@ -94,8 +93,8 @@ def solr_boundary(request):
     return dao_response(ret_val)
 
 
-@view_config(route_name='solrstops', renderer='json', http_cache=cache_long)
 @view_config(route_name='solr_stops', renderer='json', http_cache=cache_long)
+@view_config(route_name='solr_stops_select', renderer='json', http_cache=cache_long)
 def solr_stops(request):
     """
     STOP QUERY:
@@ -108,11 +107,8 @@ def solr_stops(request):
     return "HI"
 
 
-
-
 @view_config(route_name='solr', renderer='json')
-@view_config(route_name='solrselect', renderer='json')
-@view_config(route_name='solr_json', renderer='json')
+@view_config(route_name='solr_select', renderer='json')
 def solr_json(request):
     ret_val = None
     try:
@@ -123,23 +119,6 @@ def solr_json(request):
     finally:
         pass
     return dao_response(ret_val)
-
-
-@view_config(route_name='solr_xml', renderer='json', http_cache=cache_long)
-@view_config(route_name='solrxml', renderer='json', http_cache=cache_long)
-def solr_xml(request):
-    ret_val = None
-    try:
-        place = request.params.get('place')
-        rows = request.params.get('rows')
-        s = get_solr().solr(place, rows)
-        ret_val = s
-    except Exception, e:
-        log.warn(e)
-        ret_val = dao_response(system_err_msg)
-    finally:
-        pass
-    return ret_val
 
 
 @view_config(route_name='pelias_proxy', renderer='json', http_cache=cache_long)

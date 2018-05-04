@@ -6,6 +6,7 @@
 COMMIT_EDITMSG
 nohup.out
 *.log
+logs/*
 *.tar
 *.gz
 .git

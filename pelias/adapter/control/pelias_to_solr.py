@@ -56,9 +56,28 @@ class PeliasToSolr(object):
         return ret_val
 
     @classmethod
+    def fix_venues_in_pelias_response(cls, pelias_json):
+        """ will loop thru results, and append street names to venues """
+        # import pdb; pdb.set_trace()
+        if pelias_json.get('features'):
+            for f in pelias_json['features']:
+                p = f.get('properties')
+                if p and p.get('layer') == 'venue':
+                    num = p.get('housenumber')
+                    st = p.get('street')
+                    n = p.get('name')
+                    if n and st:
+                        if num:
+                            n = "{} ({} {})".format(n, num, st)
+                        else:
+                            n = "{} ({})".format(n, st)
+                        p['name'] = n
+
+    @classmethod
     def call_pelias_parse_results(cls, solr_params, url):
         param_str = cls.solr_to_pelias_param_str(solr_params)
         json = json_utils.stream_json(url, param_str)
+        cls.fix_venues_in_pelias_response(pelias_json=json)
         ret_val = cls.parse_json(json)
         return ret_val
 
@@ -74,7 +93,6 @@ class PeliasToSolr(object):
 
     @classmethod
     def call_pelias(cls, solr_params, auto_url=None, search_url=None):
-        #import pdb; pdb.set_trace()
         pelias = None
         if auto_url:
             pelias = cls.call_pelias_autocomplete(solr_params, auto_url)

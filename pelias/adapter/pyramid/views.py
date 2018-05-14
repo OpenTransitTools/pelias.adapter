@@ -35,6 +35,7 @@ DISTRICT_BOUNDARY = None
 pelias_autocomplete_url = None
 pelias_search_url = None
 def config_globals(cfg):
+    """ TODO: globals ???  something better? """
     global pelias_autocomplete_url
     global pelias_search_url
     global ADA_BOUNDARY
@@ -61,7 +62,6 @@ def call_pelias(request):
 
 
 def call_boundary(response):
-    # import pdb; pdb.set_trace()
     if response and response.docs:
         for d in response.docs:
             d.ada_boundary = False

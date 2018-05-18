@@ -63,15 +63,21 @@ class PeliasToSolr(object):
             for f in pelias_json['features']:
                 p = f.get('properties')
                 if p and p.get('layer') == 'venue':
-                    num = p.get('housenumber')
-                    st = p.get('street')
-                    n = p.get('name')
-                    if n and st:
-                        if num:
-                            n = "{} ({} {})".format(n, num, st)
+                    name = p.get('name')
+                    if name:
+                        new_name = name
+                        street = p.get('street')
+                        if street:
+                            num = p.get('housenumber')
+                            if num:
+                                new_name = "{} ({} {})".format(name, num, street)
+                            else:
+                                new_name = "{} ({})".format(name, street)
                         else:
-                            n = "{} ({})".format(n, st)
-                        p['name'] = n
+                            neighborhood = p.get('neighborhood')
+                            if neighborhood:
+                                new_name = "{} ({})".format(name, neighborhood)
+                        p['name'] = new_name
 
     @classmethod
     def call_pelias_parse_results(cls, solr_params, url):

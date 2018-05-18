@@ -74,7 +74,7 @@ class PeliasToSolr(object):
                             else:
                                 new_name = "{} ({})".format(name, street)
                         else:
-                            neighborhood = p.get('neighborhood')
+                            neighborhood = p.get('neighbourhood')
                             if neighborhood:
                                 new_name = "{} ({})".format(name, neighborhood)
                         p['name'] = new_name

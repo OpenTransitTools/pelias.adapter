@@ -5,6 +5,9 @@ from ott.utils.dao import base
 from ott.utils import json_utils
 from ott.utils import object_utils
 
+from ott.utils.svr.pyramid import response_utils
+from ott.utils.svr.pyramid import globals
+
 from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 
@@ -14,20 +17,22 @@ import logging
 log = logging.getLogger(__file__)
 
 
-cache_long = 500
-system_err_msg = base.ServerError()
-
-
 def do_view_config(cfg):
     # import pdb; pdb.set_trace()
     config_globals(cfg)
+
+    # cfg.add_route('pelias', '/pelias/{service}')
+    # TODO: handler of the pelias service ^^^^ will either proxy things like 'reverse', or else wrap 'autocomplete' and 'search'
+    # also /pelias/search will determine order of calls ... first search, and if that doesn't work, autocomplete, and vis-versa, etc...
+
+    cfg.add_route('pelias', '/pelias')
+    cfg.add_route('pelias_proxy', '/proxy')
     cfg.add_route('solr', '/solr')
     cfg.add_route('solr_select', '/solr/select')
     cfg.add_route('solr_boundary', '/solr/boundary')
     cfg.add_route('solr_boundary_select', '/solr/boundary/select')
     cfg.add_route('solr_stops', '/solr/stops')
     cfg.add_route('solr_stops_select', '/solr/stops')
-    cfg.add_route('pelias_proxy', '/proxy')
 
 
 ADA_BOUNDARY = None
@@ -55,8 +60,12 @@ def config_globals(cfg):
 
 
 def call_pelias(request):
+    # import pdb; pdb.set_trace()
+    query = request.params.get('q')
+    if not query:
+        query = request.params.get('text')
     solr_params = {}
-    solr_params['q'] = request.params.get('q')
+    solr_params['q'] = query
     ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
     return ret_val
 
@@ -73,8 +82,8 @@ def call_boundary(response):
                 d.trimet_boundary = DISTRICT_BOUNDARY.is_within_xy(d.lon, d.lat)
 
 
-@view_config(route_name='solr_boundary', renderer='json', http_cache=cache_long)
-@view_config(route_name='solr_boundary_select', renderer='json', http_cache=cache_long)
+@view_config(route_name='solr_boundary', renderer='json', http_cache=globals.CACHE_LONG)
+@view_config(route_name='solr_boundary_select', renderer='json', http_cache=globals.CACHE_LONG)
 def solr_boundary(request):
     """
     This query has a good variety of hits for both in and out of ADA and DISTRICT
@@ -85,16 +94,15 @@ def solr_boundary(request):
         ret_val = call_pelias(request)
         if ret_val and ret_val.response:
             call_boundary(ret_val.response)
-    except Exception, e:
+        ret_val = response_utils.dao_response(ret_val)
+    except Exception as e:
         log.warn(e)
-        ret_val = system_err_msg
-    finally:
-        pass
-    return dao_response(ret_val)
+        ret_val = response_utils.sys_err_response()
+    return ret_val
 
 
-@view_config(route_name='solr_stops', renderer='json', http_cache=cache_long)
-@view_config(route_name='solr_stops_select', renderer='json', http_cache=cache_long)
+@view_config(route_name='solr_stops', renderer='json', http_cache=globals.CACHE_LONG)
+@view_config(route_name='solr_stops_select', renderer='json', http_cache=globals.CACHE_LONG)
 def solr_stops(request):
     """
     STOP QUERY:
@@ -107,72 +115,22 @@ def solr_stops(request):
     return "HI"
 
 
-@view_config(route_name='solr', renderer='json')
-@view_config(route_name='solr_select', renderer='json')
+@view_config(route_name='solr', renderer='json', http_cache=globals.CACHE_LONG)
+@view_config(route_name='solr_select', renderer='json', http_cache=globals.CACHE_LONG)
 def solr_json(request):
     ret_val = None
     try:
-        ret_val = call_pelias(request)
-    except Exception, e:
+        json = call_pelias(request)
+        ret_val = response_utils.dao_response(json)
+    except Exception as e:
         log.warn(e)
-        ret_val = system_err_msg
-    finally:
-        pass
-    return dao_response(ret_val)
+        ret_val = response_utils.sys_error_response()
+    return ret_val
 
 
-@view_config(route_name='pelias_proxy', renderer='json', http_cache=cache_long)
+@view_config(route_name='pelias', renderer='json', http_cache=globals.CACHE_LONG)
+@view_config(route_name='pelias_proxy', renderer='json', http_cache=globals.CACHE_LONG)
 def pelias_proxy(request):
-    ret_val = proxy_json(pelias_autocomplete_url, request.query_string)
+    ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
     return ret_val
 
-
-def url_response(host, service, id, agency_id=None, extra="&detailed"):
-    """ return a url with id and other good stuff
-    """
-    url = "http://{}/{}?id={}"
-    if agency_id:
-        url = url + "&agency_id={}".format(agency_id)
-    if extra:
-        url = url + extra
-    ret_val = url.format(host, service, id)
-    return ret_val
-
-
-def dao_response(dao):
-    """ using a BaseDao object, send the data to a pyramid Reponse """
-    if dao is None:
-        dao = data_not_found
-    return json_response(json_data=dao.to_json(), status=dao.status_code)
-
-
-def json_response(json_data, mime='application/json', status=200):
-    """ @return Response() with content_type of 'application/json' """
-    if json_data is None:
-        json_data = data_not_found.to_json()
-    return Response(json_data, content_type=mime, status_int=status)
-
-
-def json_response_list(lst, mime='application/json', status=200):
-    """ @return Response() with content_type of 'application/json' """
-    json_data = []
-    for l in lst:
-        if l:
-            jd = l.to_json()
-            json_data.append(jd)
-    return json_response(json_data, mime, status)
-
-
-def proxy_json(url, query_string):
-    """ will call a json url and send back response / error string...
-    """
-    ret_val = None
-    try:
-        ret_val = json_utils.stream_json(url, query_string)
-    except Exception, e:
-        log.warn(e)
-        ret_val = system_err_msg.status_message
-    finally:
-        pass
-
-    return ret_val

@@ -44,7 +44,7 @@ def config_globals(cfg):
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
 
     #  TODO: we have to refactor this ... add a factory / controller to model objects?
-    #import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     db_url = cfg.registry.settings.get('db_url')
     schema = cfg.registry.settings.get('schema')
     b = Boundaries(db_url, schema)
@@ -128,8 +128,8 @@ def pelias_proxy(request):
 
 
 def url_response(host, service, id, agency_id=None, extra="&detailed"):
-    ''' return a url with id and other good stuff
-    '''
+    """ return a url with id and other good stuff
+    """
     url = "http://{}/{}?id={}"
     if agency_id:
         url = url + "&agency_id={}".format(agency_id)
@@ -140,21 +140,21 @@ def url_response(host, service, id, agency_id=None, extra="&detailed"):
 
 
 def dao_response(dao):
-    ''' using a BaseDao object, send the data to a pyramid Reponse '''
+    """ using a BaseDao object, send the data to a pyramid Reponse """
     if dao is None:
         dao = data_not_found
     return json_response(json_data=dao.to_json(), status=dao.status_code)
 
 
 def json_response(json_data, mime='application/json', status=200):
-    ''' @return Response() with content_type of 'application/json' '''
+    """ @return Response() with content_type of 'application/json' """
     if json_data is None:
         json_data = data_not_found.to_json()
     return Response(json_data, content_type=mime, status_int=status)
 
 
 def json_response_list(lst, mime='application/json', status=200):
-    ''' @return Response() with content_type of 'application/json' '''
+    """ @return Response() with content_type of 'application/json' """
     json_data = []
     for l in lst:
         if l:
@@ -164,8 +164,8 @@ def json_response_list(lst, mime='application/json', status=200):
 
 
 def proxy_json(url, query_string):
-    ''' will call a json url and send back response / error string...
-    '''
+    """ will call a json url and send back response / error string...
+    """
     ret_val = None
     try:
         ret_val = json_utils.stream_json(url, query_string)

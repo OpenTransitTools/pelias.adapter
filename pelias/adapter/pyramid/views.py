@@ -25,6 +25,8 @@ def do_view_config(cfg):
     # TODO: handler of the pelias service ^^^^ will either proxy things like 'reverse', or else wrap 'autocomplete' and 'search'
     # also /pelias/search will determine order of calls ... first search, and if that doesn't work, autocomplete, and vis-versa, etc...
 
+
+    cfg.add_route('pelias_wrapper', '/pelias/{service}')
     cfg.add_route('pelias', '/pelias')
     cfg.add_route('pelias_proxy', '/proxy')
     cfg.add_route('solr', '/solr')
@@ -39,14 +41,20 @@ ADA_BOUNDARY = None
 DISTRICT_BOUNDARY = None
 pelias_autocomplete_url = None
 pelias_search_url = None
+pelias_reverse_url = None
+
 def config_globals(cfg):
     """ TODO: globals ???  something better? """
-    global pelias_autocomplete_url
-    global pelias_search_url
     global ADA_BOUNDARY
     global DISTRICT_BOUNDARY
+
+    global pelias_autocomplete_url
+    global pelias_search_url
+    global pelias_reverse_url
+
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
+    pelias_reverse_url = cfg.registry.settings.get('pelias_reverse_url')
 
     #  TODO: we have to refactor this ... add a factory / controller to model objects?
     # import pdb; pdb.set_trace()
@@ -132,5 +140,19 @@ def solr_json(request):
 @view_config(route_name='pelias_proxy', renderer='json', http_cache=globals.CACHE_LONG)
 def pelias_proxy(request):
     ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
+    return ret_val
+
+
+@view_config(route_name='pelias_wrapper', renderer='json', http_cache=globals.CACHE_LONG)
+def pelias_wrapper(request):
+    service = request.matchdict['serivce']
+    if service == "autocomplete":
+        ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
+    elif service == "search":
+        ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
+    elif service == "search":
+        ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
+    else:
+        ret_val = response_utils.sys_err_response()
     return ret_val
 

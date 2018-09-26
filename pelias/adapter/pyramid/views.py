@@ -145,13 +145,13 @@ def pelias_proxy(request):
 
 @view_config(route_name='pelias_wrapper', renderer='json', http_cache=globals.CACHE_LONG)
 def pelias_wrapper(request):
-    service = request.matchdict['serivce']
+    service = request.matchdict['service']
     if service == "autocomplete":
         ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
     elif service == "search":
-        ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
-    elif service == "search":
-        ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
+        ret_val = response_utils.proxy_json(pelias_search_url, request.query_string)
+    elif service == "reverse":
+        ret_val = response_utils.proxy_json(pelias_reverse_url, request.query_string)
     else:
         ret_val = response_utils.sys_err_response()
     return ret_val

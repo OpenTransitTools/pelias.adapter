@@ -25,10 +25,10 @@ def do_view_config(cfg):
     # TODO: handler of the pelias service ^^^^ will either proxy things like 'reverse', or else wrap 'autocomplete' and 'search'
     # also /pelias/search will determine order of calls ... first search, and if that doesn't work, autocomplete, and vis-versa, etc...
 
-
-    cfg.add_route('pelias_wrapper', '/pelias/{service}')
     cfg.add_route('pelias', '/pelias')
     cfg.add_route('pelias_proxy', '/proxy')
+    cfg.add_route('pelias_services', '/pelias/{service}')
+
     cfg.add_route('solr', '/solr')
     cfg.add_route('solr_select', '/solr/select')
     cfg.add_route('solr_boundary', '/solr/boundary')
@@ -68,7 +68,6 @@ def config_globals(cfg):
 
 
 def call_pelias(request):
-    # import pdb; pdb.set_trace()
     query = request.params.get('q')
     if not query:
         query = request.params.get('text')
@@ -136,23 +135,37 @@ def solr_json(request):
     return ret_val
 
 
-@view_config(route_name='pelias', renderer='json', http_cache=globals.CACHE_LONG)
-@view_config(route_name='pelias_proxy', renderer='json', http_cache=globals.CACHE_LONG)
-def pelias_proxy(request):
-    ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
+def pelias_wrapper(main_url, bkup_url, query_string):
+    """ will call either autocomplete or search """
+    ret_val = response_utils.proxy_json(main_url, query_string)
+    if ret_val is None or ret_val['features'] is None or len(ret_val['features']) < 1:
+        ret_val = response_utils.proxy_json(bkup_url, query_string)
     return ret_val
 
 
-@view_config(route_name='pelias_wrapper', renderer='json', http_cache=globals.CACHE_LONG)
-def pelias_wrapper(request):
-    service = request.matchdict['service']
+@view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)
+def pelias_services(request):
+    #import pdb; pdb.set_trace()
+    try:
+        service = request.matchdict['service']
+    except:
+        service = "autocomplete"
+
     if service == "autocomplete":
-        ret_val = response_utils.proxy_json(pelias_autocomplete_url, request.query_string)
+        ret_val = pelias_wrapper(pelias_autocomplete_url, pelias_search_url, request.query_string)
     elif service == "search":
-        ret_val = response_utils.proxy_json(pelias_search_url, request.query_string)
+        ret_val = pelias_wrapper(pelias_search_url, pelias_autocomplete_url, request.query_string)
     elif service == "reverse":
         ret_val = response_utils.proxy_json(pelias_reverse_url, request.query_string)
     else:
         ret_val = response_utils.sys_err_response()
     return ret_val
+
+
+@view_config(route_name='pelias', renderer='json', http_cache=globals.CACHE_LONG)
+@view_config(route_name='pelias_proxy', renderer='json', http_cache=globals.CACHE_LONG)
+def pelias(request):
+    """ call pelias_ervices() above """
+    return pelias_services(request)
+
 

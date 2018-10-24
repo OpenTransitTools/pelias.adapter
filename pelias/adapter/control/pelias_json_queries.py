@@ -48,7 +48,7 @@ def neighborhood_and_city(pelias_json, sep=', ', def_val=None):
 
     neighbourhood = pelias_json.get('neighbourhood')
     city = pelias_json.get('locality')
-    if neighbourhood and city:
+    if neighbourhood and city and city not in neighbourhood:
         ret_val = "{}{}{}".format(neighbourhood, sep, city)
     elif neighbourhood:
         ret_val = neighbourhood

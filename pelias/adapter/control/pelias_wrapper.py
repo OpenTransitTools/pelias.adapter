@@ -1,5 +1,5 @@
 from ott.utils.svr.pyramid import response_utils
-
+from . import pelias_json_queries
 
 class PeliasWrapper(object):
 
@@ -9,72 +9,33 @@ class PeliasWrapper(object):
         ret_val = response_utils.proxy_json(main_url, query_string)
         if ret_val is None or ret_val['features'] is None or len(ret_val['features']) < 1:
             ret_val = response_utils.proxy_json(bkup_url, query_string)
-        cls.fixup_results(ret_val)
+
+        # import pdb; pdb.set_trace()
+        cls.fixup_response(ret_val)
         return ret_val
 
     @classmethod
-    def fixup_results(cls, pelias_json):
-        """ will loop thru results, cleaning up the  """
-        # import pdb; pdb.set_trace()
+    def fixup_response(cls, pelias_json, ele='label'):
+        """ will loop thru results, cleaning up / renaming / relabeling the specified element """
+
+        # step 1: loop thru the records in the Pelias response
         if pelias_json.get('features'):
             for f in pelias_json['features']:
+                rename = None
                 p = f.get('properties')
+
+                # step 2: for venues, rename the venue with the neighborhood & city
                 if p and p.get('layer') == 'venue':
-                    n = cls.rename(p)
-                    if n:
-                        p['label'] = n
+                    pass
+
+                # step 3: default rename is to add city or region, etc...
                 else:
-                    n = cls.rename(p)
-                    if n:
-                        p['label'] = n
+                    pass
 
-    @classmethod
-    def street_name(cls, pelias_json, include_number=True, def_val=None):
-        ret_val = def_val
+                #
+                if rename:
+                    p[ele] = rename
 
-        street = pelias_json.get('street')
-        if street:
-            ret_val = street
-
-            if include_number:
-                num = pelias_json.get('housenumber')
-                if num:
-                    ret_val = "{} {}".format(num, street)
-
-        return ret_val
-
-    @classmethod
-    def neighborhood_and_city(cls, pelias_json, sep=', ', def_val=None):
-        ret_val = def_val
-
-        neighbourhood = pelias_json.get('neighbourhood')
-        city = pelias_json.get('locality')
-        if neighbourhood and city:
-            ret_val = "{}{}{}".format(neighbourhood, sep, city)
-        elif neighbourhood:
-            ret_val = neighbourhood
-        elif city:
-            ret_val = city
-
-        return ret_val
-
-    @classmethod
-    def city_neighborhood_or_county(cls, pelias_json, def_val=None):
-        ret_val = def_val
-
-        city = pelias_json.get('locality')
-        if city:
-            ret_val = city
-        else:
-            neighbourhood = pelias_json.get('neighborhood')
-            if neighbourhood:
-                ret_val = neighbourhood
-            else:
-                county = pelias_json.get('county')
-                if county:
-                    ret_val = county
-
-        return ret_val
 
 
     @classmethod

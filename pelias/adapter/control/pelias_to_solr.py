@@ -2,12 +2,15 @@ from pelias.adapter.model.solr.solr_response import SolrResponse
 from ott.utils import json_utils
 from ott.utils import html_utils
 
+from .pelias_wrapper import PeliasWrapper
+
+
 import urllib
 import logging
 log = logging.getLogger(__file__)
 
 
-class PeliasToSolr(object):
+class PeliasToSolr(PeliasWrapper):
 
     @classmethod
     def solr_to_pelias_param(cls, solr_params):
@@ -54,30 +57,6 @@ class PeliasToSolr(object):
         ret_val = SolrResponse()
         ret_val.parse_pelias(json)
         return ret_val
-
-    @classmethod
-    def fix_venues_in_pelias_response(cls, pelias_json):
-        """ will loop thru results, and append street names to venues """
-        # import pdb; pdb.set_trace()
-        if pelias_json.get('features'):
-            for f in pelias_json['features']:
-                p = f.get('properties')
-                if p and p.get('layer') == 'venue':
-                    name = p.get('name')
-                    if name:
-                        new_name = name
-                        street = p.get('street')
-                        if street:
-                            num = p.get('housenumber')
-                            if num:
-                                new_name = "{} ({} {})".format(name, num, street)
-                            else:
-                                new_name = "{} ({})".format(name, street)
-                        else:
-                            neighborhood = p.get('neighbourhood')
-                            if neighborhood:
-                                new_name = "{} ({})".format(name, neighborhood)
-                        p['name'] = new_name
 
     @classmethod
     def call_pelias_parse_results(cls, solr_params, url):

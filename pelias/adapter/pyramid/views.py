@@ -9,7 +9,9 @@ from ott.utils.svr.pyramid import response_utils
 from ott.utils.svr.pyramid import globals
 
 from pelias.adapter.model.solr.solr_response import SolrResponse
+
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
+from pelias.adapter.control.pelias_wrapper import PeliasWrapper
 
 from ott.boundary.control.boundaries import Boundaries
 
@@ -135,14 +137,6 @@ def solr_json(request):
     return ret_val
 
 
-def pelias_wrapper(main_url, bkup_url, query_string):
-    """ will call either autocomplete or search """
-    ret_val = response_utils.proxy_json(main_url, query_string)
-    if ret_val is None or ret_val['features'] is None or len(ret_val['features']) < 1:
-        ret_val = response_utils.proxy_json(bkup_url, query_string)
-    return ret_val
-
-
 @view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)
 def pelias_services(request):
     #import pdb; pdb.set_trace()
@@ -152,9 +146,9 @@ def pelias_services(request):
         service = "autocomplete"
 
     if service == "autocomplete":
-        ret_val = pelias_wrapper(pelias_autocomplete_url, pelias_search_url, request.query_string)
+        ret_val = PeliasWrapper.wrapp(pelias_autocomplete_url, pelias_search_url, request.query_string)
     elif service == "search":
-        ret_val = pelias_wrapper(pelias_search_url, pelias_autocomplete_url, request.query_string)
+        ret_val = PeliasWrapper.wrapp(pelias_search_url, pelias_autocomplete_url, request.query_string)
     elif service == "reverse":
         ret_val = response_utils.proxy_json(pelias_reverse_url, request.query_string)
     else:

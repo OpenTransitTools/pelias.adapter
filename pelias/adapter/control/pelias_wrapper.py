@@ -21,18 +21,31 @@ class PeliasWrapper(object):
         # step 1: loop thru the records in the Pelias response
         if pelias_json.get('features'):
             for f in pelias_json['features']:
-                rename = None
                 p = f.get('properties')
+                if p is None:
+                    continue
+
 
                 # step 2: for venues, rename the venue with the neighborhood & city
-                if p and p.get('layer') == 'venue':
-                    pass
+                rename = None
+                if p.get('layer') == 'venue':
+                    name = pelias_json_queries.get_name(p)
+                    street = pelias_json_queries.street_name(p, include_number=False)
+                    city = pelias_json_queries.neighborhood_and_city(p, sep=' ')
+                    rename = pelias_json_queries.append3(name, street, city)
+
+                elif p.get('layer') == 'post_office':
+                    name = pelias_json_queries.get_name(p)
+                    zipcode = pelias_json_queries.get_name(p, ele='postalcode', ele2='street')
+                    rename = pelias_json_queries.append3(name, 'Post Office', zipcode, sep1=' ')
 
                 # step 3: default rename is to add city or region, etc...
                 else:
-                    pass
+                    name = pelias_json_queries.get_name(p)
+                    city = pelias_json_queries.city_neighborhood_or_county(p)
+                    rename = pelias_json_queries.append(name, city)
 
-                #
+                # step 4: append
                 if rename:
                     p[ele] = rename
 

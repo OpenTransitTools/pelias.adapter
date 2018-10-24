@@ -3,6 +3,31 @@ query the response json from Pelias for various elements
 """
 
 
+def get_name(pelias_json, ele='name', ele2='label'):
+    n = pelias_json.get(ele)
+    if n is None:
+        n = pelias_json.get(ele2)
+    return n
+
+
+def append(str1, str2, sep=', '):
+    """ append """
+    if str1:
+        if str2 and str2 not in str1:
+            ret_val = "{}{}{}".format(str1, sep, str2)
+        else:
+            ret_val = str1
+    else:
+        ret_val = str2
+
+    return ret_val
+
+
+def append3(str1, str2, str3, sep1=', ', sep2=', '):
+    ret_val = append(str1, str2, sep1)
+    ret_val = append(ret_val, str3, sep2)
+    return ret_val
+
 def street_name(pelias_json, include_number=True, def_val=None):
     ret_val = def_val
 

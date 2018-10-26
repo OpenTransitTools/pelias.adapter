@@ -25,6 +25,7 @@ def get_element_value(dict, *prop_names):
         v = dict.get(n)
         if v and len(v) > 0:
             ret_val = v
+            break
     return ret_val
 
 

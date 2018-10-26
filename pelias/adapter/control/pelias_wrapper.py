@@ -122,7 +122,7 @@ class PeliasWrapper(object):
                     city = pelias_json_queries.city_neighborhood_or_county(p)
                     rename = pelias_json_queries.append(name, city)
 
-                # step 5: append
+                # step 5: apply the rename to this record's properties dict
                 if rename:
                     p[ele] = rename
 

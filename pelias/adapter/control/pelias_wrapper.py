@@ -1,11 +1,16 @@
 from ott.utils.svr.pyramid import response_utils
+from ott.utils import html_utils
 from . import pelias_json_queries
 
 class PeliasWrapper(object):
 
     @classmethod
-    def wrapp(cls, main_url, bkup_url, query_string, def_size=5):
+    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5):
         """ will call either autocomplete or search """
+
+        # step 1: break out the size and text parameters
+        text = html_utils
+
         ret_val = response_utils.proxy_json(main_url, query_string)
         if ret_val is None or ret_val['features'] is None or len(ret_val['features']) < 1:
             ret_val = response_utils.proxy_json(bkup_url, query_string)

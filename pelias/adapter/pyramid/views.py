@@ -146,9 +146,9 @@ def pelias_services(request):
         service = "autocomplete"
 
     if service == "autocomplete":
-        ret_val = PeliasWrapper.wrapp(pelias_autocomplete_url, pelias_search_url, request.query_string)
+        ret_val = PeliasWrapper.wrapp(pelias_autocomplete_url, pelias_search_url, pelias_reverse_url, request.query_string)
     elif service == "search":
-        ret_val = PeliasWrapper.wrapp(pelias_search_url, pelias_autocomplete_url, request.query_string)
+        ret_val = PeliasWrapper.wrapp(pelias_search_url, pelias_autocomplete_url, pelias_reverse_url, request.query_string)
     elif service == "reverse":
         ret_val = response_utils.proxy_json(pelias_reverse_url, request.query_string)
     else:

@@ -7,16 +7,16 @@ class PeliasWrapper(object):
     @classmethod
     def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5):
         """ will call either autocomplete or search """
+        # import pdb; pdb.set_trace()
 
         # step 1: break out the size and text parameters
-        text = html_utils
+        text = html_utils.get_param_value_from_qs(query_string, 'text');
+        size = html_utils.get_numeric_value_from_qs(query_string, 'size', def_size);
 
         ret_val = response_utils.proxy_json(main_url, query_string)
         if ret_val is None or ret_val['features'] is None or len(ret_val['features']) < 1:
             ret_val = response_utils.proxy_json(bkup_url, query_string)
 
-        # import pdb; pdb.set_trace()
-        size = def_size # TODO parse query_string for 'size'
         cls.fixup_response(ret_val, size)
         return ret_val
 

@@ -9,8 +9,7 @@ log = logging.getLogger(__file__)
 
 
 class PeliasWrapper(object):
-
-     #admin_props = ''
+    admin_layers = ["region", "county"]
 
     @classmethod
     def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False):
@@ -36,10 +35,11 @@ class PeliasWrapper(object):
 
         # step 4: check whether the query result has something usable...
         if not in_recursion:
+            # import pdb; pdb.set_trace()
 
             # step 4a: if this is an admin record, let's see whether
             if cls.is_admin_record(ret_val):
-                qs = cls.strip_admin(query_string)
+                qs = cls.strip_admin(query_string, text)
                 r = cls.wrapp(main_url, bkup_url, reverse_geo_url, qs, def_size, in_recursion=True)
                 if cls.has_features(r):
                     ret_val = r
@@ -51,32 +51,40 @@ class PeliasWrapper(object):
 
     @classmethod
     def has_features(cls, rec):
-        """
-        check to see whether the call to pelias has any features
-        NOTE: wrap with try except, since we might get funky 500 response objects from Pelias
-        """
-        ret_val = False
-        try:
-            if rec is not None and 'features' in rec and len(rec['features']) > 0:
-                ret_val = True
-        except Exception as e:
-            log.debug(e)
-            ret_val = False
-        return ret_val
+        return pelias_json_queries.has_features(rec)
 
     @classmethod
-    def is_admin_record(cls, rec, admin_layers=["region", "county"]):
+    def get_property_value(cls, rec, *names):
+        return pelias_json_queries.get_element_value(rec, *names)
+
+    @classmethod
+    def is_admin_record(cls, rec):
         """ see if this record is full of admin records """
         ret_val = False
         if cls.has_features(rec):
-            # ret_val = True
-            pass
+            return False
+
+            if l:
+                for a in cls.admin_layers:
+                    if l == a:
+                        ret_val = True
+                        break
         return ret_val
 
     @classmethod
-    def strip_admin(cls, query_string):
-        """ will loop thru results, cleaning up / renaming / relabeling the specified element """
-        ret_val = query_string.replace('Washington', 'BLAH BLAH TODO: BLAH BLHA ZZZ')
+    def strip_admin(cls, query_string, text_param):
+        """ """
+        #ret_val = query_string.replace('Washington', 'BLAH BLAH TODO: BLAH BLHA ZZZ')
+        ret_val = query_string
+
+        # get the 'layer' property value
+        f = rec['features'][0]
+        l = f['properties'].get('layer')
+        if l:
+            pass
+        n = 'Washington'
+        if n in text_param:
+            ret_val = query_string.replace(n, '')
         return ret_val
 
     @classmethod
@@ -97,20 +105,20 @@ class PeliasWrapper(object):
 
                 # step 2: for venues, rename the venue with the neighborhood & city
                 if p.get('layer') in ('venue', 'major_employer'):
-                    name = pelias_json_queries.get_name(p)
+                    name = cls.get_property_value(p, 'name', 'label')
                     street = pelias_json_queries.street_name(p, include_number=False)
                     city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                     rename = pelias_json_queries.append3(name, street, city)
 
                 # step 3: Post Office ... add zipcode to label
                 elif p.get('layer') == 'post_office':
-                    name = pelias_json_queries.get_name(p)
-                    zipcode = pelias_json_queries.get_name(p, ele='postalcode', ele2='street')
+                    name = cls.get_property_value(p, 'name', 'label')
+                    zipcode = cls.get_property_value(p, 'postalcode')
                     rename = pelias_json_queries.append3(name, 'Post Office', zipcode, sep1=' ')
 
                 # step 4: default rename is to add city or region, etc...
                 else:
-                    name = pelias_json_queries.get_name(p)
+                    name = cls.get_property_value(p, 'name', 'label')
                     city = pelias_json_queries.city_neighborhood_or_county(p)
                     rename = pelias_json_queries.append(name, city)
 

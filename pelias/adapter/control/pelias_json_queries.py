@@ -3,11 +3,29 @@ query the response json from Pelias for various elements
 """
 
 
-def get_name(pelias_json, ele='name', ele2='label'):
-    n = pelias_json.get(ele)
-    if n is None:
-        n = pelias_json.get(ele2)
-    return n
+def has_features(rec):
+    """
+    check to see whether the call to pelias has any features
+    NOTE: wrap with try except, since we might get funky 500 response objects from Pelias
+    """
+    ret_val = False
+    try:
+        if rec is not None and 'features' in rec and len(rec['features']) > 0:
+            ret_val = True
+    except Exception as e:
+        log.debug(e)
+        ret_val = False
+    return ret_val
+
+
+def get_element_value(dict, *prop_names):
+    """ return value of first named element from a dictionary """
+    ret_val = None
+    for n in prop_names:
+        v = dict.get(n)
+        if v and len(v) > 0:
+            ret_val = v
+    return ret_val
 
 
 def append(str1, str2, sep=', '):
@@ -27,6 +45,7 @@ def append3(str1, str2, str3, sep1=', ', sep2=', '):
     ret_val = append(str1, str2, sep1)
     ret_val = append(ret_val, str3, sep2)
     return ret_val
+
 
 def street_name(pelias_json, include_number=True, def_val=None):
     ret_val = def_val
@@ -58,21 +77,11 @@ def neighborhood_and_city(pelias_json, sep=', ', def_val=None):
     return ret_val
 
 
-def city_neighborhood_or_county(pelias_json, def_val=None):
+def city_neighborhood_or_county(properties, def_val=None):
     ret_val = def_val
-
-    city = pelias_json.get('locality')
-    if city:
-        ret_val = city
-    else:
-        neighbourhood = pelias_json.get('neighborhood')
-        if neighbourhood:
-            ret_val = neighbourhood
-        else:
-            county = pelias_json.get('county')
-            if county:
-                ret_val = county
-
+    r = get_element_value(properties, 'locality', 'neighborhood', 'county')
+    if r:
+        ret_val = r
     return ret_val
 
 

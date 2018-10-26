@@ -9,7 +9,6 @@ log = logging.getLogger(__file__)
 
 
 class PeliasWrapper(object):
-    admin_layers = ["region", "county"]
 
     @classmethod
     def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False):
@@ -34,12 +33,14 @@ class PeliasWrapper(object):
                 ret_val = response_utils.proxy_json(bkup_url, query_string)
 
         # step 4: check whether the query result has something usable...
-        if not in_recursion:
+        if not in_recursion and 1 == 11111:
             # import pdb; pdb.set_trace()
+
+            # TODO...see pelias_json_queries ... this is kinda working, but...
 
             # step 4a: if this is an admin record, let's see whether
             if cls.is_admin_record(ret_val):
-                qs = cls.strip_admin(query_string, text)
+                qs = cls.fix_admin(query_string, text)
                 r = cls.wrapp(main_url, bkup_url, reverse_geo_url, qs, def_size, in_recursion=True)
                 if cls.has_features(r):
                     ret_val = r
@@ -56,36 +57,6 @@ class PeliasWrapper(object):
     @classmethod
     def get_property_value(cls, rec, *names):
         return pelias_json_queries.get_element_value(rec, *names)
-
-    @classmethod
-    def is_admin_record(cls, rec):
-        """ see if this record is full of admin records """
-        ret_val = False
-        if cls.has_features(rec):
-            return False
-
-            if l:
-                for a in cls.admin_layers:
-                    if l == a:
-                        ret_val = True
-                        break
-        return ret_val
-
-    @classmethod
-    def strip_admin(cls, query_string, text_param):
-        """ """
-        #ret_val = query_string.replace('Washington', 'BLAH BLAH TODO: BLAH BLHA ZZZ')
-        ret_val = query_string
-
-        # get the 'layer' property value
-        f = rec['features'][0]
-        l = f['properties'].get('layer')
-        if l:
-            pass
-        n = 'Washington'
-        if n in text_param:
-            ret_val = query_string.replace(n, '')
-        return ret_val
 
     @classmethod
     def fixup_response(cls, pelias_json, size, ele='label'):

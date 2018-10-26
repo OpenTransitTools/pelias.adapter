@@ -48,26 +48,26 @@ def append3(str1, str2, str3, sep1=', ', sep2=', '):
     return ret_val
 
 
-def street_name(pelias_json, include_number=True, def_val=None):
+def street_name(properties, include_number=True, def_val=None):
     ret_val = def_val
 
-    street = pelias_json.get('street')
+    street = properties.get('street')
     if street:
         ret_val = street
 
         if include_number:
-            num = pelias_json.get('housenumber')
+            num = properties.get('housenumber')
             if num:
                 ret_val = "{} {}".format(num, street)
 
     return ret_val
 
 
-def neighborhood_and_city(pelias_json, sep=', ', def_val=None):
+def neighborhood_and_city(properties, sep=', ', def_val=None):
     ret_val = def_val
 
-    neighbourhood = pelias_json.get('neighbourhood')
-    city = pelias_json.get('locality')
+    neighbourhood = properties.get('neighbourhood')
+    city = properties.get('locality')
     if neighbourhood and city and city not in neighbourhood:
         ret_val = "{}{}{}".format(neighbourhood, sep, city)
     elif neighbourhood:
@@ -80,21 +80,59 @@ def neighborhood_and_city(pelias_json, sep=', ', def_val=None):
 
 def city_neighborhood_or_county(properties, def_val=None):
     ret_val = def_val
-    r = get_element_value(properties, 'locality', 'neighborhood', 'county')
-    if r:
-        ret_val = r
+    v = get_element_value(properties, 'locality', 'neighborhood', 'county')
+    if v:
+        ret_val = v
     return ret_val
 
+"""" TODO...
 
-def is_region_record(pelias_json):
+    @classmethod
+    def is_admin_record(cls, rec):
+        #"" see if this record is full of admin records ""
+        ret_val = False
+        if cls.has_features(rec):
+            return False
+
+            if l:
+                for a in cls.admin_layers:
+                    if l == a:
+                        ret_val = True
+                        break
+        return ret_val
+
+    @classmethod
+    def fix_admin(cls, query_string, text_param):
+        ""
+        This will try to fix the admin part of the query...
+        Problems being fixed:
+          a) there's no comma, ala Starbucks Lake Oswego
+          b) the city (and other data) is messing things up
+        ""
+        #ret_val = query_string.replace('Washington', 'BLAH BLAH TODO: BLAH BLHA ZZZ')
+        ret_val = query_string
+
+        # get the 'layer' property value
+        f = rec['features'][0]
+        l = f['properties'].get('layer')
+        if l:
+            pass
+        n = 'Washington'
+        if n in text_param:
+            ret_val = query_string.replace(n, '')
+        return ret_val
+"""
+
+
+def is_region_record(properties):
     ret_val = False
-    layer = pelias_json.get('layer')
+    layer = properties.get('layer')
     if layer in ('locality', 'neighbourhood', 'region', 'county'):
         ret_val = True
     return ret_val
 
 
-def break_query_string_at_region(pelias_json, query_string, min_len=3):
+def break_query_string_at_region(properties, query_string, min_len=3):
     """
     Pelias Query string of 'text=834 SE Lambert St, WA' could return
     elements with 'WA', 'Washington', "Whatcom County", etc...
@@ -102,7 +140,7 @@ def break_query_string_at_region(pelias_json, query_string, min_len=3):
     ret_val = query_string
     if query_string and len(query_string) > min_len:
         for n in ['name', 'locality', 'region_a', 'label', 'county_a', 'county']:
-            val = pelias_json.get(n)
+            val = properties.get(n)
             if val in query_string:
                 s = query_string.split()
                 if s and len(s) > 1:

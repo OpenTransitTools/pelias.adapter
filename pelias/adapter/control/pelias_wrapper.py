@@ -10,7 +10,7 @@ class PeliasWrapper(object):
         """ will call either autocomplete or search """
         ret_val = None
 
-        import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
 
         # step 1: break out the size and text parameters
         size = html_utils.get_numeric_value_from_qs(query_string, 'size', def_size)

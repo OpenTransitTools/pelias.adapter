@@ -1,7 +1,11 @@
 from ott.utils.svr.pyramid import response_utils
 from ott.utils import html_utils
 from ott.utils import geo_utils
+
 from . import pelias_json_queries
+
+import logging
+log = logging.getLogger(__file__)
 
 
 class PeliasWrapper(object):
@@ -12,8 +16,6 @@ class PeliasWrapper(object):
     def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False):
         """ will call either autocomplete or search """
         ret_val = None
-
-        # import pdb; pdb.set_trace()
 
         # step 1: break out the size and text parameters
         size = html_utils.get_numeric_value_from_qs(query_string, 'size', def_size)
@@ -49,23 +51,32 @@ class PeliasWrapper(object):
 
     @classmethod
     def has_features(cls, rec):
-         """ check to see whether the call to pelias has any features """
-         ret_val = False
-         if rec is not None and 'features' in rec and len(rec['features']) > 0:
-             ret_val = True
-         return ret_val
+        """
+        check to see whether the call to pelias has any features
+        NOTE: wrap with try except, since we might get funky 500 response objects from Pelias
+        """
+        ret_val = False
+        try:
+            if rec is not None and 'features' in rec and len(rec['features']) > 0:
+                ret_val = True
+        except Exception as e:
+            log.debug(e)
+            ret_val = False
+        return ret_val
 
     @classmethod
-    def is_admin_record(cls, ret_val):
-        """ will loop thru results, cleaning up / renaming / relabeling the specified element """
+    def is_admin_record(cls, rec, admin_layers=["region", "county"]):
+        """ see if this record is full of admin records """
         ret_val = False
-        ret_val = True
+        if cls.has_features(rec):
+            # ret_val = True
+            pass
         return ret_val
 
     @classmethod
     def strip_admin(cls, query_string):
         """ will loop thru results, cleaning up / renaming / relabeling the specified element """
-        ret_val = query_string.replace('Washington', '')
+        ret_val = query_string.replace('Washington', 'BLAH BLAH TODO: BLAH BLHA ZZZ')
         return ret_val
 
     @classmethod
@@ -73,7 +84,7 @@ class PeliasWrapper(object):
         """ will loop thru results, cleaning up / renaming / relabeling the specified element """
 
         # step 1: loop thru the records in the Pelias response
-        if pelias_json.get('features'):
+        if cls.has_features(pelias_json):
             for i, f in enumerate(pelias_json['features']):
                 if i >= size:
                     break

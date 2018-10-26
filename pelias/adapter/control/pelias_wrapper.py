@@ -3,10 +3,13 @@ from ott.utils import html_utils
 from ott.utils import geo_utils
 from . import pelias_json_queries
 
+
 class PeliasWrapper(object):
 
+     #admin_props = ''
+
     @classmethod
-    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5):
+    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False):
         """ will call either autocomplete or search """
         ret_val = None
 
@@ -26,12 +29,43 @@ class PeliasWrapper(object):
         # step 3: call geocoder (if we didn't already reverse geocode, or if that result was null)
         if ret_val is None:
             ret_val = response_utils.proxy_json(main_url, query_string)
-            if ret_val is None or ret_val['features'] is None or len(ret_val['features']) < 1:
+            if not cls.has_features(ret_val):
                 ret_val = response_utils.proxy_json(bkup_url, query_string)
 
-        # step 4: clean up the label attribute
+        # step 4: check whether the query result has something usable...
+        if not in_recursion:
+
+            # step 4a: if this is an admin record, let's see whether
+            if cls.is_admin_record(ret_val):
+                qs = cls.strip_admin(query_string)
+                r = cls.wrapp(main_url, bkup_url, reverse_geo_url, qs, def_size, in_recursion=True)
+                if cls.has_features(r):
+                    ret_val = r
+
+        # step 5: clean up the label attribute
         cls.fixup_response(ret_val, size)
 
+        return ret_val
+
+    @classmethod
+    def has_features(cls, rec):
+         """ check to see whether the call to pelias has any features """
+         ret_val = False
+         if rec is not None and 'features' in rec and len(rec['features']) > 0:
+             ret_val = True
+         return ret_val
+
+    @classmethod
+    def is_admin_record(cls, ret_val):
+        """ will loop thru results, cleaning up / renaming / relabeling the specified element """
+        ret_val = False
+        ret_val = True
+        return ret_val
+
+    @classmethod
+    def strip_admin(cls, query_string):
+        """ will loop thru results, cleaning up / renaming / relabeling the specified element """
+        ret_val = query_string.replace('Washington', '')
         return ret_val
 
     @classmethod
@@ -69,11 +103,12 @@ class PeliasWrapper(object):
                     city = pelias_json_queries.city_neighborhood_or_county(p)
                     rename = pelias_json_queries.append(name, city)
 
-                # step 4: append
+                # step 5: append
                 if rename:
                     p[ele] = rename
 
 
+    #### TODO -- replace the routines below with 'fixup_response' above ???
 
     @classmethod
     def rename(cls, pelias_json, def_val=None):

@@ -21,6 +21,7 @@ class PeliasWrapper(object):
 
         # step 2 call reverse geocoder if we think text is a coord
         if geo_utils.is_coord(text):
+            # import pdb; pdb.set_trace()
             x, y = geo_utils.ll_from_str(text)
             ll = geo_utils.xy_to_url_param_str(x, y, x_name="point.lon", y_name="point.lat", check_lat_lon=True)
             qs = "{}&{}".format(query_string, ll)

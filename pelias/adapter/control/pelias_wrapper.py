@@ -76,7 +76,7 @@ class PeliasWrapper(object):
                 rename = None
 
                 # step 2: for venues, rename the venue with the neighborhood & city
-                if p.get('layer') in ('venue', 'major_employer'):
+                if p.get('layer') in ('venue', 'major_employer', 'fare', 'fare_outlet'):
                     name = cls.get_property_value(p, 'name', 'label')
                     street = pelias_json_queries.street_name(p, include_number=False)
                     city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')

@@ -19,5 +19,5 @@ class TestStringsCrash(BaseUnit):
         for c in csv:
             # import pdb; pdb.set_trace()
             url = self.url_tmpl + c.get("NAME")
-            res = self.call_test(url, find_attribute="features")
+            res = self.call_test_json(url, find_attribute="features")
             self.assertTrue(res)

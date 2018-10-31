@@ -33,7 +33,7 @@ def append(str1, str2, sep=', '):
     """ append """
     if str1:
         if str2 and str2 not in str1:
-            ret_val = "{}{}{}".format(str1, sep, str2)
+            ret_val = u"{}{}{}".format(str1, sep, str2)
         else:
             ret_val = str1
     else:
@@ -58,7 +58,7 @@ def street_name(properties, include_number=True, def_val=None):
         if include_number:
             num = properties.get('housenumber')
             if num:
-                ret_val = "{} {}".format(num, street)
+                ret_val = u"{} {}".format(num, street)
 
     return ret_val
 
@@ -69,7 +69,7 @@ def neighborhood_and_city(properties, sep=', ', def_val=None):
     neighbourhood = properties.get('neighbourhood')
     city = properties.get('locality')
     if neighbourhood and city and city not in neighbourhood:
-        ret_val = "{}{}{}".format(neighbourhood, sep, city)
+        ret_val = u"{}{}{}".format(neighbourhood, sep, city)
     elif neighbourhood:
         ret_val = neighbourhood
     elif city:

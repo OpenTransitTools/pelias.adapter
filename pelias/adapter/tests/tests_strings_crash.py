@@ -17,6 +17,7 @@ class TestStringsCrash(BaseUnit):
     def test_wrapp_alias(self):
         csv = self.csv('./data/alias.csv', "NAME")
         for c in csv:
-            n = c.get("NAME")
-            url = self.url_tmpl + n
-            self.call_test(url, has_attribute="features")
+            # import pdb; pdb.set_trace()
+            url = self.url_tmpl + c.get("NAME")
+            res = self.call_test(url, find_attribute="features")
+            self.assertTrue(res)

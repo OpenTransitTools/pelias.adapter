@@ -2,6 +2,9 @@
 query the response json from Pelias for various elements
 """
 
+import logging
+log = logging.getLogger(__file__)
+
 
 def has_features(rec):
     """

@@ -19,7 +19,7 @@ def main(global_config, **settings):
         from pyramid.paster import setup_logging
         setup_logging(settings['logging_config_file'])
 
-    import views
+    from . import views
     config.include(views.do_view_config)
     config.scan('pelias.adapter.pyramid')
 

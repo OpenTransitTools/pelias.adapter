@@ -44,5 +44,5 @@ class SolrStopRecord(SolrRecord):
             id_parts = properties.get('id').split('::')
             self.stop_id = id_parts[0]
             self.agency_id = id_parts[1]
-        except Exception, e:
+        except Exception as e:
             log.warn(e)

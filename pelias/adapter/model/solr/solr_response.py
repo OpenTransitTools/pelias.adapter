@@ -53,7 +53,7 @@ class Response(MinimalDao):
                     # step 4: if we get a good record, add it to the response
                     if solr_rec:
                         self.docs.append(solr_rec)
-        except Exception, e:
+        except Exception as e:
             log.warn(e)
 
 

@@ -63,7 +63,7 @@ class SolrRecord(MinimalDao):
             self.x = x
             self.y = y
 
-        except Exception, e:
+        except Exception as e:
             log.warn(e)
 
     @classmethod
@@ -74,6 +74,6 @@ class SolrRecord(MinimalDao):
             rec = cls()  # inheritance polymorphism constructor call
             rec.parse_pelias(json)
             ret_val = rec
-        except Exception, e:
+        except Exception as e:
             log.warn(e)
         return ret_val

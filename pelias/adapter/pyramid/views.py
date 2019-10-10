@@ -13,7 +13,6 @@ from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 from pelias.adapter.control.pelias_wrapper import PeliasWrapper
 
-from ott.boundary.control.boundaries import Boundaries
 
 import logging
 log = logging.getLogger(__file__)
@@ -23,33 +22,25 @@ def do_view_config(cfg):
     # import pdb; pdb.set_trace()
     config_globals(cfg)
 
-    # cfg.add_route('pelias', '/pelias/{service}')
-    # TODO: handler of the pelias service ^^^^ will either proxy things like 'reverse', or else wrap 'autocomplete' and 'search'
-    # also /pelias/search will determine order of calls ... first search, and if that doesn't work, autocomplete, and vis-versa, etc...
-
     cfg.add_route('pelias', '/pelias')
     cfg.add_route('pelias_proxy', '/proxy')
     cfg.add_route('pelias_services', '/pelias/{service}')
 
     cfg.add_route('solr', '/solr')
     cfg.add_route('solr_select', '/solr/select')
-    cfg.add_route('solr_boundary', '/solr/boundary')
-    cfg.add_route('solr_boundary_select', '/solr/boundary/select')
     cfg.add_route('solr_stops', '/solr/stops')
     cfg.add_route('solr_stops_select', '/solr/stops')
+    cfg.add_route('solr_boundary', '/solr/boundry')
+    cfg.add_route('solr_boundary_select', '/solr/boundary/select')
 
 
-ADA_BOUNDARY = None
-DISTRICT_BOUNDARY = None
 pelias_autocomplete_url = None
 pelias_search_url = None
 pelias_reverse_url = None
 
+
 def config_globals(cfg):
     """ TODO: globals ???  something better? """
-    global ADA_BOUNDARY
-    global DISTRICT_BOUNDARY
-
     global pelias_autocomplete_url
     global pelias_search_url
     global pelias_reverse_url
@@ -57,16 +48,6 @@ def config_globals(cfg):
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
     pelias_reverse_url = cfg.registry.settings.get('pelias_reverse_url')
-
-    #  TODO: we have to refactor this ... add a factory / controller to model objects?
-    # import pdb; pdb.set_trace()
-    db_url = cfg.registry.settings.get('db_url')
-    schema = cfg.registry.settings.get('schema')
-    b = Boundaries(db_url, schema)
-    boundaries = b.get_boundaries()
-    if boundaries:
-        ADA_BOUNDARY = boundaries.get('ada')
-        DISTRICT_BOUNDARY = boundaries.get('district')
 
 
 def call_pelias(request):
@@ -79,16 +60,16 @@ def call_pelias(request):
     return ret_val
 
 
-def call_boundary(response):
-    if response and response.docs:
-        for d in response.docs:
-            d.ada_boundary = False
-            if ADA_BOUNDARY:
-                d.ada_boundary = ADA_BOUNDARY.is_within_xy(d.lon, d.lat)
-
-            d.trimet_boundary = False
-            if DISTRICT_BOUNDARY:
-                d.trimet_boundary = DISTRICT_BOUNDARY.is_within_xy(d.lon, d.lat)
+def call_boundary(response, boundary="all"):
+    """
+    will call a boundary service to check if results are in/out of a given boundary(s)
+    will update the response object with in/out status...
+    """
+    # TODO stepz below
+    # step 1: look thru response objects
+    # step 2: get lat,lon and call service
+    # step 3: update record w/result
+    pass
 
 
 @view_config(route_name='solr_boundary', renderer='json', http_cache=globals.CACHE_LONG)
@@ -98,6 +79,8 @@ def solr_boundary(request):
     This query has a good variety of hits for both in and out of ADA and DISTRICT
     http://localhost:45454/solr/boundary?q=8
     """
+
+
     ret_val = None
     try:
         ret_val = call_pelias(request)
@@ -139,6 +122,11 @@ def solr_json(request):
 
 @view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)
 def pelias_services(request):
+    """
+
+    :param request:
+    :return:
+    """
     #import pdb; pdb.set_trace()
     try:
         service = request.matchdict['service']

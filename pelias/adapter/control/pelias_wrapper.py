@@ -34,8 +34,8 @@ class PeliasWrapper(object):
                 ret_val = response_utils.proxy_json(bkup_url, query_string)
 
         # step 4: check whether the query result has something usable...
-        if not in_recursion and 1 == 11111:
-            # import pdb; pdb.set_trace()
+        if not in_recursion:
+            import pdb; pdb.set_trace()
 
             # TODO...see pelias_json_queries ... this is kinda working, but...
 
@@ -49,6 +49,11 @@ class PeliasWrapper(object):
         # step 5: clean up the label attribute
         cls.fixup_response(ret_val, size)
 
+        return ret_val
+
+    @classmethod
+    def is_admin_record(cls, response):
+        ret_val = False
         return ret_val
 
     @classmethod

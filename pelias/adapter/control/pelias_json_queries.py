@@ -127,13 +127,15 @@ def city_neighborhood_or_county(properties, def_val=None):
 """
 
 
-def is_region_record(property):
+def is_region_record(rec):
     ret_val = False
 
     # step 1: find value from either string or (dict) object
-    layer_value = property
-    if 'layer' in property:
-        layer_value = property.get('layer')
+    layer_value = rec
+    if 'properties' in rec:
+        rec = rec.get('properties')
+    if 'layer' in rec:
+        layer_value = rec.get('layer')
 
     # step 2: see if the value matchess a region record
     if layer_value in ('locality', 'neighbourhood', 'region', 'county'):
@@ -156,6 +158,16 @@ def find_feature_property(pelias_response, property_name, feature_index=0, def_v
     try:
         f = find_feature(pelias_response, feature_index)
         ret_val = f.get('properties').get(property_name)
+    except:
+        pass
+    return ret_val
+
+
+def find_parsed_text(pelias_response, def_val=None):
+    """ return record of normalized input elements """
+    ret_val = def_val
+    try:
+        ret_val = pelias_response.get('geocoding').get('query').get('parsed_text')
     except:
         pass
     return ret_val

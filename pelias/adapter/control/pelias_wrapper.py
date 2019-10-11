@@ -35,12 +35,15 @@ class PeliasWrapper(object):
 
         # step 4: check whether the query result has something usable...
         if not in_recursion:
-            import pdb; pdb.set_trace()
-
-            # TODO...see pelias_json_queries ... this is kinda working, but...
-
-            # step 4a: if this is an admin record, let's see whether
+            # step 4a: if this is an admin record, let's see whether we can resub just street address
             if cls.is_admin_record(ret_val):
+                """
+                This code addresses the WRONG CITY bug, etc...
+                https://github.com/OpenTransitTools/trimet-mod-pelias/issues/23 
+                
+                Here's an address that brings up an admin record from Pelias due to the wrong city:
+                .../pelias/autocomplete?text=11911%20SW%20TONQUIN%20RD,%20SHERWOOD,%20OR%2097140
+                """
                 qs = cls.fix_admin(query_string, text)
                 r = cls.wrapp(main_url, bkup_url, reverse_geo_url, qs, def_size, in_recursion=True)
                 if cls.has_features(r):
@@ -53,7 +56,9 @@ class PeliasWrapper(object):
 
     @classmethod
     def is_admin_record(cls, response):
+        import pdb; pdb.set_trace()
         ret_val = False
+        n = pelias_json_queries.find_feature_property(response, "layer")
         return ret_val
 
     @classmethod

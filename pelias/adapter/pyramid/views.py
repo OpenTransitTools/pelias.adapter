@@ -79,8 +79,6 @@ def solr_boundary(request):
     This query has a good variety of hits for both in and out of ADA and DISTRICT
     http://localhost:45454/solr/boundary?q=8
     """
-
-
     ret_val = None
     try:
         ret_val = call_pelias(request)
@@ -118,6 +116,26 @@ def solr_json(request):
         log.warn(e)
         ret_val = response_utils.sys_error_response()
     return ret_val
+
+
+def get_routes(stops):
+    """
+    when either of the web params "layers=.*,stops,.*" and/or "fq=type%3Astop" (SOLR) and/or "stop_routes=true" is 
+    detected, then find out which routes serve the stops
+
+    SOLR:
+     https://trimet.org/solr/select?_=1573607961601&q=3&rows=6&wt=json&fq=type%3Astop
+     https://trimet.org/solr/select?_=1573608158660&q=12377&rows=6&wt=json&fq=type%3Astop
+     "routes": "193:Portland Streetcar:NS Line:;195:Portland Streetcar:B Loop:",
+     "route_stops": "Portland Streetcar,\"NS Line\",1,\"To South Waterfront\",false,false,true;Portland Streetcar,\"B Loop\",0,\"Counter-clockwise\",false,false,true",
+
+    PELIAS:
+     will return { {stop_id:3, routes:[route_a, route_b]}, {stop_id:6,
+
+    TODO: query route stops service, and then return route information for a stop...
+    """
+    return "HI"
+
 
 
 @view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)

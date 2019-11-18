@@ -13,7 +13,6 @@ from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 from pelias.adapter.control.pelias_wrapper import PeliasWrapper
 
-from ott.boundary.control.boundaries import Boundaries
 
 import logging
 log = logging.getLogger(__file__)
@@ -23,33 +22,25 @@ def do_view_config(cfg):
     # import pdb; pdb.set_trace()
     config_globals(cfg)
 
-    # cfg.add_route('pelias', '/pelias/{service}')
-    # TODO: handler of the pelias service ^^^^ will either proxy things like 'reverse', or else wrap 'autocomplete' and 'search'
-    # also /pelias/search will determine order of calls ... first search, and if that doesn't work, autocomplete, and vis-versa, etc...
-
     cfg.add_route('pelias', '/pelias')
     cfg.add_route('pelias_proxy', '/proxy')
     cfg.add_route('pelias_services', '/pelias/{service}')
 
     cfg.add_route('solr', '/solr')
     cfg.add_route('solr_select', '/solr/select')
-    cfg.add_route('solr_boundary', '/solr/boundary')
-    cfg.add_route('solr_boundary_select', '/solr/boundary/select')
     cfg.add_route('solr_stops', '/solr/stops')
     cfg.add_route('solr_stops_select', '/solr/stops')
+    cfg.add_route('solr_boundary', '/solr/boundry')
+    cfg.add_route('solr_boundary_select', '/solr/boundary/select')
 
 
-ADA_BOUNDARY = None
-DISTRICT_BOUNDARY = None
 pelias_autocomplete_url = None
 pelias_search_url = None
 pelias_reverse_url = None
 
+
 def config_globals(cfg):
     """ TODO: globals ???  something better? """
-    global ADA_BOUNDARY
-    global DISTRICT_BOUNDARY
-
     global pelias_autocomplete_url
     global pelias_search_url
     global pelias_reverse_url
@@ -57,16 +48,6 @@ def config_globals(cfg):
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
     pelias_reverse_url = cfg.registry.settings.get('pelias_reverse_url')
-
-    #  TODO: we have to refactor this ... add a factory / controller to model objects?
-    # import pdb; pdb.set_trace()
-    db_url = cfg.registry.settings.get('db_url')
-    schema = cfg.registry.settings.get('schema')
-    b = Boundaries(db_url, schema)
-    boundaries = b.get_boundaries()
-    if boundaries:
-        ADA_BOUNDARY = boundaries.get('ada')
-        DISTRICT_BOUNDARY = boundaries.get('district')
 
 
 def call_pelias(request):
@@ -79,16 +60,16 @@ def call_pelias(request):
     return ret_val
 
 
-def call_boundary(response):
-    if response and response.docs:
-        for d in response.docs:
-            d.ada_boundary = False
-            if ADA_BOUNDARY:
-                d.ada_boundary = ADA_BOUNDARY.is_within_xy(d.lon, d.lat)
-
-            d.trimet_boundary = False
-            if DISTRICT_BOUNDARY:
-                d.trimet_boundary = DISTRICT_BOUNDARY.is_within_xy(d.lon, d.lat)
+def call_boundary(response, boundary="all"):
+    """
+    will call a boundary service to check if results are in/out of a given boundary(s)
+    will update the response object with in/out status...
+    """
+    # TODO stepz below
+    # step 1: look thru response objects
+    # step 2: get lat,lon and call service
+    # step 3: update record w/result
+    pass
 
 
 @view_config(route_name='solr_boundary', renderer='json', http_cache=globals.CACHE_LONG)
@@ -137,8 +118,33 @@ def solr_json(request):
     return ret_val
 
 
+def get_routes(stops):
+    """
+    when either of the web params "layers=.*,stops,.*" and/or "fq=type%3Astop" (SOLR) and/or "stop_routes=true" is 
+    detected, then find out which routes serve the stops
+
+    SOLR:
+     https://trimet.org/solr/select?_=1573607961601&q=3&rows=6&wt=json&fq=type%3Astop
+     https://trimet.org/solr/select?_=1573608158660&q=12377&rows=6&wt=json&fq=type%3Astop
+     "routes": "193:Portland Streetcar:NS Line:;195:Portland Streetcar:B Loop:",
+     "route_stops": "Portland Streetcar,\"NS Line\",1,\"To South Waterfront\",false,false,true;Portland Streetcar,\"B Loop\",0,\"Counter-clockwise\",false,false,true",
+
+    PELIAS:
+     will return { {stop_id:3, routes:[route_a, route_b]}, {stop_id:6,
+
+    TODO: query route stops service, and then return route information for a stop...
+    """
+    return "HI"
+
+
+
 @view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)
 def pelias_services(request):
+    """
+
+    :param request:
+    :return:
+    """
     #import pdb; pdb.set_trace()
     try:
         service = request.matchdict['service']

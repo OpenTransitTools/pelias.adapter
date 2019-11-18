@@ -34,14 +34,23 @@ class PeliasWrapper(object):
                 ret_val = response_utils.proxy_json(bkup_url, query_string)
 
         # step 4: check whether the query result has something usable...
-        if not in_recursion and 1 == 11111:
-            # import pdb; pdb.set_trace()
+        if not in_recursion:
+            # step 4a: if this is an admin record, let's see whether we can resub just street address
+            if cls.is_wrong_city_bug(ret_val):
+                """
+                This code addresses the WRONG CITY bug, etc...
+                https://github.com/OpenTransitTools/trimet-mod-pelias/issues/23 
+                
+                Here's an address that brings up an admin record from Pelias due to the wrong city:
+                .../pelias/autocomplete?text=11911%20SW%20TONQUIN%20RD,%20SHERWOOD,%20OR%2097140
+                """
 
-            # TODO...see pelias_json_queries ... this is kinda working, but...
+                # step 4b: create a new query string of just the "text=NUMBER STREET"
+                normalized_data = pelias_json_queries.find_parsed_text(ret_val)
+                qs = "text={number} {street}".format(**normalized_data)
+                qs = qs.replace(' ', '%20')
 
-            # step 4a: if this is an admin record, let's see whether
-            if cls.is_admin_record(ret_val):
-                qs = cls.fix_admin(query_string, text)
+                # step 4c: re-call Pelias with our simple
                 r = cls.wrapp(main_url, bkup_url, reverse_geo_url, qs, def_size, in_recursion=True)
                 if cls.has_features(r):
                     ret_val = r
@@ -49,6 +58,22 @@ class PeliasWrapper(object):
         # step 5: clean up the label attribute
         cls.fixup_response(ret_val, size)
 
+        return ret_val
+
+    @classmethod
+    def is_wrong_city_bug(cls, response):
+        """
+        check if the original Pelias response is just a 'region' record (like City)
+        if we have a single region record, then see if we have normalized address elements
+        (e.g., 'number' and 'street' in the parsed_text record)
+        """
+        #import pdb; pdb.set_trace()
+        ret_val = False
+        features = response.get('features')
+        if features and len(features) == 1 and pelias_json_queries.is_region_record(features[0]):
+            normalized_data = pelias_json_queries.find_parsed_text(response)
+            if 'number' in normalized_data and 'street' in normalized_data:
+                ret_val = True
         return ret_val
 
     @classmethod

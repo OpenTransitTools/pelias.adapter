@@ -7,7 +7,6 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 
 requires = [
     'ott.utils',
-    'ott.boundary',
 
     'pyramid',
     'pyramid_tm',
@@ -37,7 +36,6 @@ setup(
 
     dependency_links = [
         'git+https://github.com/OpenTransitTools/utils.git#egg=ott.utils-0.1.0',
-        'git+https://github.com/OpenTransitTools/boundary.git#egg=ott.boundary-0.1.0',
     ],
 
     license="Mozilla-derived (http://opentransittools.com)",

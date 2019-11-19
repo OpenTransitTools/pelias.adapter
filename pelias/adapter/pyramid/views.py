@@ -159,6 +159,7 @@ def pelias_services(request):
         ret_val = response_utils.proxy_json(pelias_reverse_url, request.query_string)
     else:
         ret_val = response_utils.sys_err_response()
+    json_utils.append_hostname_to_json(ret_val)
     return ret_val
 
 

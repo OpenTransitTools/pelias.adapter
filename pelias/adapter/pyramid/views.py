@@ -165,6 +165,14 @@ def pelias_services(request):
     # step 3: append the hostname to the response
     json_utils.append_hostname_to_json(ret_val)
 
+    """
+    TODO: WIP find and add stops / in/out / etc... 
+    x = object_utils.find_elements('properties', ret_val)
+    for z in x:
+        z["XXXX"] = 'MMMMMMMMMMM'
+    import pdb; pdb.set_trace()
+    """
+
     return ret_val
 
 

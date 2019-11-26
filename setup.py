@@ -8,17 +8,21 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'ott.utils',
 
+    'venusian==1.1.0',
     'pyramid',
     'pyramid_tm',
     'pyramid_exclog',
     'waitress',
 ]
 
+# TODO: if py < 3.x add  'venusian==1.1.0',
+
 extras_require = dict(
     dev=[
       '' if os.name == 'nt' or os.name == 'posix' else 'linesman'
     ],
 )
+
 
 setup(
     name='pelias.adapter',

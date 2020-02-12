@@ -1,11 +1,13 @@
-from pelias.adapter.model.solr.solr_response import SolrResponse
+from future.standard_library import install_aliases
+install_aliases()
+
+from urllib.parse import urlencode
+
 from ott.utils import json_utils
 from ott.utils import html_utils
-
+from pelias.adapter.model.solr.solr_response import SolrResponse
 from .pelias_wrapper import PeliasWrapper
 
-
-import urllib
 import logging
 log = logging.getLogger(__file__)
 
@@ -49,7 +51,7 @@ class PeliasToSolr(PeliasWrapper):
         convert SOLR dict params to string of params for calling Pelias via url
         """
         pelias_params = cls.solr_to_pelias_param(solr_params)
-        ret_val = urllib.urlencode(pelias_params)  # converts dict to a string after encoding each value in dict
+        ret_val = urlencode(pelias_params)  # converts dict to a string after encoding each value in dict
         return ret_val
 
     @classmethod

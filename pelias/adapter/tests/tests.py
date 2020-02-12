@@ -6,7 +6,7 @@ from ott.utils import file_utils
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 from pelias.adapter.model.solr.solr_stop_record import SolrStopRecord
 
-PORT="45454"
+PORT="45554"
 
 
 class TestPeliasToSolr(unittest.TestCase):

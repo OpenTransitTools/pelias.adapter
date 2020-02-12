@@ -13,14 +13,15 @@ from pelias.adapter.model.solr.solr_response import SolrResponse
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 from pelias.adapter.control.pelias_wrapper import PeliasWrapper
 
-
 import logging
 log = logging.getLogger(__file__)
+
 
 # urls
 pelias_autocomplete_url = None
 pelias_search_url = None
 pelias_reverse_url = None
+
 
 def config_globals(cfg):
     """ TODO: globals ???  something better? """
@@ -59,7 +60,6 @@ def call_pelias(request):
 def solr_json(request):
     ret_val = None
     try:
-        import pdb; pdb.set_trace()
         json = call_pelias(request)
         ret_val = response_utils.dao_response(json)
     except Exception as e:
@@ -74,7 +74,7 @@ def pelias_services(request):
     calls pellias wrapper based on specified service (autocomplete == default, search or reverse)
     :return: json data from Pelias ... after fixing up the response in ways defined by 'PeliasWrapper'
     """
-    import pdb; pdb.set_trace()
+    #import pdb; pdb.set_trace()
 
     # step 1: find the service based on pelias/{service}? ... default to autocomplete
     try:

@@ -11,7 +11,7 @@ log = logging.getLogger(__file__)
 class PeliasWrapper(object):
 
     @classmethod
-    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False):
+    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False, is_calltaker=False):
         """ will call either autocomplete or search """
         ret_val = None
 
@@ -56,7 +56,7 @@ class PeliasWrapper(object):
                     ret_val = r
 
         # step 5: clean up the label attribute
-        cls.fixup_response(ret_val, size)
+        cls.fixup_response(ret_val, size, is_calltaker=is_calltaker)
 
         return ret_val
 
@@ -85,7 +85,7 @@ class PeliasWrapper(object):
         return pelias_json_queries.get_element_value(rec, *names)
 
     @classmethod
-    def fixup_response(cls, pelias_json, size, ele='label'):
+    def fixup_response(cls, pelias_json, size, ele='label', is_calltaker=False):
         """ will loop thru results, cleaning up / renaming / relabeling the specified element """
 
         # step 1: loop thru the records in the Pelias response
@@ -107,19 +107,31 @@ class PeliasWrapper(object):
                     city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                     rename = pelias_json_queries.append3(name, street, city)
 
-                # step 3: Post Office ... add zipcode to label
+                # step 3: rename routes
+                elif p.get('layer') == 'routes':
+                    name = cls.get_property_value(p, 'name', 'label')
+                    route_lbl = "Transit Route"
+                    if "TRIMET" in p.get('id'):
+                        route_lbl = "TriMet Route" 
+                    rename = "{} ({})".format(name, route_lbl)
+                    
+                # step 4: Post Office ... add zipcode to label
                 elif p.get('layer') == 'post_office':
                     name = cls.get_property_value(p, 'name', 'label')
                     zipcode = cls.get_property_value(p, 'postalcode')
                     rename = pelias_json_queries.append3(name, 'Post Office', zipcode, sep1=' ')
 
-                # step 4: default rename is to add city or region, etc...
+                # step 5: default rename is to add city or region, etc...
                 else:
                     name = cls.get_property_value(p, 'name', 'label')
                     city = pelias_json_queries.city_neighborhood_or_county(p)
                     rename = pelias_json_queries.append(name, city)
 
-                # step 5: apply the rename to this record's properties dict
+                # step 6: append '*' to any calltaker response when dealing with  interpolated recs
+                if is_calltaker and p.get('match_type') == "interpolated":
+                    rename = "*" + rename 
+
+                # step 7: apply the rename to this record's properties dict
                 if rename:
                     p[ele] = rename
 
@@ -147,7 +159,11 @@ class PeliasWrapper(object):
 
     @classmethod
     def fix_venues_in_pelias_response(cls, pelias_json):
-        """ will loop thru results, and append street names to venues """
+        """ 
+        will loop thru results, and append street names to venues 
+        NOTE: 2-24-2020: this routine is only used in the SOLR wrapper 
+              the Pelias wrapper has a different rendering (see above)
+        """
         if pelias_json.get('features'):
             for f in pelias_json['features']:
                 p = f.get('properties')

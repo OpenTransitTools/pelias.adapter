@@ -35,7 +35,7 @@ class PeliasWrapper(object):
                 # TODO: make this generic and configurable ... not specific to TriMet
                 if len(text) <= 7 and text.lower() in "trimet":
                     frm = "text={}".format(text)
-                    to = "text=TriMet%20Admin"
+                    to = "text=TriMet%20HOP%20Admin%20Office"
                     query_string = query_string.replace(frm, to)
 
             ret_val = response_utils.proxy_json(main_url, query_string)

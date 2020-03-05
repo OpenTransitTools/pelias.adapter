@@ -20,7 +20,6 @@ class PeliasWrapper(object):
         text = html_utils.get_param_value_from_qs(query_string, 'text')
 
         # step 2 call reverse geocoder if we think text is a coord
-        # import pdb; pdb.set_trace()
         if geo_utils.is_coord(text):
             x, y = geo_utils.ll_from_str(text)
             ll = geo_utils.xy_to_url_param_str(x, y, x_name="point.lon", y_name="point.lat", check_lat_lon=True)
@@ -29,6 +28,16 @@ class PeliasWrapper(object):
 
         # step 3: call geocoder (if we didn't already reverse geocode, or if that result was null)
         if ret_val is None:
+            # step 3a: special query string handling
+            if text and len(text) > 1:
+                # import pdb; pdb.set_trace()
+                # convert searches for trimet (and sub-strings) to "TriMet Admin"
+                # TODO: make this generic and configurable ... not specific to TriMet
+                if len(text) <= 7 and text.lower() in "trimet":
+                    frm = "text={}".format(text)
+                    to = "text=TriMet%20Admin"
+                    query_string = query_string.replace(frm, to)
+
             ret_val = response_utils.proxy_json(main_url, query_string)
             if not cls.has_features(ret_val):
                 ret_val = response_utils.proxy_json(bkup_url, query_string)

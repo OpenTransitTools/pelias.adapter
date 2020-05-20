@@ -11,7 +11,8 @@ log = logging.getLogger(__file__)
 class PeliasWrapper(object):
 
     @classmethod
-    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False, is_calltaker=False):
+    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False,
+              is_calltaker=False):
         """ will call either autocomplete or search """
         ret_val = None
 
@@ -70,6 +71,13 @@ class PeliasWrapper(object):
         return ret_val
 
     @classmethod
+    def reverse(cls, reverse_geo_url, query_string):
+        pelias_json_queries.spec_check(query_string)
+        ret_val = response_utils.proxy_json(reverse_geo_url, query_string)
+        cls.fixup_response(ret_val)
+        return ret_val
+
+    @classmethod
     def is_wrong_city_bug(cls, response):
         """
         check if the original Pelias response is just a 'region' record (like City)
@@ -94,7 +102,7 @@ class PeliasWrapper(object):
         return pelias_json_queries.get_element_value(rec, *names)
 
     @classmethod
-    def fixup_response(cls, pelias_json, size, ele='label', is_calltaker=False):
+    def fixup_response(cls, pelias_json, size=10, ele='label', is_calltaker=False):
         """ will loop thru results, cleaning up / renaming / relabeling the specified element """
 
         # step 1: loop thru the records in the Pelias response

@@ -1,14 +1,9 @@
 from pyramid.response import Response
 from pyramid.view import view_config
 
-from ott.utils.dao import base
 from ott.utils import json_utils
-from ott.utils import object_utils
-
 from ott.utils.svr.pyramid import response_utils
 from ott.utils.svr.pyramid import globals
-
-from pelias.adapter.model.solr.solr_response import SolrResponse
 
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 from pelias.adapter.control.pelias_wrapper import PeliasWrapper
@@ -74,7 +69,7 @@ def pelias_services(request):
     calls pellias wrapper based on specified service (autocomplete == default, search or reverse)
     :return: json data from Pelias ... after fixing up the response in ways defined by 'PeliasWrapper'
     """
-    #import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
 
     # step 1: find the service based on pelias/{service}? ... default to autocomplete
     try:
@@ -88,9 +83,9 @@ def pelias_services(request):
     elif service == "search":
         ret_val = PeliasWrapper.wrapp(pelias_search_url, pelias_autocomplete_url, pelias_reverse_url, request.query_string)
     elif service == "reverse":
-        ret_val = response_utils.proxy_json(pelias_reverse_url, request.query_string)
+        ret_val = PeliasWrapper.reverse(pelias_reverse_url, request.query_string)
     else:
-        ret_val = response_utils.sys_err_response()
+        ret_val = response_utils.sys_error_response()
 
     # step 3: append the hostname to the response
     json_utils.append_hostname_to_json(ret_val)

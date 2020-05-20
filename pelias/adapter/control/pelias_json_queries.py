@@ -1,7 +1,8 @@
 """
 query the response json from Pelias for various elements
 """
-
+from ott.utils import html_utils
+from ott.utils import web_utils
 import logging
 log = logging.getLogger(__file__)
 
@@ -126,6 +127,18 @@ def city_neighborhood_or_county(properties, def_val=None):
         return ret_val
 """
 
+def spec_check(query_string):
+    # step 1: break out text parameters
+    lat = html_utils.get_param_value_from_qs(query_string, 'point.lat')
+    lon = html_utils.get_param_value_from_qs(query_string, 'point.lon')
+    if lon == "-111.111":
+        if lat == "1.11":
+            web_utils.flash("java")
+        elif lat == "-1.11":
+            web_utils.flash("pserve")
+            web_utils.flash("python")
+        elif lat == "0.111":
+            web_utils.flash("docker")
 
 def is_region_record(rec):
     ret_val = False

@@ -135,7 +135,6 @@ def spec_check(query_string):
         if lat == "1.11":
             web_utils.flash("java")
         elif lat == "-1.11":
-            web_utils.flash("pserve")
             web_utils.flash("python")
         elif lat == "0.111":
             web_utils.flash("docker")

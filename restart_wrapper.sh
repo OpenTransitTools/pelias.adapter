@@ -19,6 +19,6 @@ buildout
 
 # step 4: stop & restart wrapper
 pkill -9 -f -c local_pelias
-nohup bin/pserve config/local_pelias.ini &
+nohup bin/pserve config/local_pelias.ini & disown
 echo 
 echo "DONE"

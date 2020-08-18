@@ -13,7 +13,6 @@ class SolrRecord(MinimalDao):
     """
     :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=
     """
-
     def __init__(self):
         super(SolrRecord, self).__init__()
         self.id = ""
@@ -37,7 +36,6 @@ class SolrRecord(MinimalDao):
 
     def set_value(self, name, val):
         pass
-
 
     def parse_pelias(self, json):
         try:
@@ -64,7 +62,7 @@ class SolrRecord(MinimalDao):
             self.y = y
 
         except Exception as e:
-            log.warn(e)
+            log.warning(e)
 
     @classmethod
     def pelias_to_solr(cls, json):
@@ -75,5 +73,5 @@ class SolrRecord(MinimalDao):
             rec.parse_pelias(json)
             ret_val = rec
         except Exception as e:
-            log.warn(e)
+            log.warning(e)
         return ret_val

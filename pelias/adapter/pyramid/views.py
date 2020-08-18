@@ -1,4 +1,3 @@
-from pyramid.response import Response
 from pyramid.view import view_config
 
 from ott.utils import json_utils
@@ -58,7 +57,7 @@ def solr_json(request):
         json = call_pelias(request)
         ret_val = response_utils.dao_response(json)
     except Exception as e:
-        log.warn(e)
+        log.warning(e)
         ret_val = response_utils.sys_error_response()
     return ret_val
 

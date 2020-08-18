@@ -54,7 +54,7 @@ class Response(MinimalDao):
                     if solr_rec:
                         self.docs.append(solr_rec)
         except Exception as e:
-            log.warn(e)
+            log.warning(e)
 
 
 class SolrResponse(BaseDao):

@@ -8,7 +8,6 @@ class SolrStopRecord(SolrRecord):
     """
     :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type:stop
     """
-
     def __init__(self):
         super(SolrStopRecord, self).__init__()
 
@@ -20,7 +19,7 @@ class SolrStopRecord(SolrRecord):
         self.providers = None # "Transportation Reaching People (TRP);Friends of Estacada Community Center"
         self.routes = None # "30:30:Estacada:"
         self.route_stops = None # "30,\"Estacada\",0,\"To Estacada\",false,false,false",
-        self.begin_date = "2018-01-31"
+        self.begin_date = "2020-01-31"
         self.end_date = "9999-12-31"
 
     def query_stop_information(self):
@@ -45,4 +44,4 @@ class SolrStopRecord(SolrRecord):
             self.stop_id = id_parts[0]
             self.agency_id = id_parts[1]
         except Exception as e:
-            log.warn(e)
+            log.warning(e)

@@ -14,6 +14,7 @@ class PeliasWrapper(object):
     def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False,
               is_calltaker=False):
         """ will call either autocomplete or search """
+        # import pdb; pdb.set_trace()
         ret_val = None
 
         # step 1: break out the size and text parameters
@@ -41,7 +42,9 @@ class PeliasWrapper(object):
 
             ret_val = response_utils.proxy_json(main_url, query_string)
             if not cls.has_features(ret_val):
-                ret_val = response_utils.proxy_json(bkup_url, query_string)
+                alt_resp = response_utils.proxy_json(bkup_url, query_string)
+                if alt_resp and 'features' in alt_resp:
+                    ret_val = alt_resp
 
         # step 4: check whether the query result has something usable...
         if not in_recursion:
@@ -84,7 +87,7 @@ class PeliasWrapper(object):
         if we have a single region record, then see if we have normalized address elements
         (e.g., 'number' and 'street' in the parsed_text record)
         """
-        #import pdb; pdb.set_trace()
+        # import pdb; pdb.set_trace()
         ret_val = False
         features = response.get('features')
         if features and len(features) == 1 and pelias_json_queries.is_region_record(features[0]):

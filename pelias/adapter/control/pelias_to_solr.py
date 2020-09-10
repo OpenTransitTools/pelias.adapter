@@ -55,9 +55,9 @@ class PeliasToSolr(PeliasWrapper):
         return ret_val
 
     @classmethod
-    def parse_json(cls, json):
+    def parse_json(cls, json, solr_params=None):
         ret_val = SolrResponse()
-        ret_val.parse_pelias(json)
+        ret_val.parse_pelias(json, solr_params)
         return ret_val
 
     @classmethod
@@ -65,8 +65,7 @@ class PeliasToSolr(PeliasWrapper):
         param_str = cls.solr_to_pelias_param_str(solr_params)
         json = json_utils.stream_json(url, param_str)
         cls.fix_venues_in_pelias_response(pelias_json=json)
-        ret_val = cls.parse_json(json)
-        ret_val.fix_headers(solr_params)
+        ret_val = cls.parse_json(json, solr_params)
         return ret_val
 
     @classmethod

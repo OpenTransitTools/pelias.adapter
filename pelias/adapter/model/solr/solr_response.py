@@ -8,6 +8,19 @@ import logging
 log = logging.getLogger(__file__)
 
 
+class RouteStopRecords(object):
+    cache = {}
+
+    @classmethod
+    def find_record(cls, id):
+        ret_val = cls.cache.get(id)
+        if ret_val is None:
+            # step 1: query route stop service
+            # step 2: cache record
+            pass
+        return ret_val
+
+
 class ResponseHeader(MinimalDao):
     def __init__(self):
         self.status = 0
@@ -25,10 +38,7 @@ class Response(MinimalDao):
         self.maxScore = 0
         self.docs = []
 
-    def parse_pelias(self, json):
-        self.parse_features(json)
-
-    def parse_features(self, json):
+    def parse_pelias(self, json, add_route_stops=False):
         try:
             # step 1: get pelias records
             features = json.get('features', [])
@@ -42,6 +52,9 @@ class Response(MinimalDao):
                 if layer:
                     if layer == 'stops':
                         solr_rec = SolrStopRecord.pelias_to_solr(f)
+                        if add_route_stops and solr_rec and solr_rec.id:
+                            rs = RouteStopRecords.find_record(solr_rec.id)
+                            solr_rec.route_stops = rs
                     else:
                         solr_rec = SolrRecord.pelias_to_solr(f)
 
@@ -62,9 +75,12 @@ class SolrResponse(BaseDao):
         self.responseHeader = ResponseHeader()
         self.response = Response()
 
-    def parse_pelias(self, json):
+    def parse_pelias(self, json, solr_params=None):
         self.responseHeader.parse_pelias(json)
-        self.response.parse_pelias(json)
+        self.fix_headers(solr_params)
+
+        add_route_stops = True  # object_utils.safe_get('')
+        self.response.parse_pelias(json, add_route_stops)
 
     def num_records(self):
         return len(self.response.docs)

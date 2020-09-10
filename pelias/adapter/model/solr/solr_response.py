@@ -12,12 +12,7 @@ class ResponseHeader(MinimalDao):
     def __init__(self):
         self.status = 0
         self.QTime = 2
-        self.params = {
-           'q': "3",
-           'wt': "json",
-           'fq': "type:stop",
-           'rows': "6"
-        }
+        self.params = {}
 
     def parse_pelias(self, json):
         pass
@@ -53,6 +48,7 @@ class Response(MinimalDao):
                     # step 4: if we get a good record, add it to the response
                     if solr_rec:
                         self.docs.append(solr_rec)
+                        self.numFound += 1
         except Exception as e:
             log.warning(e)
 
@@ -72,3 +68,7 @@ class SolrResponse(BaseDao):
 
     def num_records(self):
         return len(self.response.docs)
+
+    def fix_headers(self, solr_params):
+        if solr_params:
+            self.responseHeader.params.update(solr_params)

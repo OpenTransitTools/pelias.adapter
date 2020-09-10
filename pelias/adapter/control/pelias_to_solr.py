@@ -66,6 +66,7 @@ class PeliasToSolr(PeliasWrapper):
         json = json_utils.stream_json(url, param_str)
         cls.fix_venues_in_pelias_response(pelias_json=json)
         ret_val = cls.parse_json(json)
+        ret_val.fix_headers(solr_params)
         return ret_val
 
     @classmethod

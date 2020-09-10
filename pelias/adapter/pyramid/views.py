@@ -1,6 +1,7 @@
 from pyramid.view import view_config
 
 from ott.utils import json_utils
+from ott.utils import object_utils
 from ott.utils.svr.pyramid import response_utils
 from ott.utils.svr.pyramid import globals
 
@@ -29,7 +30,6 @@ def config_globals(cfg):
 
 
 def do_view_config(cfg):
-    # import pdb; pdb.set_trace()
     config_globals(cfg)
 
     cfg.add_route('pelias', '/pelias')
@@ -39,22 +39,38 @@ def do_view_config(cfg):
     cfg.add_route('solr_select', '/solr/select')
 
 
-def call_pelias(request):
-    query = request.params.get('q')
-    if not query:
-        query = request.params.get('text')
-    solr_params = {}
-    solr_params['q'] = query
-    ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
-    return ret_val
-
-
 @view_config(route_name='solr', renderer='json', http_cache=globals.CACHE_LONG)
 @view_config(route_name='solr_select', renderer='json', http_cache=globals.CACHE_LONG)
 def solr_json(request):
     ret_val = None
+    # import pdb; pdb.set_trace()
+
+    def solr_api(request, def_rows=10):
+        """ will handle SOLR api params, then call pelias """
+        solr_params = {}
+
+        # step 1: SOLR params
+        query = request.params.get('q')
+        if not query:
+            query = request.params.get('text')
+        solr_params['q'] = query
+
+        rows = request.params.get('rows')
+        solr_params['rows'] = object_utils.safe_int(rows, def_rows)
+
+        fq = request.params.get('fq')
+        if fq:
+            solr_params['fq'] = fq
+
+        wt = request.params.get('wt', 'json')
+        solr_params['wt'] = wt
+
+        # step 2: wrap call to Pelias and get SOLR response
+        ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
+        return ret_val
+
     try:
-        json = call_pelias(request)
+        json = solr_api(request)
         ret_val = response_utils.dao_response(json)
     except Exception as e:
         log.warning(e)

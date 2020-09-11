@@ -8,6 +8,7 @@ CHANGES = open(os.path.join(here, 'CHANGES.txt')).read()
 requires = [
     'ott.utils',
 
+    'requests',
     'venusian==1.1.0',
     'pyramid',
     'pyramid_tm',

@@ -1,3 +1,5 @@
+import requests
+
 from ott.utils.dao.base import MinimalDao
 from ott.utils.dao.base import BaseDao
 
@@ -16,8 +18,12 @@ class RouteStopRecords(object):
         ret_val = cls.cache.get(id)
         if ret_val is None:
             # step 1: query route stop service
+            rs = requests.get("http://maps8.trimet.org/ti/index/stops/{}/routes/str".format(id))
+
             # step 2: cache record
-            pass
+            if rs and len(rs.text):
+                #cls.cache.update()
+                ret_val = rs.text
         return ret_val
 
 
@@ -39,21 +45,20 @@ class Response(MinimalDao):
         self.docs = []
 
     def parse_pelias(self, json, add_route_stops=False):
+        # import pdb; pdb.set_trace()
         try:
             # step 1: get pelias records
             features = json.get('features', [])
 
             # step 2: loop thru pelias records
             for f in features:
-                # import pdb; pdb.set_trace()
-
                 # step 3: handle parsing of different layer types
                 layer = f.get('properties', {}).get('layer')
                 if layer:
                     if layer == 'stops':
                         solr_rec = SolrStopRecord.pelias_to_solr(f)
-                        if add_route_stops and solr_rec and solr_rec.id:
-                            rs = RouteStopRecords.find_record(solr_rec.id)
+                        if add_route_stops and hasattr(solr_rec, 'stop_id'):
+                            rs = RouteStopRecords.find_record(solr_rec.stop_id)
                             solr_rec.route_stops = rs
                     else:
                         solr_rec = SolrRecord.pelias_to_solr(f)

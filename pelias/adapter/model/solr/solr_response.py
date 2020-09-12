@@ -44,7 +44,7 @@ class Response(MinimalDao):
         self.maxScore = 0
         self.docs = []
 
-    def parse_pelias(self, json, add_route_stops=False):
+    def parse_pelias(self, json, add_routes=False):
         # import pdb; pdb.set_trace()
         try:
             # step 1: get pelias records
@@ -57,9 +57,9 @@ class Response(MinimalDao):
                 if layer:
                     if layer == 'stops':
                         solr_rec = SolrStopRecord.pelias_to_solr(f)
-                        if add_route_stops and hasattr(solr_rec, 'stop_id'):
+                        if add_routes and hasattr(solr_rec, 'stop_id'):
                             rs = RouteStopRecords.find_record(solr_rec.stop_id)
-                            solr_rec.route_stops = rs
+                            solr_rec.routes = rs
                     else:
                         solr_rec = SolrRecord.pelias_to_solr(f)
 
@@ -73,7 +73,9 @@ class Response(MinimalDao):
 
 class SolrResponse(BaseDao):
     """
-    :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=
+    :see:
+      https://trimet.org/solr/select?q=4&rows=6&wt=json&fq=type%3Astop
+      routes": "37:37:Lake Grove:;78:78:Denney/Kerr Pkwy:snow",
     """
     def __init__(self):
         super(SolrResponse, self).__init__()
@@ -84,8 +86,8 @@ class SolrResponse(BaseDao):
         self.responseHeader.parse_pelias(json)
         self.fix_headers(solr_params)
 
-        add_route_stops = True  # object_utils.safe_get('')
-        self.response.parse_pelias(json, add_route_stops)
+        add_routes = True  # object_utils.safe_get('')
+        self.response.parse_pelias(json, add_routes)
 
     def num_records(self):
         return len(self.response.docs)

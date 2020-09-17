@@ -49,8 +49,6 @@ def solr_json(request):
     :param request:
     :return:
     """
-    # import pdb; pdb.set_trace()
-    ret_val = None
 
     def solr_api(request, def_rows=10):
         """ will handle SOLR api params, then call pelias """
@@ -75,6 +73,9 @@ def solr_json(request):
         # step 2: wrap call to Pelias and get SOLR response
         ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
         return ret_val
+
+    # import pdb; pdb.set_trace()
+    ret_val = None
 
     try:
         json = solr_api(request)

@@ -31,19 +31,26 @@ def config_globals(cfg):
 
 def do_view_config(cfg):
     config_globals(cfg)
-
     cfg.add_route('pelias', '/pelias')
     cfg.add_route('pelias_proxy', '/proxy')
     cfg.add_route('pelias_services', '/pelias/{service}')
     cfg.add_route('solr', '/solr')
-    cfg.add_route('solr_select', '/solr/select')
+    cfg.add_route('solr_select', '/solr/{select}')
 
 
 @view_config(route_name='solr', renderer='json', http_cache=globals.CACHE_LONG)
-@view_config(route_name='solr_select', renderer='json', http_cache=globals.CACHE_LONG)
 def solr_json(request):
-    ret_val = None
+    """
+    SOLR response wrapper...
+
+    SOLR Queries:
+    https://trimet.org/solr/select?q=12&rows=6&wt=xml&fq=type%3Astop
+
+    :param request:
+    :return:
+    """
     # import pdb; pdb.set_trace()
+    ret_val = None
 
     def solr_api(request, def_rows=10):
         """ will handle SOLR api params, then call pelias """
@@ -76,6 +83,12 @@ def solr_json(request):
         log.warning(e)
         ret_val = response_utils.sys_error_response()
     return ret_val
+
+
+@view_config(route_name='solr_select', renderer='json', http_cache=globals.CACHE_LONG)
+def solr_select(request):
+    """ catches ../solr/select (or ../solr/search, ../solr/autocomplete, ../solr/etc...) paths """
+    return solr_json(request)
 
 
 @view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)
@@ -112,7 +125,6 @@ def pelias_services(request):
         z["XXXX"] = 'MMMMMMMMMMM'
     import pdb; pdb.set_trace()
     """
-
     return ret_val
 
 

@@ -16,17 +16,22 @@ log = logging.getLogger(__file__)
 pelias_autocomplete_url = None
 pelias_search_url = None
 pelias_reverse_url = None
+route_stop_str_url = None
 
 
 def config_globals(cfg):
-    """ TODO: globals ???  something better? """
+    """
+    :see: config/base.ini for configured url strings
+    """
     global pelias_autocomplete_url
     global pelias_search_url
     global pelias_reverse_url
+    global route_stop_str_url
 
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
     pelias_reverse_url = cfg.registry.settings.get('pelias_reverse_url')
+    route_stop_str_url = cfg.registry.settings.get('route_stop_str_url')
 
 
 def do_view_config(cfg):

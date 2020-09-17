@@ -12,13 +12,26 @@ log = logging.getLogger(__file__)
 
 class RouteStopRecords(object):
     cache = {}
+    _url = None
+
+    @classmethod
+    def url(cls):
+        """ get route stops as string """
+        if cls._url is None:
+            from pelias.adapter.pyramid.views import route_stop_str_url
+            if route_stop_str_url and len(route_stop_str_url) > 5:
+                cls._url = route_stop_str_url
+            else:
+                cls._url = "http://maps.trimet.org/ti/index/stops"
+        return cls._url
 
     @classmethod
     def find_record(cls, id):
+        """ see requests_cache: https://requests-cache.readthedocs.io/en/latest/user_guide.html """
         ret_val = cls.cache.get(id)
         if ret_val is None:
             # step 1: query route stop service
-            rs = requests.get("http://maps8.trimet.org/ti/index/stops/{}/routes/str".format(id))
+            rs = requests.get("{}/{}/routes/str".format(cls.url(), id))
 
             # step 2: cache record
             if rs and len(rs.text):

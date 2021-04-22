@@ -3,6 +3,17 @@ from .solr_record import SolrRecord
 import logging
 log = logging.getLogger(__file__)
 
+"""
+
+Route Stops:
+https://maps.trimet.org/ti/index/stops/4/routes/str
+
+Show In/Out of district on this page:
+https://trimet.org/taxinfo/#boundary
+https://maps.trimet.org/solr/select?_dc=1618955956672&start=0&limit=10&fq=(-type%3A26%20AND%20-type%3Aroute)&wt=json&qt=dismax&rows=10&q=44%20se
+
+"""
+
 
 class SolrStopRecord(SolrRecord):
     """
@@ -22,6 +33,8 @@ class SolrStopRecord(SolrRecord):
         self.begin_date = "2020-01-31"
         self.end_date = "9999-12-31"
 
+    '''
+    NOT USED in April 2021 ... broken no query_stop method
     def query_stop_information(self):
         """
         will grab detailed stop data from service, if needed...
@@ -33,6 +46,7 @@ class SolrStopRecord(SolrRecord):
         self.route_stops = stop_json.get('')
         self.begin_date = stop_json.get('')
         self.end_date = stop_json.get('')
+    '''
 
     def parse_pelias(self, json):
         super(SolrStopRecord, self).parse_pelias(json)

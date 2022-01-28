@@ -11,8 +11,7 @@ log = logging.getLogger(__file__)
 class PeliasWrapper(object):
 
     @classmethod
-    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=5, in_recursion=False,
-              is_calltaker=False):
+    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=10, in_recursion=False, is_calltaker=False):
         """ will call either autocomplete or search """
         # import pdb; pdb.set_trace()
         ret_val = None
@@ -127,7 +126,16 @@ class PeliasWrapper(object):
                     city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                     rename = pelias_json_queries.append3(name, street, city)
 
-                # step 3: rename routes
+                # step 3: for TRIMET stops, reduce the size of the string
+                if p.get('layer') in ('stops'):
+                    if "TRIMET" in p.get('id'):
+                        name = cls.get_property_value(p, 'name', 'label')
+                        if name and len(name) > 10:
+                            city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
+                            name = name.replace("TriMet Stop ID ", "")
+                            rename = pelias_json_queries.append(name, city)
+
+                # step 4: rename routes
                 elif p.get('layer') == 'routes':
                     name = cls.get_property_value(p, 'name', 'label')
                     route_lbl = "Transit Route"
@@ -135,13 +143,13 @@ class PeliasWrapper(object):
                         route_lbl = "TriMet Route" 
                     rename = "{} ({})".format(name, route_lbl)
                     
-                # step 4: Post Office ... add zipcode to label
+                # step 5: Post Office ... add zipcode to label
                 elif p.get('layer') == 'post_office':
                     name = cls.get_property_value(p, 'name', 'label')
                     zipcode = cls.get_property_value(p, 'postalcode')
                     rename = pelias_json_queries.append3(name, 'Post Office', zipcode, sep1=' ')
 
-                # step 5: default rename is to add city or region, etc...
+                # step 6: default rename is to add city or region, etc...
                 else:
                     name = cls.get_property_value(p, 'name', 'label')
                     city = pelias_json_queries.city_neighborhood_or_county(p)

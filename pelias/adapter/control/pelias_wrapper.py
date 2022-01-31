@@ -132,7 +132,7 @@ class PeliasWrapper(object):
                         name = cls.get_property_value(p, 'name', 'label')
                         if name and len(name) > 10:
                             city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
-                            name = name.replace("TriMet Stop ID ", "")
+                            name = name.replace("TriMet Stop ", "")
                             rename = pelias_json_queries.append(name, city)
 
                 # step 4: rename routes

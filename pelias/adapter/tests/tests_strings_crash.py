@@ -35,4 +35,3 @@ class TestStringsCrash(BaseUnit):
             url = self.url_tmpl + c.get("stop_code")
             res = self.call_test_json(url, find_attribute="features")
             self.assertTrue(res)
-

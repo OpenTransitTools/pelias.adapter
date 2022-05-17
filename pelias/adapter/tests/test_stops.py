@@ -38,8 +38,8 @@ class TestStops(BaseUnit):
 
     def test_autocomplete(self):
         url_tmpl = "https://ws-st.trimet.org/pelias/v1/autocomplete?text="
-        self.runz(url_tmpl)
+        self.assertTrue(self.runz(url_tmpl))
 
     def test_search(self):
         url_tmpl = "https://ws-st.trimet.org/pelias/v1/search?text="
-        self.runz(url_tmpl)
+        self.assertTrue(self.runz(url_tmpl))

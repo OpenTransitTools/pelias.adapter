@@ -21,11 +21,13 @@ class TestStops(BaseUnit):
             features = res.get('features')
             seen = False
             index = 0
+            feat = None
             for i, f in enumerate(features):
                 fid = f.get('properties').get('id')
                 if fid and fid.startswith(id + '::'):
                     seen = True
                     index = i+1
+                    feat = f.get('properties').get('id')
                     break
 
             if not seen:
@@ -33,13 +35,18 @@ class TestStops(BaseUnit):
                 ret_val = False
             elif index > within:
                 print("WARN: {} seen in record {}".format(id, index))
+            else: 
+                #print("INFO: {} seen in record {}".format(id, index, feat))
+
         
         return ret_val
 
     def test_autocomplete(self):
+        print("\n\nAUTOCOMPLETE:")
         url_tmpl = "https://ws-st.trimet.org/pelias/v1/autocomplete?text="
         self.assertTrue(self.runz(url_tmpl))
 
     def test_search(self):
+        print("\n\nSEARCH:")
         url_tmpl = "https://ws-st.trimet.org/pelias/v1/search?text="
         self.assertTrue(self.runz(url_tmpl))

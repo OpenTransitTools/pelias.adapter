@@ -37,8 +37,7 @@ class TestStops(BaseUnit):
                 print("WARN: {} seen in record {}".format(id, index))
             else: 
                 #print("INFO: {} seen in record {}".format(id, index, feat))
-
-        
+                print "."
         return ret_val
 
     def test_autocomplete(self):

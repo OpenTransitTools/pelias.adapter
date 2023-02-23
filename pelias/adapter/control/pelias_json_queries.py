@@ -22,6 +22,16 @@ def has_features(rec):
     return ret_val
 
 
+def get_addendum_value(dict, prop_name, base_name='gtfs', def_val=''):
+    try:
+        addendum = dict.get('addendum').get(base_name)
+        ret_val = addendum.get(prop_name)
+    except Exception as e:
+        log.debug(e)
+        ret_val = def_val
+    return ret_val
+
+
 def get_element_value(dict, *prop_names):
     """ return value of first named element from a dictionary """
     ret_val = None

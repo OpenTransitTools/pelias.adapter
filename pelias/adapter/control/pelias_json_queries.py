@@ -77,10 +77,22 @@ def street_name(properties, include_number=True, def_val=None):
     return ret_val
 
 
+def neighborhood_fix(neighborhood, def_val=None, ban_list=["Portland International Airport"]):
+    """ will filter certain neighborhoods """
+    ret_val = def_val
+    if neighborhood not in ban_list:
+        ret_val = neighborhood
+    return ret_val
+
+
+def get_neighborhood(properties, def_val=None):
+    return neighborhood_fix(properties.get('neighbourhood'), def_val)
+
+
 def neighborhood_and_city(properties, sep=', ', def_val=None):
     ret_val = def_val
 
-    neighbourhood = properties.get('neighbourhood')
+    neighbourhood = get_neighborhood(properties)
     city = properties.get('locality')
     if neighbourhood and city and city not in neighbourhood:
         ret_val = u"{}{}{}".format(neighbourhood, sep, city)

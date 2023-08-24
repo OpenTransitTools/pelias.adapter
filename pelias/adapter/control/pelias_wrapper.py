@@ -181,7 +181,7 @@ class PeliasWrapper(object):
                 if name:
                     pass
                 else:
-                    neighborhood = pelias_json.get('neighbourhood')
+                    neighborhood = pelias_json_queries.get_neighborhood(pelias_json)
                     if neighborhood:
                         new_name = "{} ({})".format(name, neighborhood)
                 if new_name:
@@ -212,7 +212,7 @@ class PeliasWrapper(object):
                             else:
                                 new_name = "{} ({})".format(name, street)
                         else:
-                            neighborhood = p.get('neighbourhood')
+                            neighborhood = pelias_json_queries.get_neighborhood(p)
                             if neighborhood:
                                 new_name = "{} ({})".format(name, neighborhood)
                         p['name'] = new_name

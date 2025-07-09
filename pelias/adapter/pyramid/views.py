@@ -39,6 +39,7 @@ def do_view_config(cfg):
     cfg.add_route('pelias', '/pelias')
     cfg.add_route('pelias_proxy', '/proxy')
     cfg.add_route('pelias_services', '/pelias/{service}')
+    cfg.add_route('pelias_trimet', '/pelias/trimet/{service}')
     cfg.add_route('solr', '/solr')
     cfg.add_route('solr_select', '/solr/{select}')
 
@@ -98,7 +99,7 @@ def solr_select(request):
 
 
 @view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)
-def pelias_services(request):
+def pelias_services(request, trimet_only=False):
     """
     calls pellias wrapper based on specified service (autocomplete == default, search or reverse)
     :return: json data from Pelias ... after fixing up the response in ways defined by 'PeliasWrapper'
@@ -139,3 +140,9 @@ def pelias_services(request):
 def pelias(request):
     """ call pelias_services() above w/out specifying a service ... so will default to autocomplete """
     return pelias_services(request)
+
+
+
+@view_config(route_name='pelias_trimet', renderer='json', http_cache=globals.CACHE_LONG)
+def pelias_trimet(request):
+    return pelias_services(request, trimet_only=True)

@@ -101,7 +101,12 @@ class PeliasWrapper(object):
 
     @classmethod
     def reverse(cls, reverse_geo_url, query_string):
-        """ TODO: what? why? """
+        """
+        call the reverse geocoder
+        :note: pelias does not (seemingly) talk to the stops or other custom layers (just OSM layer)
+        :url: /reverse?point.lat=45.51423467680257&point.lon=-122.7097523397708
+        """
+        # import pdb; pdb.set_trace()
         pelias_json_queries.spec_check(query_string)
         ret_val = response_utils.proxy_json(reverse_geo_url, query_string)
         cls.fixup_response(ret_val)

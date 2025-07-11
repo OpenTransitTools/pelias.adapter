@@ -10,15 +10,42 @@ log = logging.getLogger(__file__)
 
 class PeliasWrapper(object):
 
+    rtp_agencies = [
+        "clackamas",
+        "ctran",
+        "mult",
+        "rideconnection",
+        "sam",
+        "smart",
+        "wapark"
+    ]
+
     @classmethod
-    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=10, in_recursion=False, is_calltaker=False):
+    def rtp_stop_filter(cls):
+        """
+        cache up list of pelias stop filters
+        pelias/search?text=2&layers=-wapark:stops,-smart:stops,-ctran:stops
+        -ctran:stops,-smart:stops,-sam:stops,-rideconnection:stops,-clackamas:stops,-mult:stops,-wapark:stops
+        """
+        if not cls._rtp_stop_filter:
+            f = ["-{}:stops".format(a) for a in cls.rtp_agencies]
+            cls._rtp_stop_filter = ','.join(f)
+        return cls._rtp_stop_filter
+    _rtp_stop_filter = None
+
+    @classmethod
+    def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=10, in_recursion=False, is_calltaker=False, is_rtp=False):
         """ will call either autocomplete or search """
-        # import pdb; pdb.set_trace()
         ret_val = None
 
         # step 1: break out the size and text parameters
         size = html_utils.get_numeric_value_from_qs(query_string, 'size', def_size)
         text = html_utils.get_param_value_from_qs(query_string, 'text')
+
+        # step 1b: filter agencies if we're in single-agency (TriMet) exclusive mode
+        #import pdb; pdb.set_trace()
+        if not is_rtp:
+            query_string = "{}&layers={}".format(query_string, cls.rtp_stop_filter())
 
         # step 2 call reverse geocoder if we think text is a coord
         if geo_utils.is_coord(text):
@@ -63,7 +90,7 @@ class PeliasWrapper(object):
                 qs = qs.replace(' ', '%20')
 
                 # step 4c: re-call Pelias with our simple
-                r = cls.wrapp(main_url, bkup_url, reverse_geo_url, qs, def_size, in_recursion=True)
+                r = cls.wrapp(main_url, bkup_url, reverse_geo_url, qs, def_size, is_calltaker=is_calltaker, is_rtp=is_rtp, in_recursion=True)
                 if cls.has_features(r):
                     ret_val = r
 
@@ -74,6 +101,7 @@ class PeliasWrapper(object):
 
     @classmethod
     def reverse(cls, reverse_geo_url, query_string):
+        """ TODO: what? why? """
         pelias_json_queries.spec_check(query_string)
         ret_val = response_utils.proxy_json(reverse_geo_url, query_string)
         cls.fixup_response(ret_val)
@@ -104,7 +132,7 @@ class PeliasWrapper(object):
         return pelias_json_queries.get_element_value(rec, *names)
 
     @classmethod
-    def fixup_response(cls, pelias_json, size=10, ele='label', is_calltaker=False):
+    def fixup_response(cls, pelias_json, size=10, ele='label', is_calltaker=False, is_rtp=False):
         """ will loop thru results, cleaning up / renaming / relabeling the specified element """
 
         # step 1: loop thru the records in the Pelias response
@@ -126,9 +154,9 @@ class PeliasWrapper(object):
                     city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                     rename = pelias_json_queries.append3(name, street, city)
 
-                # step 3: for TRIMET stops, reduce the size of the string
-                if p.get('layer') in ('stops'):
-                    if "TRIMET" in p.get('id'):
+                # step 3: for stops, possibly reduce the size of the string
+                if "stops" in p.get('layer'):
+                    if not is_rtp and "TRIMET" in p.get('id'):
                         name = cls.get_property_value(p, 'name', 'label')
                         if name and len(name) > 10:
                             city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')

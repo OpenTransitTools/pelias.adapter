@@ -39,7 +39,7 @@ def do_view_config(cfg):
     cfg.add_route('pelias', '/pelias')
     cfg.add_route('pelias_proxy', '/proxy')
     cfg.add_route('pelias_services', '/pelias/{service}')
-    cfg.add_route('pelias_trimet', '/pelias/trimet/{service}')
+    cfg.add_route('pelias_rtp', '/pelias/rtp/{service}')
     cfg.add_route('solr', '/solr')
     cfg.add_route('solr_select', '/solr/{select}')
 
@@ -99,7 +99,7 @@ def solr_select(request):
 
 
 @view_config(route_name='pelias_services', renderer='json', http_cache=globals.CACHE_LONG)
-def pelias_services(request, trimet_only=False):
+def pelias_services(request, is_rtp=False):
     """
     calls pellias wrapper based on specified service (autocomplete == default, search or reverse)
     :return: json data from Pelias ... after fixing up the response in ways defined by 'PeliasWrapper'
@@ -114,9 +114,9 @@ def pelias_services(request, trimet_only=False):
 
     # step 2: call the wrapper
     if service == "autocomplete":
-        ret_val = PeliasWrapper.wrapp(pelias_autocomplete_url, pelias_search_url, pelias_reverse_url, request.query_string)
+        ret_val = PeliasWrapper.wrapp(pelias_autocomplete_url, pelias_search_url, pelias_reverse_url, request.query_string, is_rtp=is_rtp)
     elif service == "search":
-        ret_val = PeliasWrapper.wrapp(pelias_search_url, pelias_autocomplete_url, pelias_reverse_url, request.query_string)
+        ret_val = PeliasWrapper.wrapp(pelias_search_url, pelias_autocomplete_url, pelias_reverse_url, request.query_string, is_rtp=is_rtp)
     elif service == "reverse":
         ret_val = PeliasWrapper.reverse(pelias_reverse_url, request.query_string)
     else:
@@ -142,7 +142,6 @@ def pelias(request):
     return pelias_services(request)
 
 
-
-@view_config(route_name='pelias_trimet', renderer='json', http_cache=globals.CACHE_LONG)
-def pelias_trimet(request):
-    return pelias_services(request, trimet_only=True)
+@view_config(route_name='pelias_rtp', renderer='json', http_cache=globals.CACHE_LONG)
+def pelias_rtp(request):
+    return pelias_services(request, is_rtp=True)

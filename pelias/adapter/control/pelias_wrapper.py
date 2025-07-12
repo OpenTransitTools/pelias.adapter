@@ -95,7 +95,7 @@ class PeliasWrapper(object):
                     ret_val = r
 
         # step 5: clean up the label attribute
-        cls.fixup_response(ret_val, size, is_calltaker=is_calltaker)
+        cls.fixup_response(ret_val, size, is_calltaker=is_calltaker, is_rtp=is_rtp)
 
         return ret_val
 

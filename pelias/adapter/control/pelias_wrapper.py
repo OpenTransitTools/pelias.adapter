@@ -137,12 +137,74 @@ class PeliasWrapper(object):
         return pelias_json_queries.get_element_value(rec, *names)
 
     @classmethod
+    def dedup_addresses(cls, pelias_json):
+        """
+        TODO needs work and testing
+
+        this mucks with the pelias_json to filter out (dedup) matching named 'features'
+        if filtering is applied, then the pelias_json['features'] array will be altered 
+
+        examples:
+            1114 Cesar Chavez Blvd
+            1505 NW 118th Ct
+        """
+        features = pelias_json.get('features', [])
+
+        # step 0: make sure there are 2+ records (eg something to dedupe)
+        if len(features) < 2:
+            return
+
+        # step 1: sort addresses from other records
+        adds = []
+        new_other = []
+        for f in features:
+            p = f.get('properties')
+            if p is None:
+                continue
+            if p.get('layer') in ('address'):
+                adds.append(f)
+            else:
+                new_other.append(f)
+
+        # step 2: make sure we have at least 2 addresses (eg addresses to dedupe)
+        if len(adds) < 2:
+            return
+
+        # step 3: filter duplicate (adjacent) named address records
+        new_adds = []
+        num_addresses = len(adds)
+        if num_addresses > 0:
+            new_adds.append(adds[0])
+            if num_addresses >= 2:  # make sure we have multiple addresses (eg duplicates to potentially dedup)
+                #import pdb; pdb.set_trace()
+                i=1
+                while i < num_addresses:
+                    n1 = adds[i].get('properties').get('name', "").lower().replace('.', '').replace('boulevard','blvd').replace('court','ct')
+                    n2 = adds[i-1].get('properties').get('name', "").lower().replace('.', '').replace('boulevard','blvd').replace('court','ct')
+                    l1 = len(n1)
+                    l2 = len(n2)
+                    d  = abs(l1 - l2)
+                    #import pdb; pdb.set_trace()
+                    # filter out if address names are similar (e.g., same or majority subset of one another)
+                    if l1 > 5 and l2 > 5 and d <= 6 and (n1 in n2 or n2 in n1):
+                        i += 1
+                        continue
+                    else:
+                        new_adds.append(features[i])
+                        i += 1
+
+        pelias_json['features'] = new_adds + new_other
+        return
+
+    @classmethod
     def fixup_response(cls, pelias_json, size=10, ele='label', is_calltaker=False, is_rtp=False):
         """ will loop thru results, cleaning up / renaming / relabeling the specified element """
 
         # step 1: loop thru the records in the Pelias response
         if cls.has_features(pelias_json):
-            for i, f in enumerate(pelias_json['features']):
+            #cls.dedup_addresses(pelias_json)
+
+            for i, f in enumerate(pelias_json.get('features')):
                 if i >= size:
                     break
 
@@ -230,7 +292,7 @@ class PeliasWrapper(object):
         NOTE: 2-24-2020: this routine is only used in the SOLR wrapper 
               the Pelias wrapper has a different rendering (see above)
         """
-        if pelias_json.get('features'):
+        if pelias_json.get('features', None):
             for f in pelias_json['features']:
                 p = f.get('properties')
                 if p and p.get('layer') == 'venue':

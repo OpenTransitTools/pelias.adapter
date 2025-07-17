@@ -15,7 +15,7 @@ log = logging.getLogger(__file__)
 class PeliasToSolr(PeliasWrapper):
 
     @classmethod
-    def solr_to_pelias_param(cls, solr_params):
+    def solr_to_pelias_param(cls, solr_params, is_rtp=False):
         """
         convert SOLR dict params dict of params for Pelias
 
@@ -39,9 +39,13 @@ class PeliasToSolr(PeliasWrapper):
         if layers:
             layers = layers.replace('%3A', ':')
             if layers == 'type:stop':
-                ret_val['layers'] = 'stops'
+                ret_val['layers'] = 'trimet:stops'
             elif layers == 'type:pr':
                 ret_val['layers'] = 'pr'
+        else:
+            # note: excludes all other
+            if not is_rtp:
+                ret_val['layers'] = cls.rtp_stop_filter()
 
         return ret_val
 

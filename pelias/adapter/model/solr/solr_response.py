@@ -72,11 +72,14 @@ class Response(MinimalDao):
                 # step 3: handle parsing of different layer types
                 layer = f.get('properties', {}).get('layer')
                 if layer:
-                    if layer == 'stops':
+                    if ':stops' in layer:
                         solr_rec = SolrStopRecord.pelias_to_solr(f)
+                        """
                         if add_routes and hasattr(solr_rec, 'stop_id'):
                             rs = RouteStopRecords.find_record(solr_rec.stop_id)
                             solr_rec.routes = rs
+                            pass
+                        """
                     else:
                         solr_rec = SolrRecord.pelias_to_solr(f)
 

@@ -223,17 +223,16 @@ class PeliasWrapper(object):
 
                 # step 3: for stops, possibly reduce the size of the string
                 if "stops" in p.get('layer'):
-                    if not is_rtp and "TRIMET" in p.get('id'):
-                        name = cls.get_property_value(p, 'name', 'label')
-                        if name and len(name) > 10:
-                            city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
-                            street_dir = pelias_json_queries.get_addendum_value(p, 'dir')
-                            if street_dir:
-                                name = name.replace("(TriMet Stop ", "{} (".format(street_dir))
-                            else:
-                                name = name.replace("TriMet Stop ", "")
+                    name = cls.get_property_value(p, 'name', 'label')
 
-                            rename = pelias_json_queries.append(name, city)
+                    # 3a: if we're just a single agency (and TriMet), then strip off junk
+                    if not is_rtp and "TRIMET" in p.get('id'):
+                         name = name.replace("TriMet Stop ", "")
+
+                    # 3b: remove state and country from the label
+                    if name and len(name) > 10:
+                        city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
+                        rename = pelias_json_queries.append(name, city)
 
                 # step 4: rename routes
                 elif p.get('layer') == 'routes':
@@ -284,30 +283,3 @@ class PeliasWrapper(object):
         except:
             pass
         return ret_val
-
-    @classmethod
-    def fix_venues_in_pelias_response(cls, pelias_json):
-        """ 
-        will loop thru results, and append street names to venues 
-        NOTE: 2-24-2020: this routine is only used in the SOLR wrapper 
-              the Pelias wrapper has a different rendering (see above)
-        """
-        if pelias_json.get('features', None):
-            for f in pelias_json['features']:
-                p = f.get('properties')
-                if p and p.get('layer') == 'venue':
-                    name = p.get('name')
-                    if name:
-                        new_name = name
-                        street = p.get('street')
-                        if street:
-                            num = p.get('housenumber')
-                            if num:
-                                new_name = "{} ({} {})".format(name, num, street)
-                            else:
-                                new_name = "{} ({})".format(name, street)
-                        else:
-                            neighborhood = pelias_json_queries.get_neighborhood(p)
-                            if neighborhood:
-                                new_name = "{} ({})".format(name, neighborhood)
-                        p['name'] = new_name

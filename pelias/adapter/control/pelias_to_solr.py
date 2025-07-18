@@ -65,10 +65,39 @@ class PeliasToSolr(PeliasWrapper):
         return ret_val
 
     @classmethod
+    def fix_venues_in_pelias_response(cls, pelias_json):
+        """
+        will loop thru results, and append street names to venues
+        NOTE: 2-24-2020: this routine is only used in the SOLR wrapper
+              the Pelias wrapper has a different rendering (see above)
+        """
+        if pelias_json.get('features', []):
+            for f in pelias_json.get('features', []):
+                p = f.get('properties')
+                if p and p.get('layer') == 'venue':
+                    name = p.get('name')
+                    if name:
+                        new_name = name
+                        street = p.get('street')
+                        if street:
+                            num = p.get('housenumber')
+                            if num:
+                                new_name = "{} ({} {})".format(name, num, street)
+                            else:
+                                new_name = "{} ({})".format(name, street)
+                        else:
+                            neighborhood = pelias_json_queries.get_neighborhood(p)
+                            if neighborhood:
+                                new_name = "{} ({})".format(name, neighborhood)
+                        p['name'] = new_name
+
+
+    @classmethod
     def call_pelias_parse_results(cls, solr_params, url):
         param_str = cls.solr_to_pelias_param_str(solr_params)
         json = json_utils.stream_json(url, param_str)
-        cls.fix_venues_in_pelias_response(pelias_json=json)
+        #cls.fix_venues_in_pelias_response(pelias_json=json)
+        cls.fixup_response(json, is_calltaker=True, is_rtp=False)
         ret_val = cls.parse_json(json, solr_params)
         return ret_val
 

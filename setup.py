@@ -56,5 +56,8 @@ setup(
     entry_points="""\
         [paste.app_factory]
         main = pelias.adapter.pyramid.app:main
+
+        [console_scripts]
+        pr = pelias.adapter.tests.pr:main
     """,
 )

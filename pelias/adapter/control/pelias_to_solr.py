@@ -36,6 +36,8 @@ class PeliasToSolr(PeliasWrapper):
             ret_val['format'] = 'xml'
 
         layers = html_utils.get_first_param(solr_params, 'fq')
+        # TODO rtp
+        """
         if layers:
             layers = layers.replace('%3A', ':')
             if layers == 'type:stop':
@@ -46,7 +48,7 @@ class PeliasToSolr(PeliasWrapper):
             # note: excludes all other
             if not is_rtp:
                 ret_val['layers'] = cls.rtp_stop_filter()
-
+        """
         return ret_val
 
     @classmethod

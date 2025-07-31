@@ -10,6 +10,7 @@ log = logging.getLogger(__file__)
 
 class PeliasWrapper(object):
 
+    # TODO: configure this list
     rtp_agencies = [
         "clackamas",
         "ctran",
@@ -45,7 +46,8 @@ class PeliasWrapper(object):
         # step 1b: filter agencies if we're in single-agency (TriMet) exclusive mode
         #import pdb; pdb.set_trace()
         if not is_rtp:
-            query_string = "{}&layers={}".format(query_string, cls.rtp_stop_filter())
+            #query_string = "{}&layers={}".format(query_string, cls.rtp_stop_filter())
+            pass # TODO - RTP - not yet
 
         # step 2 call reverse geocoder if we think text is a coord
         if geo_utils.is_coord(text):

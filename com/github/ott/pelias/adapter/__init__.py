@@ -1,0 +1,1 @@
+# FastAPI Oracle Template Application

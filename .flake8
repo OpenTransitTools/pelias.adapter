@@ -1,0 +1,5 @@
+[flake8]
+extend-ignore = E501 E712
+exclude = .git,__pycache__,.venv,old,build,dist,trimet.asset.egg-info
+max-complexity = 30
+max-line-length = 88

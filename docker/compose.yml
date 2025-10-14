@@ -1,0 +1,17 @@
+services:
+  pelias_adapter:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    container_name: pelias_adapter
+    image: pelias_adapter:latest
+    ports:
+      - "8000:8000"
+    environment:
+      PYTHONUNBUFFERED: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
+      PORT: "8000"
+      ENVIRONMENT: "dev"
+    working_dir: /pelias_adapter
+    entrypoint: /pelias_adapter/entrypoint.sh
+    restart: unless-stopped

@@ -1,0 +1,52 @@
+# --- Python junk ---
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+.env/
+
+logs
+
+# --- Build and dependency artifacts ---
+dist/
+build/
+*.egg-info/
+.eggs/
+.cache/
+*.log
+
+.flake8
+
+# --- Development / tooling directories ---
+.idea/
+.vscode/
+tests/
+docs/
+.git/
+.gitignore
+
+# --- OS & editor clutter ---
+.DS_Store
+Thumbs.db
+
+# --- Node / frontend (if present) ---
+node_modules/
+npm-debug.log
+yarn.lock
+
+# --- Docker ---
+Dockerfile*
+compose*.yml
+docker-compose*.yml
+
+# --- Local data ---
+*.db
+*.sqlite3
+
+/docker
+!/docker/entrypoint.sh

@@ -1,13 +1,10 @@
 import logging
 from urllib.parse import urlencode
-from zoneinfo import ZoneInfo
 
 from future.standard_library import install_aliases
 from ott.utils import html_utils
 from ott.utils import json_utils
-from datetime import datetime
 
-from com.github.ott.pelias.adapter.core.config import TIME_ZONE
 from com.github.ott.pelias.adapter.models.solr.solr_response import SolrResponse
 from com.github.ott.pelias.adapter.service import pelias_json_queries
 from com.github.ott.pelias.adapter.service.pelias_wrapper import PeliasWrapper
@@ -71,11 +68,8 @@ class PeliasToSolr(PeliasWrapper):
 
     @classmethod
     def parse_json(cls, json, solr_params=None):
-        ret_val:SolrResponse = SolrResponse()
+        ret_val: SolrResponse = SolrResponse()
         ret_val.parse_pelias(json, solr_params)
-        for doc in ret_val.response.docs:
-            doc.timestamp = datetime.now(TIME_ZONE).strftime('%Y-%m-%dT%H:%M:%S.%f')[:-3] + 'Z'
-
         return ret_val
 
     @classmethod

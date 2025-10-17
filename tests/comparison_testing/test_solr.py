@@ -1,4 +1,4 @@
-import os
+import logging
 import urllib.parse
 from time import sleep
 
@@ -9,15 +9,8 @@ from starlette.testclient import TestClient
 from main import app
 from tests.comparison_testing.util import assert_builtins
 
-OUTPUT_DIR = "pelias_results"
-
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-import logging
-
 logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s"
+    level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(message)s"
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -79,19 +72,14 @@ def get_query_text(q):
 
 QUERY_MAP = {get_query_text(q): q for q in queries}
 
-# Output directory for results
 
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-
-# @pytest.mark.skip(reason="This compares the current api with the staging api, not meant for regular CI runs")
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "query_id, query",
-    list(QUERY_MAP.items()),
-    ids=list(QUERY_MAP.keys())
+    "query_id, query", list(QUERY_MAP.items()), ids=list(QUERY_MAP.keys())
 )
-@pytest.skip("Run these to compare with stage. Ensure the results attributes are the same")
+@pytest.mark.skip(
+    "Run these to compare with stage. Ensure the results attributes are the same"
+)
 async def test_compare_with_stage(query_id, query):
     print(f"Running {query_id} query against local solr/{query} and {STAGE_URL}")
     stage_url = f"{STAGE_URL}{query}"
@@ -102,9 +90,9 @@ async def test_compare_with_stage(query_id, query):
     stage_data = stage_response.json()
 
     with TestClient(app) as client:
-            local_response = client.get(local_url)
-            local_data = local_response.json()
-            client.close()
+        local_response = client.get(local_url)
+        local_data = local_response.json()
+        client.close()
 
     assert_builtins(local_data=local_data, stage_data=stage_data)
 
@@ -117,14 +105,18 @@ async def test_compare_with_stage(query_id, query):
     for doc in local_docs:
         doc_id = doc.get("id")
         if doc_id:
-            stage_doc = next((item for item in stage_docs if item.get("id") == doc_id), None)
+            stage_doc = next(
+                (item for item in stage_docs if item.get("id") == doc_id), None
+            )
             docs_map[doc_id] = {"local": doc, "stage": stage_doc}
 
     for doc_id, doc_pair in docs_map.items():
         local_doc = doc_pair["local"]
         stage_doc = doc_pair["stage"]
         if stage_doc:
-            assert_builtins(local_data=local_doc, stage_data=stage_doc, skip=["timestamp"])
+            assert_builtins(
+                local_data=local_doc, stage_data=stage_doc, skip=["timestamp"]
+            )
         else:
             print(f"Warning: Document with id {doc_id} not found in stage response.")
 

@@ -191,7 +191,7 @@ def find_feature(pelias_response, feature_index=0, def_val=None):
     try:
         ret_val = pelias_response.get("features")[feature_index]
     except Exception as e:
-        log.nm(e)
+        log.info(e)
     return ret_val
 
 

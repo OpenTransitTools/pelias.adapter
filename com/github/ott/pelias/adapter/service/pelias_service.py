@@ -48,7 +48,8 @@ def get_pelias_response(
             ret_val = PeliasWrapper.reverse(pelias_place_url, query)
         case _:
             raise PeliasAdapterError(
-                f"unknown pelias service requested: {service}, must be one of autocomplete, search or reverse")
+                f"unknown pelias service requested: {service}, must be one of autocomplete, search or reverse"
+            )
 
     # step 3: append the hostname to the response
     json_utils.append_hostname_to_json(ret_val)

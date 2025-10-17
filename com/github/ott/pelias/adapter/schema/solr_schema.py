@@ -9,13 +9,6 @@ from com.github.ott.pelias.adapter.models.solr.solr_response import SolrResponse
 from com.github.ott.pelias.adapter.models.solr.solr_stop_record import SolrStopRecord
 
 
-class SolrQueryModel(BaseModel):
-    q: str  # query
-    rows: Optional[int] = 6
-    fq: Optional[str] = None
-    stop: Optional[str] = None
-
-
 class SolrParams(BaseModel):
     q: Optional[str] = None
     fl: Optional[str] = None
@@ -51,7 +44,7 @@ class SolrDoc(BaseModel):
     type_name: Optional[str] = ""
     vtype: Optional[str] = "1"
     city: Optional[str] = ""
-    county:Optional[str] = ""
+    county: Optional[str] = ""
     neighborhood: Optional[str] = ""
     zip_code: Optional[str] = ""
     x: Optional[int | float] = None
@@ -64,10 +57,9 @@ class SolrDoc(BaseModel):
     model_config = {"extra": "allow", "exclude_none": False, "populate_by_name": True}
 
     @staticmethod
-    def toSchema(record:SolrStopRecord):
+    def toSchema(record: SolrStopRecord):
         record_dict = record.__dict__
         return SolrDoc(**record_dict)
-
 
 
 class SolrResponseBody(BaseModel):
@@ -84,12 +76,12 @@ class SolrResponseBody(BaseModel):
 
 
 class SolrResponseSchema(BaseModel):
-    status_code: int = 200,
-    status_message: Optional[str] = None,
-    has_errors: bool = False,
-    has_alerts: bool = False,
-    alerts: Optional[List[str]] = [],
-    date_info: Optional[Dict[str, Any]] = {}
+    status_code: int = 200
+    status_message: Optional[str] = None
+    has_errors: bool = False
+    has_alerts: bool = False
+    alerts: Optional[List[str]] = Field(default_factory=list)
+    date_info: Optional[Dict[str, Any]] = Field(default_factory=dict)
     responseHeader: SolrResponseHeader
     response: SolrResponseBody
 
@@ -106,4 +98,5 @@ class SolrResponseSchema(BaseModel):
             date_info=solr_response.date_info,
             alerts=solr_response.alerts,
             response=response,
-            responseHeader=header)
+            responseHeader=header,
+        )

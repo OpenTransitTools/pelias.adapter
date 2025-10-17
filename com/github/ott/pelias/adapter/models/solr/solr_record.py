@@ -1,7 +1,11 @@
 import logging
 
+from datetime import datetime
+
 from ott.utils import geo_utils
 from ott.utils.dao.base import MinimalDao
+
+from com.github.ott.pelias.adapter.core.config import TIME_ZONE, DATE_STRING_FORMAT
 
 log = logging.getLogger(__file__)
 
@@ -19,24 +23,24 @@ class SolrRecord(MinimalDao):
     :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=
     """
 
-    id = ""
-    type = ""
-    type_name = ""
-    vtype = "1"
-    name = ""
+    def __init__(self):
+        super().__init__()
+        self.id = ""
+        self.type = ""
+        self.type_name = ""
+        self.vtype = "1"
+        self.name = ""
+        self.city = ""
+        self.county = ""
+        self.neighborhood = ""
+        self.zip_code = ""
+        self.x = 7645053.5
+        self.y = 684388.9
+        self.lon = -122.67371
+        self.lat = 45.523335
+        self.timestamp = datetime.now(TIME_ZONE).strftime(DATE_STRING_FORMAT)
 
-    city = ""
-    county = ""
-    neighborhood = ""
-    zip_code = ""
-
-    x = 7645053.5
-    y = 684388.9
-    lon = -122.67371
-    lat = 45.523335
-
-    timestamp = "2018-02-03T07:47:45.045Z"
-    score = 0.0
+        self.score = 0.0
 
     def set_value(self, name, val):
         pass

@@ -10,7 +10,7 @@ homepage = "http://opentransittools.com"
 
 classifiers = [
     "Programming Language :: Python",
-    "Framework :: Pyramid",
+    "Framework :: FastAPI",
     "Topic :: Internet :: WWW/HTTP",
     "Topic :: Internet :: WWW/HTTP :: WSGI :: Application"
 ]
@@ -43,12 +43,18 @@ autoflake = "^2.3.1"
 autopep8 = "^2.3.2"
 pytest-asyncio = "^1.2.0"
 asgi-lifespan = "^2.1.0"
+pytest-cov = "^7.0.0"
 
 [tool.black]
 line-length = 88
-target-version = ['py310']
+target-version = ['py312']
 include = '\.pyi?$'
-
+exclude = '''
+/(
+    \.venv
+  | \.yml$
+)/
+'''
 
 [build-system]
 requires = ["poetry-core>=1.7.0"]

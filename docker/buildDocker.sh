@@ -1,2 +1,2 @@
-docker build --debug --rm --progress=plain -f docker/Dockerfile -t pelias-adapter:latest .
+docker build --debug --rm --progress=plain -f docker/Dockerfile -t pelias_adapter:latest .
 

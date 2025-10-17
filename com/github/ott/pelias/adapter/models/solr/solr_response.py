@@ -4,8 +4,9 @@ import requests
 from ott.utils.dao.base import BaseDao
 from ott.utils.dao.base import MinimalDao
 
-from .solr_record import SolrRecord
+from com.github.ott.pelias.adapter.models.solr.solr_record import SolrRecord
 from .solr_stop_record import SolrStopRecord
+from ...service.config import route_stop_str_url
 
 log = logging.getLogger(__file__)
 
@@ -17,13 +18,8 @@ class RouteStopRecords(object):
     @classmethod
     def url(cls):
         """get route stops as string"""
-        if cls._url is None:
-            from com.github.ott.pelias.adapter.routers.pelias import route_stop_str_url
 
-            if route_stop_str_url and len(route_stop_str_url) > 5:
-                cls._url = route_stop_str_url
-            else:
-                cls._url = "http://maps.trimet.org/ti/index/stops"
+        cls._url = route_stop_str_url if not cls._url else cls._url
         return cls._url
 
     @classmethod

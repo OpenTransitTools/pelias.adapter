@@ -69,7 +69,8 @@ class PeliasWrapper(object):
             qs = "{}&{}".format(query_string, ll)
             ret_val = response_utils.proxy_json(reverse_geo_url, qs)
 
-        # step 3: call geocoder (if we didn't already reverse geocode, or if that result was null)
+        # step 3: call geocoder (if we didn't already reverse geocode, or if that
+        # result was null)
         if ret_val is None:
             # step 3a: special query string handling
             if text and len(text) > 1:
@@ -89,7 +90,8 @@ class PeliasWrapper(object):
 
         # step 4: check whether the query result has something usable...
         if not in_recursion:
-            # step 4a: if this is an admin record, let's see whether we can resub just street address
+            # step 4a: if this is an admin record, let's see whether we can resub just
+            # street address
             if cls.is_wrong_city_bug(ret_val):
                 """
                 This code addresses the WRONG CITY bug, etc...
@@ -204,8 +206,11 @@ class PeliasWrapper(object):
         if num_addresses > 0:
             new_adds.append(adds[0])
             if (
-                num_addresses >= 2
-            ):  # make sure we have multiple addresses (eg duplicates to potentially dedup)
+                num_addresses
+                >= 2
+                # make sure we have multiple addresses (eg duplicates to potentially
+                # dedup)
+            ):
                 # import pdb; pdb.set_trace()
                 i = 1
                 while i < num_addresses:
@@ -231,7 +236,8 @@ class PeliasWrapper(object):
                     l2 = len(n2)
                     d = abs(l1 - l2)
                     # import pdb; pdb.set_trace()
-                    # filter out if address names are similar (e.g., same or majority subset of one another)
+                    # filter out if address names are similar (e.g., same or majority
+                    # subset of one another)
                     if l1 > 5 and l2 > 5 and d <= 6 and (n1 in n2 or n2 in n1):
                         i += 1
                         continue
@@ -273,7 +279,8 @@ class PeliasWrapper(object):
                 if "stops" in p.get("layer"):
                     name = cls.get_property_value(p, "name", "label")
 
-                    # 3a: if we're just a single agency (and TriMet), then strip off junk
+                    # 3a: if we're just a single agency (and TriMet), then strip off
+                    # junk
                     if not is_rtp and "TRIMET" in p.get("id"):
                         name = name.replace("TriMet Stop ", "")
 
@@ -304,7 +311,8 @@ class PeliasWrapper(object):
                     city = pelias_json_queries.city_neighborhood_or_county(p)
                     rename = pelias_json_queries.append(name, city)
 
-                # step 6: append '*' to any calltaker response when dealing with  interpolated recs
+                # step 6: append '*' to any calltaker response when dealing with
+                # interpolated recs
                 if is_calltaker and p.get("match_type") == "interpolated":
                     rename = "*" + rename
 

@@ -10,13 +10,15 @@ logger = getLogger(__name__)
 
 ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")  # default to dev
 
-CACHE_LONG = f"public, max-age={CACHE_LONG}"
+CACHE_LONG_STR = f"public, max-age={CACHE_LONG}"
 
 logger.info(f"Environment: {ENVIRONMENT}")
 
 ENV_FILE = f"{ENVIRONMENT}.env"
 
-TIME_ZONE:ZoneInfo = ZoneInfo("America/Los_Angeles")
+TIME_ZONE: ZoneInfo = ZoneInfo("America/Los_Angeles")
+
+DATE_STRING_FORMAT = "%Y-%m-%d %H:%M:%S %Z%z"
 
 
 class Settings(BaseSettings):

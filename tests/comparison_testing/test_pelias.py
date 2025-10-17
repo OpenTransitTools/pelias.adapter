@@ -1,3 +1,4 @@
+import logging
 import os
 import urllib.parse
 from time import sleep
@@ -9,15 +10,8 @@ from starlette.testclient import TestClient
 from main import app
 from tests.comparison_testing.util import assert_builtins
 
-OUTPUT_DIR = "pelias_results"
-
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-import logging
-
 logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s"
+    level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(message)s"
 )
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -47,7 +41,7 @@ queries = [
     "/v1/search?text=oregon%20zoo&layers=venue,address&sources=openstreetmap,wof",
     "/v1/search?text=hawthorne&focus.point.lat=45.5152&focus.point.lon=-122.6784&boundary.country=US",
     "/v1/search?text=97209",
-    "/v1/search?text=1120%20SW%205th%20Ave&boundary.country=US&layers=address&sources=openstreetmap"
+    "/v1/search?text=1120%20SW%205th%20Ave&boundary.country=US&layers=address&sources=openstreetmap",
 ]
 
 
@@ -61,13 +55,13 @@ def get_query_text(q):
 QUERY_MAP = {get_query_text(q): q for q in queries}
 
 
-
 @pytest.mark.parametrize(
-    "query_id, query",
-    list(QUERY_MAP.items()),
-    ids=list(QUERY_MAP.keys())
+    "query_id, query", list(QUERY_MAP.items()), ids=list(QUERY_MAP.keys())
 )
-#@pytest.mark.skip(reason="This compares the current api with the staging api, not meant for regular CI runs")
+@pytest.mark.skipif(
+    os.getenv("RUN_INTEGRATION") != "1",
+    reason="This test calls external staging services and is skipped unless RUN_INTEGRATION=1",
+)
 def test_compare_with_stage(query_id, query):
     print(f"Running {query_id} query against {LOCAL_URL} and {STAGE_URL}")
     # Run through all queries and save results
@@ -85,28 +79,38 @@ def test_compare_with_stage(query_id, query):
         local_data = local_response.json()
         client.close()
 
+    sleep(0.2)  # Slight delay to be kind to the server
 
-    loca_attr, stage_attr = local_data["geocoding"].get("attribution"), stage_data["geocoding"].get("attribution")
+    loca_attr, stage_attr = local_data["geocoding"].get("attribution"), stage_data[
+        "geocoding"
+    ].get("attribution")
 
     assert loca_attr == stage_attr, f"attribution mismatch: {loca_attr} != {stage_attr}"
 
     for local_feature in local_data["features"]:
         local_props = local_feature.get("properties", {})
         local_id = local_props.get("id")
-        stage_props = next((f.get("properties", {}) for f in stage_data["features"] if f.get("properties", {}).get("id") == local_id), None)
+        stage_props = next(
+            (
+                f.get("properties", {})
+                for f in stage_data["features"]
+                if f.get("properties", {}).get("id") == local_id
+            ),
+            None,
+        )
         if stage_props:
             # todo label varies here. Not sure why. attribution is the same
-            l1, l2 = local_props.get("label", "").split("(")[0], stage_props.get("label", "").split("(")[0]
+            l1, l2 = (
+                local_props.get("label", "").split("(")[0],
+                stage_props.get("label", "").split("(")[0],
+            )
             assert l1 in l2, f"label mismatch for {local_id}: {l1} not in {l2}"
 
-            assert_builtins(local_data=local_props, stage_data=stage_props, skip=["label"])
+            assert_builtins(
+                local_data=local_props, stage_data=stage_props, skip=["label"]
+            )
 
         else:
             print(f"no stage props for {local_id}")
 
-
-
-
-sleep(0.2)  # Slight delay to be kind to the server
-
-print("✅ All done.")
+    print("✅ All done.")

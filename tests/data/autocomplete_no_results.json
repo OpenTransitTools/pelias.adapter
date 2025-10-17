@@ -1,0 +1,32 @@
+{
+  "geocoding": {
+    "version": "0.2",
+    "attribution": "http://pelias.mapzen.com/v1/attribution",
+    "query": {
+      "text": "7-11 ticket",
+      "parser": "addressit",
+      "tokens": [
+        "7-11",
+        "ticket"
+      ],
+      "size": 10,
+      "private": false,
+      "focus.point.lat": 45.52,
+      "focus.point.lon": -122.67,
+      "lang": {
+        "name": "English",
+        "iso6391": "en",
+        "iso6393": "eng",
+        "defaulted": false
+      }
+    },
+    "engine": {
+      "name": "Pelias",
+      "author": "Mapzen",
+      "version": "1.0"
+    },
+    "timestamp": 1518989052715
+  },
+  "type": "FeatureCollection",
+  "features": []
+}

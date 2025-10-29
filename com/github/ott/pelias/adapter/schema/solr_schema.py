@@ -57,7 +57,7 @@ class SolrDoc(BaseModel):
     model_config = {"extra": "allow", "exclude_none": False, "populate_by_name": True}
 
     @staticmethod
-    def toSchema(record: SolrStopRecord):
+    def to_schema(record: SolrStopRecord):
         record_dict = record.__dict__
         return SolrDoc(**record_dict)
 
@@ -69,7 +69,7 @@ class SolrResponseBody(BaseModel):
 
     @staticmethod
     def to_schema(response: SResponse) -> "SolrResponseBody":
-        docs = [SolrDoc.toSchema(doc) for doc in response.docs]
+        docs = [SolrDoc.to_schema(doc) for doc in response.docs]
         return SolrResponseBody(
             numFound=response.numFound, start=response.start, docs=docs
         )

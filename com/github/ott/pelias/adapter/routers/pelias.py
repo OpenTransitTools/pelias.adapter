@@ -16,9 +16,10 @@ def get_json_response(
     request: Request,
     service: SearchApiType = SearchApiType.autocomplete,
     is_rtp: bool = False,
+    refine: bool = False,
 ) -> JSONResponse:
     ret_val = pelias_service.get_pelias_response(
-        service=service, request=request, is_rtp=is_rtp
+        request, service, is_rtp, refine=refine
     )
 
     return JSONResponse(content=ret_val, headers={"Cache-Control": CACHE_LONG_STR})
@@ -30,6 +31,14 @@ def pelias(
     api: SearchApiType = SearchApiType.autocomplete,
 ) -> JSONResponse:
     return get_json_response(request=request, service=api)
+
+
+@router.get("/refine/{api}")
+def refine(
+    request: Request,
+    api: SearchApiType = SearchApiType.autocomplete,
+) -> JSONResponse:
+    return get_json_response(request=request, service=api, refine=True)
 
 
 @router.get("/rtp/{api}")

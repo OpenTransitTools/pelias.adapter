@@ -27,8 +27,8 @@ class SolrApiType(str, Enum):
     autocomplete = "autocomplete"
 
 
-logger.info(f"Pelias URL: {PELIAS}")
-logger.info(f"Pelias Search URL: {pelias_search_url}")
-logger.info(f"Pelias Autocomplete URL: {pelias_autocomplete_url}")
-logger.info(f"Pelias Reverse URL: {pelias_reverse_url}")
-logger.info(f"Pelias Place URL: {pelias_place_url}")
+logger.debug(f"Pelias URL: {PELIAS}")
+logger.debug(f"Pelias Search URL: {pelias_search_url}")
+logger.debug(f"Pelias Autocomplete URL: {pelias_autocomplete_url}")
+logger.debug(f"Pelias Reverse URL: {pelias_reverse_url}")
+logger.debug(f"Pelias Place URL: {pelias_place_url}")

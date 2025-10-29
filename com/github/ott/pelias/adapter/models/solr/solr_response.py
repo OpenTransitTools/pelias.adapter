@@ -23,14 +23,14 @@ class RouteStopRecords(object):
         return cls._url
 
     @classmethod
-    def find_record(cls, id):
+    def find_record(cls, _id):
         """see requests_cache: https://requests-cache.readthedocs.io/en/latest/user_guide.html"""
         ret_val = None
         try:
-            ret_val = cls.cache.get(id)
+            ret_val = cls.cache.get(_id)
             if ret_val is None:
                 # step 1: query route stop service
-                rs = requests.get("{}/{}/routes/str".format(cls.url(), id))
+                rs = requests.get("{}/{}/routes/str".format(cls.url(), _id))
 
                 # step 2: cache record
                 if rs and len(rs.text):
@@ -64,7 +64,7 @@ class Response(MinimalDao):
             # step 1: get pelias records
             features = json.get("features", [])
 
-            # step 2: loop thru pelias records
+            # step 2: loop through pelias records
             for f in features:
                 # step 3: handle parsing of different layer types
                 layer = f.get("properties", {}).get("layer")

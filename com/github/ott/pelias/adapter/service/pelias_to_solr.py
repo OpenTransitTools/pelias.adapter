@@ -35,8 +35,8 @@ class PeliasToSolr(PeliasWrapper):
         if size:
             ret_val["size"] = size
 
-        format = html_utils.get_first_param(solr_params, "wt")
-        if format and format == "xml":
+        fmt = html_utils.get_first_param(solr_params, "wt")
+        if fmt and fmt == "xml":
             ret_val["format"] = "xml"
 
         _ = html_utils.get_first_param(solr_params, "fq")
@@ -75,7 +75,7 @@ class PeliasToSolr(PeliasWrapper):
     @classmethod
     def fix_venues_in_pelias_response(cls, pelias_json):
         """
-        will loop thru results, and append street names to venues
+        will loop through results, and append street names to venues
         NOTE: 2-24-2020: this routine is only used in the SOLR wrapper
               the Pelias wrapper has a different rendering (see above)
         """

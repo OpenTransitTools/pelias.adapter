@@ -89,7 +89,15 @@ def remove_duplicate_features(features):
     """
     Best shot at normalizing and removing duplicate features from pelias response
     """
-    refined = {f["properties"]["name"].strip().lower(): f for f in features}
+    refined = {
+        f["properties"]["name"].strip().lower(): f
+        for f in features
+        if isinstance(f, dict)
+        and "properties" in f
+        and isinstance(f["properties"], dict)
+        and "name" in f["properties"]
+        and isinstance(f["properties"]["name"], str)
+    }
     normalized_addresses = {normalize_address(key): v for key, v in refined.items()}
 
     return list(normalized_addresses.values())
@@ -107,9 +115,7 @@ def get_best_match(ret_val, text: str, is_stop_request=False):
     if not features or len(features) == 1:
         return ret_val
     else:
-        print(f"initial features length: {len(features)}")
         features = remove_duplicate_features(features)
-        print(f"duplicates removed features length: {len(features)}")
         if is_stop_request:
             # for stop requests, we expect exactly one match
             stop_id = remove_non_digits(text)
@@ -148,7 +154,7 @@ def adjust_layers_for_query(query_type, query_params) -> tuple[bool, dict]:
 
 
 def refactor_pelias_request(request: Request, new_params: dict) -> Request:
-    """ " update both request._query_params and the ASGI scope query_string,
+    """update both request._query_params and the ASGI scope query_string,
     and clear cached URL so request.url reflects the new params
     """
     request._query_params = QueryParams(**new_params)
@@ -172,7 +178,7 @@ def get_pelias_response(
     for stop requests or single result requests
 
     However, if the request is truly ambiguous (for example text="big"), the method will probably return a number of results...
-    Unless there is an item whose exact name matches the ambigous value
+    Unless there is an item whose exact name matches the ambiguous value
 
     """
 
@@ -199,7 +205,7 @@ def get_pelias_response(
         if size == 1:
             new_params["size"] = "10"
 
-        # determine of this is a stop request and apply reset layers to STOPS_LAYERS
+        # determine if this is a stop request and apply reset layers to STOPS_LAYERS
         # or if determined an address "address", for request
         is_stop_request, new_params = adjust_layers_for_query(query_type, new_params)
 
@@ -210,7 +216,7 @@ def get_pelias_response(
 
         _features = ret_val.get("features", [])
 
-        # after hte first request, we'll use feature.property.name to normalize
+        # after the first request, we'll use feature.property.name to normalize
         # and remove dupes
         features = (
             remove_duplicate_features(_features)
@@ -234,7 +240,7 @@ def get_pelias_response(
             ret_val = _get_pelias_response(
                 service=service, request=request, is_rtp=is_rtp
             )
-            features = ret_val.get("features", {})
+            features = ret_val.get("features", [])
 
         if len(features) > 1:
             ret_val = get_best_match(

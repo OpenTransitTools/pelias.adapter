@@ -25,6 +25,7 @@ def get_query_type(query: str) -> tuple[QueryType, int]:
     try:
         stop_id = int(query)
     except ValueError:
+        # If parsing fails, stop_id remains -1, indicating the query is not a number.
         pass
     if is_street_address(query):
         query_type = QueryType.STREET_ADDRESS

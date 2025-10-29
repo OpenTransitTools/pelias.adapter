@@ -12,7 +12,7 @@ ENVIRONMENT = os.getenv("ENVIRONMENT", "dev")  # default to dev
 
 CACHE_LONG_STR = f"public, max-age={CACHE_LONG}"
 
-logger.info(f"Environment: {ENVIRONMENT}")
+logger.debug(f"Environment: {ENVIRONMENT}")
 
 ENV_FILE = f"{ENVIRONMENT}.env"
 
@@ -40,4 +40,4 @@ class Settings(BaseSettings):
 # Global settings instance
 settings = Settings()
 
-logger.info(f"Loaded settings for environment: {ENVIRONMENT}, {settings.debug}")
+logger.debug(f"Loaded settings for environment: {ENVIRONMENT}, {settings.debug}")

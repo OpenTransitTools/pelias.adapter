@@ -180,7 +180,7 @@ class PeliasWrapper(object):
         """
         features = pelias_json.get("features", [])
 
-        # step 0: make sure there are 2+ records (eg something to dedupe)
+        # step 0: make sure there are 2+ records (e.g something to dedupe)
         if len(features) < 2:
             return
 
@@ -191,12 +191,12 @@ class PeliasWrapper(object):
             p = f.get("properties")
             if p is None:
                 continue
-            if p.get("layer") in ("address"):
+            if p.get("layer") in "address":
                 adds.append(f)
             else:
                 new_other.append(f)
 
-        # step 2: make sure we have at least 2 addresses (eg addresses to dedupe)
+        # step 2: make sure we have at least 2 addresses (e.g addresses to dedupe)
         if len(adds) < 2:
             return
 
@@ -208,7 +208,7 @@ class PeliasWrapper(object):
             if (
                 num_addresses
                 >= 2
-                # make sure we have multiple addresses (eg duplicates to potentially
+                # make sure we have multiple addresses (e.g duplicates to potentially
                 # dedup)
             ):
                 # import pdb; pdb.set_trace()
@@ -252,7 +252,7 @@ class PeliasWrapper(object):
     def fixup_response(
         cls, pelias_json, size=10, ele="label", is_calltaker=False, is_rtp=False
     ):
-        """will loop thru results, cleaning up / renaming / relabeling the specified element"""
+        """will loop through results, cleaning up / renaming / relabeling the specified element"""
 
         # step 1: loop thru the records in the Pelias response
         if cls.has_features(pelias_json):

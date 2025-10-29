@@ -56,6 +56,10 @@ exclude = '''
 )/
 '''
 
+[tool.pytest.ini_options]
+addopts = "--cov -rA --log-cli-level=DEBUG"
+
+
 [build-system]
 requires = ["poetry-core>=1.7.0"]
 build-backend = "poetry.core.masonry.api"

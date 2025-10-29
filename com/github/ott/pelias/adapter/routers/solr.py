@@ -1,6 +1,6 @@
 import logging
 
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter, Request
 
 from com.github.ott.pelias.adapter.models.solr.solr_response import SolrResponse
 from com.github.ott.pelias.adapter.schema.solr_schema import SolrResponseSchema

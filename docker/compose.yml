@@ -4,7 +4,7 @@ services:
             context: ../
             dockerfile: docker/Dockerfile
         container_name: pelias_adapter
-        image: pelias_adapter:latest
+        image: ghcr.io/opentransittools/pelias-adapter:latest # todo make this tag dynamic
         ports:
             - "8000:8000"
         environment:

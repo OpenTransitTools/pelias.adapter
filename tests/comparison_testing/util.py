@@ -1,4 +1,6 @@
-def assert_builtins(local_data, stage_data, skip: list[str] = []):
+def assert_builtins(local_data, stage_data, skip=None):
+    if skip is None:
+        skip = []
     if skip:
         for s in skip:
             if s in local_data:

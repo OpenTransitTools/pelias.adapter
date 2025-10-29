@@ -1,19 +1,16 @@
-import logging
 import logging.config
 
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from com.github.ott.pelias.adapter.core.errors import PeliasAdapterError
 from com.github.ott.pelias.adapter.core.config import settings
-
+from com.github.ott.pelias.adapter.core.errors import PeliasAdapterError
 from com.github.ott.pelias.adapter.routers import core, pelias, solr
 
 # Configure logging
 logging.config.fileConfig("logging.ini", disable_existing_loggers=False)
 logger = logging.getLogger(__name__)
-
 
 # Create FastAPI application
 app = FastAPI(
@@ -38,9 +35,10 @@ app.include_router(solr.router, prefix="/solr/v1", tags=["solr"])
 app.include_router(core.router, prefix="/core/v1", tags=["core"])
 
 
-def add_exception_handlers(app):
-    @app.exception_handler(PeliasAdapterError)
+def add_exception_handlers(application: FastAPI):
+    @application.exception_handler(PeliasAdapterError)
     async def pelias_wrapper_error_handler(request: Request, exc: PeliasAdapterError):
+        logger.error(f"PeliasAdapterError: {request.url}")
         return JSONResponse(status_code=400, content={"error": exc.message})
 
 

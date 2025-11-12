@@ -14,6 +14,7 @@ class PeliasWrapper(object):
     rtp_agencies = [
         "clackamas",
         "ctran",
+        "ctran_flex",
         "mult",
         "rideconnection",
         "sam",
@@ -64,7 +65,7 @@ class PeliasWrapper(object):
 
         # step 1b: filter agencies if we're in single-agency (TriMet) exclusive mode
         #import pdb; pdb.set_trace()
-        if not is_rtp and cls._rtp_agency_filter != "SKIP":
+        if not is_rtp and cls._rtp_agency_filter != "SKIP" and "layers" not in query_string:
             query_string = "{}&layers={}".format(query_string, cls.rtp_agency_filter())
 
         # step 2 call reverse geocoder if we think text is a coord

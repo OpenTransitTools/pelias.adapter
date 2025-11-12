@@ -35,20 +35,25 @@ class PeliasToSolr(PeliasWrapper):
         if format and format == "xml":
             ret_val['format'] = 'xml'
 
+        # import pdb; pdb.set_trace()
         layers = html_utils.get_first_param(solr_params, 'fq')
-        # TODO rtp
-        """
         if layers:
-            layers = layers.replace('%3A', ':')
-            if layers == 'type:stop':
-                ret_val['layers'] = 'trimet:stops'
-            elif layers == 'type:pr':
-                ret_val['layers'] = 'pr'
+            l = ''
+            if 'stop' in layers:
+                l += 'trimet:stops,'
+            if 'pr' in layers:
+                l += 'pr,'
+            if 'tc' in layers:
+                l += 'tc,'
+            if len(l) > 1:
+                ret_val['layers'] = l[:-1]
+            else:
+                ret_val['layers'] = layers
         else:
-            # note: excludes all other
-            if not is_rtp:
-                ret_val['layers'] = cls.rtp_stop_filter()
-        """
+            # note: if no SOLR 'fq' layer (filter) param, then apply the rtp agency filter
+            if not is_rtp and cls._rtp_agency_filter != "SKIP":
+                ret_val['layers'] = cls.rtp_agency_filter()
+
         return ret_val
 
     @classmethod
@@ -98,6 +103,7 @@ class PeliasToSolr(PeliasWrapper):
     def call_pelias_parse_results(cls, solr_params, url):
         param_str = cls.solr_to_pelias_param_str(solr_params)
         json = json_utils.stream_json(url, param_str)
+        cls.check_invalid_layers(json)
         #cls.fix_venues_in_pelias_response(pelias_json=json)
         cls.fixup_response(json, is_calltaker=True, is_rtp=False)
         ret_val = cls.parse_json(json, solr_params)

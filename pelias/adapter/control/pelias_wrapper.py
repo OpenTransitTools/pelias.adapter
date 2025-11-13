@@ -252,7 +252,13 @@ class PeliasWrapper(object):
 
                     # 3a: if we're just a single agency (and TriMet), then strip off junk
                     if not is_rtp and "TRIMET" in p.get('id'):
-                         name = name.replace("TriMet Stop ", "")
+                        name = name.replace("TriMet Stop ", "")
+
+                        # backward compatible for old TORA id formatting of id::TRIMET::stops
+                        # this page gotten to via geocoder https://trimet.org/home/stop/4/
+                        if "stops:TRIMET" in p.get('id'):
+                            idz = p.get('id').replace("stops:TRIMET:", "")
+                            p['id'] = "{}::TRIMET::stops".format(idz)
 
                     # 3b: remove state and country from the label
                     if name and len(name) > 10:

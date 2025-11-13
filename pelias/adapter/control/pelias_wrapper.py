@@ -14,7 +14,7 @@ class PeliasWrapper(object):
     rtp_agencies = [
         "clackamas",
         "ctran",
-        "ctran_flex",
+        #"ctran_flex",
         "mult",
         "rideconnection",
         "sam",
@@ -255,12 +255,18 @@ class PeliasWrapper(object):
                         name = name.replace("TriMet Stop ", "")
 
                         # backward compatible for old TORA id formatting of id::TRIMET::stops
-                        # this page gotten to via geocoder https://trimet.org/home/stop/4/
+                        # a stop page (https://trimet.org/home/stop/4) via geocoder https://trimet.org/home/search
+                        # TODO: should probably remove this eventually
                         if "stops:TRIMET" in p.get('id'):
                             idz = p.get('id').replace("stops:TRIMET:", "")
                             p['id'] = "{}::TRIMET::stops".format(idz)
 
-                    # 3b: remove state and country from the label
+                    # 3b: remove "stops:" from ID to get TORA RTP to work properly
+                    #     TODO: should probably remove this eventually
+                    if is_rtp and "stops:" in p.get('id'):
+                        p['id'] = p.get('id').replace("stops:", "")
+
+                    # 3c: remove state and country from the label
                     if name and len(name) > 10:
                         city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                         rename = pelias_json_queries.append(name, city)

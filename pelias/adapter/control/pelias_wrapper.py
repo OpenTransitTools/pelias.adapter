@@ -14,7 +14,7 @@ class PeliasWrapper(object):
     rtp_agencies = [
         "clackamas",
         "ctran",
-        #"ctran_flex",
+        "ctran_flex",
         "mult",
         "rideconnection",
         "sam",

@@ -22,6 +22,7 @@ class PeliasToSolr(PeliasWrapper):
         :see: https://trimet.org/solr/select?q=3&rows=6
         :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type:stop
         :see: https://ws-st.trimet.org/pelias/v1/autocomplete?text=13135&size=1&layers=address&sources=osm
+        :see: https://dv.trimet.org/solr/select?rows=6&wt=json&qt=dismax&fq=(-type%3A26+AND+-type%3Aroute)&q=3
         """
         ret_val = {}
 
@@ -35,24 +36,33 @@ class PeliasToSolr(PeliasWrapper):
         if format and format == "xml":
             ret_val['format'] = 'xml'
 
-        # import pdb; pdb.set_trace()
+        #import pdb; pdb.set_trace()
         layers = html_utils.get_first_param(solr_params, 'fq')
         if layers:
             l = ''
-            if 'stop' in layers:
-                l += 'trimet:stops,'
+            n = ''
+
+            # negation of layer type
+            if '-type' in layers:
+                n = '-'
+
+            if 'stop' in layers and cls._rtp_agency_filter != "SKIP":
+                # negate all stops layers ... only include trimet stops
+                if n == '-':
+                    l = "{}{},{},".format(l, cls.rtp_agency_filter(), '-trimet:stops')
+                else:
+                    l = "{}{}{},".format(l, n, 'trimet:stops')
             if 'pr' in layers:
-                l += 'pr,'
+                l = "{}{}{},".format(l, n, 'pr')
             if 'tc' in layers:
-                l += 'tc,'
+                l = "{}{}{},".format(l, n, 'tc')
+
             if len(l) > 1:
-                ret_val['layers'] = l[:-1]
-            else:
-                ret_val['layers'] = layers
-        else:
-            # note: if no SOLR 'fq' layer (filter) param, then apply the rtp agency filter
-            if not is_rtp and cls._rtp_agency_filter != "SKIP":
-                ret_val['layers'] = cls.rtp_agency_filter()
+                ret_val['layers'] = l[:-1]  # trim off last ,comma,
+
+        # note: if no SOLR 'fq' layer (filter) param was mapped, then apply the rtp agency filter
+        if not ret_val.get('layers') and not is_rtp and cls._rtp_agency_filter != "SKIP":
+            ret_val['layers'] = cls.rtp_agency_filter()
 
         return ret_val
 

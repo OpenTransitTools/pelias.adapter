@@ -1,13 +1,17 @@
+from logging import getLogger
 from typing import Literal, Any
 
 from ott.utils import json_utils
 from ott.utils.svr.pyramid import response_utils
 from pelias.adapter.control.pelias_wrapper import PeliasWrapper
 from pyramid.request import Request
+logger = getLogger(__name__)
+
 
 
 def get_pelias_response(service:Literal["autocomplete", "search", "reverse"], request:Request, is_rtp:bool=False) -> dict[str, Any]:
     from pelias.adapter.pyramid.views import pelias_autocomplete_url, pelias_reverse_url, pelias_search_url
+    logger.debug(f"query: {request.query_string} ")
 
     # step 2: call the wrapper
     if service == "autocomplete":

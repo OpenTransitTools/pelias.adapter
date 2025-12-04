@@ -1,0 +1,4339 @@
+{
+    "1": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "1",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "1"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703770077
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.716546,
+                        45.510506
+                    ]
+                },
+                "properties": {
+                    "id": "stops:WAPARK:815440",
+                    "gid": "transit:wapark:stops:stops:WAPARK:815440",
+                    "layer": "wapark:stops",
+                    "source": "transit",
+                    "source_id": "stops:WAPARK:815440",
+                    "country_code": "US",
+                    "name": "TriMet Washington Park MAX Station (Washington Park Shuttle Stop ID 1)",
+                    "distance": 3.781,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Sylvan-Highlands",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85893251",
+                    "label": "TriMet Washington Park MAX Station (Washington Park Shuttle Stop ID 1), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "WAPARK",
+                            "agency_id": "501",
+                            "stop_id": "815440",
+                            "stop_code": "1",
+                            "stop_description": "Oregon Zoo, Portland Children's Museum, World Forestry Center, 4T Trail",
+                            "location_type": 0,
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.678451,
+                        45.503812
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:143",
+                    "gid": "transit:trimet:stops:stops:TRIMET:143",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:143",
+                    "country_code": "US",
+                    "name": "SW Arthur & 1st (TriMet Stop ID 143)",
+                    "distance": 1.919,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "South Portland",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85849969",
+                    "label": "SW Arthur & 1st (TriMet Stop ID 143), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "143",
+                            "stop_code": "143",
+                            "stop_description": "Westbound stop in Portland (Stop ID 143)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/143",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.675839,
+                        45.514455
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:3635",
+                    "gid": "transit:trimet:stops:stops:TRIMET:3635",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:3635",
+                    "country_code": "US",
+                    "name": "SW Madison & 1st (TriMet Stop ID 3635)",
+                    "distance": 0.767,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW Madison & 1st (TriMet Stop ID 3635), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "3635",
+                            "stop_code": "3635",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 3635)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/3635",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.679711,
+                        45.508043
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:3398",
+                    "gid": "transit:trimet:stops:stops:TRIMET:3398",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:3398",
+                    "country_code": "US",
+                    "name": "SW Lincoln & 1st (TriMet Stop ID 3398)",
+                    "distance": 1.532,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW Lincoln & 1st (TriMet Stop ID 3398), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "3398",
+                            "stop_code": "3398",
+                            "stop_description": "Westbound stop in Portland (Stop ID 3398)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/3398",
+                            "direction": "West",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.678537,
+                        45.506687
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:6472",
+                    "gid": "transit:trimet:stops:stops:TRIMET:6472",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:6472",
+                    "country_code": "US",
+                    "name": "2200 Block SW 1st (TriMet Stop ID 6472)",
+                    "distance": 1.625,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "2200 Block SW 1st (TriMet Stop ID 6472), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "6472",
+                            "stop_code": "6472",
+                            "stop_description": "Northbound stop in Portland (Stop ID 6472)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/6472",
+                            "direction": "North",
+                            "position": "At",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.672146,
+                        45.52028
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:8337",
+                    "gid": "transit:trimet:stops:stops:TRIMET:8337",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:8337",
+                    "country_code": "US",
+                    "name": "Oak/ SW 1st Ave MAX Station (TriMet Stop ID 8337)",
+                    "distance": 0.17,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Old Town Chinatown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867303",
+                    "label": "Oak/ SW 1st Ave MAX Station (TriMet Stop ID 8337), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "8337",
+                            "stop_code": "8337",
+                            "stop_description": "Northbound stop in Portland (Stop ID 8337)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/8337",
+                            "direction": "North",
+                            "position": "Nearside",
+                            "mode": "TRAM"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.672523,
+                        45.51986
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:8380",
+                    "gid": "transit:trimet:stops:stops:TRIMET:8380",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:8380",
+                    "country_code": "US",
+                    "name": "Oak/ SW 1st Ave MAX Station (TriMet Stop ID 8380)",
+                    "distance": 0.197,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "Oak/ SW 1st Ave MAX Station (TriMet Stop ID 8380), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "8380",
+                            "stop_code": "8380",
+                            "stop_description": "Southbound stop in Portland (Stop ID 8380)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/8380",
+                            "direction": "South",
+                            "position": "Farside",
+                            "mode": "TRAM"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.671994,
+                        45.52042
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:12798",
+                    "gid": "transit:trimet:stops:stops:TRIMET:12798",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:12798",
+                    "country_code": "US",
+                    "name": "SW Oak & 1st (TriMet Stop ID 12798)",
+                    "distance": 0.162,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Old Town Chinatown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867303",
+                    "label": "SW Oak & 1st (TriMet Stop ID 12798), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "12798",
+                            "stop_code": "12798",
+                            "stop_description": "Westbound stop in Portland (Stop ID 12798)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/12798",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.701988,
+                        45.496342
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:1211",
+                    "gid": "transit:trimet:stops:stops:TRIMET:1211",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:1211",
+                    "country_code": "US",
+                    "name": "SW Council Crest & Chehalem (#1) (TriMet Stop ID 1211)",
+                    "distance": 3.628,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Southwest Hills",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867153",
+                    "label": "SW Council Crest & Chehalem (#1) (TriMet Stop ID 1211), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "1211",
+                            "stop_code": "1211",
+                            "stop_description": "Northbound stop in Portland (Stop ID 1211)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/1211",
+                            "direction": "North",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.675585,
+                        45.513751
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:12789",
+                    "gid": "transit:trimet:stops:stops:TRIMET:12789",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:12789",
+                    "country_code": "US",
+                    "name": "SW Jefferson & 1st (TriMet Stop ID 12789)",
+                    "distance": 0.821,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW Jefferson & 1st (TriMet Stop ID 12789), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "12789",
+                            "stop_code": "12789",
+                            "stop_description": "Westbound stop in Portland (Stop ID 12789)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/12789",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            }
+        ],
+        "bbox": [
+            -122.716546,
+            45.496342,
+            -122.671994,
+            45.52042
+        ]
+    },
+    "NW_23rd_and_Thurman": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "NW 23rd and Thurman",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "NW 23rd & Thurman",
+                    "street": "NW 23rd",
+                    "cross_street": "Thurman"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703770189
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.698886,
+                        45.535235
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:8986",
+                    "gid": "transit:trimet:stops:stops:TRIMET:8986",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:8986",
+                    "country_code": "US",
+                    "name": "NW 23rd & Thurman (TriMet Stop ID 8986)",
+                    "distance": 2.82,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 23rd & Thurman (TriMet Stop ID 8986), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "8986",
+                            "stop_code": "8986",
+                            "stop_description": "Southbound stop in Portland (Stop ID 8986)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/8986",
+                            "direction": "South",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.698714,
+                        45.535752
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7169",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7169",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7169",
+                    "country_code": "US",
+                    "name": "NW 23rd & Thurman (TriMet Stop ID 7169)",
+                    "distance": 2.844,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 23rd & Thurman (TriMet Stop ID 7169), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7169",
+                            "stop_code": "7169",
+                            "stop_description": "Northbound stop in Portland (Stop ID 7169)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7169",
+                            "direction": "North",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.699655,
+                        45.535535
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:8984",
+                    "gid": "transit:trimet:stops:stops:TRIMET:8984",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:8984",
+                    "country_code": "US",
+                    "name": "NW Thurman & 23rd Pl (TriMet Stop ID 8984)",
+                    "distance": 2.888,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW Thurman & 23rd Pl (TriMet Stop ID 8984), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "8984",
+                            "stop_code": "8984",
+                            "stop_description": "Westbound stop in Portland (Stop ID 8984)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/8984",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.698388,
+                        45.535446
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:14032",
+                    "gid": "transit:trimet:stops:stops:TRIMET:14032",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:14032",
+                    "country_code": "US",
+                    "name": "NW Thurman & 23rd (TriMet Stop ID 14032)",
+                    "distance": 2.803,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW Thurman & 23rd (TriMet Stop ID 14032), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "14032",
+                            "stop_code": "14032",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 14032)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/14032",
+                            "direction": "East",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.698829,
+                        45.535498
+                    ]
+                },
+                "properties": {
+                    "id": "17028",
+                    "gid": "transit:intersection:17028",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "17028",
+                    "country_code": "US",
+                    "name": "NW Thurman St & NW 23rd Ave",
+                    "street": "NW Thurman St",
+                    "distance": 2.834,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW Thurman St & NW 23rd Ave, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.699854,
+                        45.535481
+                    ]
+                },
+                "properties": {
+                    "id": "81585",
+                    "gid": "transit:intersection:81585",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "81585",
+                    "country_code": "US",
+                    "name": "NW 23rd Pl & NW Thurman St",
+                    "street": "NW 23rd Pl",
+                    "distance": 2.897,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 23rd Pl & NW Thurman St, Portland, OR, USA"
+                }
+            }
+        ],
+        "bbox": [
+            -122.699854,
+            45.535235,
+            -122.698388,
+            45.535752
+        ]
+    },
+    "NE_82nd": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "NE 82nd",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "NE 82nd",
+                    "street": "NE 82nd"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703770361
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.578852,
+                        45.522858
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:814",
+                    "gid": "transit:trimet:stops:stops:TRIMET:814",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:814",
+                    "country_code": "US",
+                    "name": "E Burnside & NE 82nd (TriMet Stop ID 814)",
+                    "distance": 7.116,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "E Burnside & NE 82nd (TriMet Stop ID 814), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "814",
+                            "stop_code": "814",
+                            "stop_description": "Westbound stop in Portland (Stop ID 814)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/814",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.56671,
+                        45.52276
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:823",
+                    "gid": "transit:trimet:stops:stops:TRIMET:823",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:823",
+                    "country_code": "US",
+                    "name": "E Burnside & NE 94th (TriMet Stop ID 823)",
+                    "distance": 8.062,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "E Burnside & NE 94th (TriMet Stop ID 823), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "823",
+                            "stop_code": "823",
+                            "stop_description": "Westbound stop in Portland (Stop ID 823)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/823",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.579179,
+                        45.524726
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7956",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7956",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7956",
+                    "country_code": "US",
+                    "name": "NE 82nd & Davis (TriMet Stop ID 7956)",
+                    "distance": 7.103,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE 82nd & Davis (TriMet Stop ID 7956), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7956",
+                            "stop_code": "7956",
+                            "stop_description": "Southbound stop in Portland (Stop ID 7956)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7956",
+                            "direction": "South",
+                            "position": "Opposite",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.57892,
+                        45.524478
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7955",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7955",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7955",
+                    "country_code": "US",
+                    "name": "NE 82nd & Davis (TriMet Stop ID 7955)",
+                    "distance": 7.121,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE 82nd & Davis (TriMet Stop ID 7955), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7955",
+                            "stop_code": "7955",
+                            "stop_description": "Northbound stop in Portland (Stop ID 7955)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7955",
+                            "direction": "North",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.579163,
+                        45.526553
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7973",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7973",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7973",
+                    "country_code": "US",
+                    "name": "NE 82nd & Glisan (TriMet Stop ID 7973)",
+                    "distance": 7.122,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE 82nd & Glisan (TriMet Stop ID 7973), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7973",
+                            "stop_code": "7973",
+                            "stop_description": "Southbound stop in Portland (Stop ID 7973)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7973",
+                            "direction": "South",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.578928,
+                        45.526656
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7972",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7972",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7972",
+                    "country_code": "US",
+                    "name": "NE 82nd & Glisan (TriMet Stop ID 7972)",
+                    "distance": 7.141,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE 82nd & Glisan (TriMet Stop ID 7972), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7972",
+                            "stop_code": "7972",
+                            "stop_description": "Northbound stop in Portland (Stop ID 7972)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7972",
+                            "direction": "North",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.579166,
+                        45.529031
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7932",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7932",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7932",
+                    "country_code": "US",
+                    "name": "NE 82nd & Pacific (TriMet Stop ID 7932)",
+                    "distance": 7.155,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE 82nd & Pacific (TriMet Stop ID 7932), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7932",
+                            "stop_code": "7932",
+                            "stop_description": "Southbound stop in Portland (Stop ID 7932)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7932",
+                            "direction": "South",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.578721,
+                        45.526501
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:2148",
+                    "gid": "transit:trimet:stops:stops:TRIMET:2148",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:2148",
+                    "country_code": "US",
+                    "name": "NE Glisan & 82nd (TriMet Stop ID 2148)",
+                    "distance": 7.156,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE Glisan & 82nd (TriMet Stop ID 2148), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "2148",
+                            "stop_code": "2148",
+                            "stop_description": "Westbound stop in Portland (Stop ID 2148)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/2148",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.578911,
+                        45.528299
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:8014",
+                    "gid": "transit:trimet:stops:stops:TRIMET:8014",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:8014",
+                    "country_code": "US",
+                    "name": "NE 82nd & Oregon (TriMet Stop ID 8014)",
+                    "distance": 7.164,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE 82nd & Oregon (TriMet Stop ID 8014), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "8014",
+                            "stop_code": "8014",
+                            "stop_description": "Northbound stop in Portland (Stop ID 8014)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/8014",
+                            "direction": "North",
+                            "position": "Opposite",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.578558,
+                        45.526336
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:2147",
+                    "gid": "transit:trimet:stops:stops:TRIMET:2147",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:2147",
+                    "country_code": "US",
+                    "name": "NE Glisan & 82nd (TriMet Stop ID 2147)",
+                    "distance": 7.167,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Montavilla",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85834889",
+                    "label": "NE Glisan & 82nd (TriMet Stop ID 2147), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "2147",
+                            "stop_code": "2147",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 2147)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/2147",
+                            "direction": "East",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            }
+        ],
+        "bbox": [
+            -122.579179,
+            45.52276,
+            -122.56671,
+            45.529031
+        ]
+    },
+    "Shoes": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "Shoes",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "Shoes"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703770478
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.716041,
+                        45.538922
+                    ]
+                },
+                "properties": {
+                    "id": "way/784624317",
+                    "gid": "openstreetmap:venue:way/784624317",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "way/784624317",
+                    "country_code": "US",
+                    "name": "Summit Safety Shoes",
+                    "housenumber": "2350",
+                    "street": "NW St Helens Rd",
+                    "postalcode": "97210",
+                    "distance": 4.163,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "Summit Safety Shoes, Portland, OR, USA",
+                    "addendum": {
+                        "osm": {
+                            "wheelchair": "yes",
+                            "website": "https://summitsafetyshoes.com",
+                            "phone": "+1 503 2433836",
+                            "opening_hours": "Mo-Th 09:00-17:00; PH off"
+                        }
+                    }
+                },
+                "bbox": [
+                    -122.7163683,
+                    45.5387509,
+                    -122.7157135,
+                    45.539094
+                ]
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.770206,
+                        45.431503
+                    ]
+                },
+                "properties": {
+                    "id": "way/336054418",
+                    "gid": "openstreetmap:venue:way/336054418",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "way/336054418",
+                    "country_code": "US",
+                    "name": "New Shoes",
+                    "housenumber": "12255",
+                    "street": "SW Main St",
+                    "postalcode": "97223",
+                    "distance": 12.579,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Washington County",
+                    "county_gid": "whosonfirst:county:102082215",
+                    "county_a": "WI",
+                    "locality": "Tigard",
+                    "locality_gid": "whosonfirst:locality:101715823",
+                    "label": "New Shoes, Tigard, OR, USA",
+                    "addendum": {
+                        "osm": {
+                            "website": "https://newshoes.com/",
+                            "phone": "+1-503-684-2497",
+                            "opening_hours": "Tu-Fr 10:00-17:30; Sa 10:00-14:00"
+                        }
+                    }
+                },
+                "bbox": [
+                    -122.7703303,
+                    45.4314109,
+                    -122.7700624,
+                    45.4315816
+                ]
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.539376,
+                        45.569124
+                    ]
+                },
+                "properties": {
+                    "id": "node/12903816942",
+                    "gid": "openstreetmap:venue:node/12903816942",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "node/12903816942",
+                    "country_code": "US",
+                    "name": "Crary Shoes",
+                    "housenumber": "12035",
+                    "street": "NE Glenn Widing Dr",
+                    "postalcode": "97220-9050",
+                    "distance": 11.559,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Parkrose",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85840687",
+                    "label": "Crary Shoes, Portland, OR, USA",
+                    "addendum": {
+                        "osm": {
+                            "operator": "Crary Shoes",
+                            "phone": "503-253-8984",
+                            "opening_hours": "Mo-Th 08:30-16:30; Fr 08:30-15:30"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.579385,
+                        45.480763
+                    ]
+                },
+                "properties": {
+                    "id": "node/6345516967",
+                    "gid": "openstreetmap:venue:node/6345516967",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "node/6345516967",
+                    "country_code": "US",
+                    "name": "Al's Shoes & Boots",
+                    "housenumber": "5811",
+                    "street": "SE 82nd Ave",
+                    "postalcode": "97266",
+                    "distance": 8.311,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Mt. Scott-Arleta",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85893209",
+                    "label": "Al's Shoes & Boots, Portland, OR, USA",
+                    "addendum": {
+                        "osm": {
+                            "website": "http://alsshoesboots.com/"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.680646,
+                        45.519786
+                    ]
+                },
+                "properties": {
+                    "id": "node/6388676559",
+                    "gid": "openstreetmap:venue:node/6388676559",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "node/6388676559",
+                    "country_code": "US",
+                    "name": "Shoes on the Run",
+                    "housenumber": "803",
+                    "street": "SW Morrison St",
+                    "postalcode": "97205",
+                    "distance": 0.831,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "Shoes on the Run, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.652198,
+                        45.532345
+                    ]
+                },
+                "properties": {
+                    "id": "node/5772016222",
+                    "gid": "openstreetmap:venue:node/5772016222",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "node/5772016222",
+                    "country_code": "US",
+                    "name": "Trend Shoes",
+                    "housenumber": "967",
+                    "street": "Lloyd Center",
+                    "postalcode": "97232",
+                    "distance": 1.953,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Lloyd District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871513",
+                    "label": "Trend Shoes, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.38987,
+                        45.54225
+                    ]
+                },
+                "properties": {
+                    "id": "way/561388546",
+                    "gid": "openstreetmap:venue:way/561388546",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "way/561388546",
+                    "country_code": "US",
+                    "name": "Rack Room Shoes",
+                    "housenumber": "450",
+                    "street": "257th Way",
+                    "postalcode": "97060",
+                    "distance": 21.985,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Troutdale",
+                    "locality_gid": "whosonfirst:locality:101716273",
+                    "label": "Rack Room Shoes, Troutdale, OR, USA",
+                    "addendum": {
+                        "osm": {
+                            "brand": "Rack Room Shoes",
+                            "opening_hours": "Mo-Sa 10:00-20:00; Su 10:00-19:00"
+                        }
+                    }
+                },
+                "bbox": [
+                    -122.3900005,
+                    45.5421708,
+                    -122.3896347,
+                    45.5423783
+                ]
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.571098,
+                        45.430987
+                    ]
+                },
+                "properties": {
+                    "id": "way/552486027",
+                    "gid": "openstreetmap:venue:way/552486027",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "way/552486027",
+                    "country_code": "US",
+                    "name": "Jay's Wide Shoes",
+                    "housenumber": "8966",
+                    "street": "SE Sunnyside Rd",
+                    "postalcode": "97015",
+                    "distance": 12.561,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Clackamas County",
+                    "county_gid": "whosonfirst:county:102082213",
+                    "county_a": "CC",
+                    "locality": "Clackamas",
+                    "locality_gid": "whosonfirst:locality:1125933145",
+                    "label": "Jay's Wide Shoes, Clackamas, OR, USA"
+                },
+                "bbox": [
+                    -122.5711871,
+                    45.4308786,
+                    -122.571009,
+                    45.4310948
+                ]
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.986755,
+                        45.522427
+                    ]
+                },
+                "properties": {
+                    "id": "way/436052173",
+                    "gid": "openstreetmap:venue:way/436052173",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "way/436052173",
+                    "country_code": "US",
+                    "name": "Gimre's Shoes",
+                    "housenumber": "250",
+                    "street": "E Main St",
+                    "postalcode": "97123",
+                    "distance": 24.707,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Washington County",
+                    "county_gid": "whosonfirst:county:102082215",
+                    "county_a": "WI",
+                    "locality": "Hillsboro",
+                    "locality_gid": "whosonfirst:locality:101715839",
+                    "label": "Gimre's Shoes, Hillsboro, OR, USA"
+                },
+                "bbox": [
+                    -122.9868158,
+                    45.5223002,
+                    -122.9866937,
+                    45.5225547
+                ]
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.879336,
+                        45.15541
+                    ]
+                },
+                "properties": {
+                    "id": "node/4316542487",
+                    "gid": "openstreetmap:venue:node/4316542487",
+                    "layer": "venue",
+                    "source": "openstreetmap",
+                    "source_id": "node/4316542487",
+                    "country_code": "US",
+                    "name": "Rack Room Shoes",
+                    "distance": 43.767,
+                    "accuracy": "point",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Marion County",
+                    "county_gid": "whosonfirst:county:102082219",
+                    "county_a": "MR",
+                    "locality": "Woodburn",
+                    "locality_gid": "whosonfirst:locality:101716059",
+                    "label": "Rack Room Shoes, Woodburn, OR, USA",
+                    "addendum": {
+                        "osm": {
+                            "brand": "Rack Room Shoes"
+                        }
+                    }
+                }
+            }
+        ],
+        "bbox": [
+            -122.9868158,
+            45.15541,
+            -122.3896347,
+            45.569124
+        ]
+    },
+    "SW_5th_Avenue": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "SW 5th Avenue",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "SW 5th Avenue",
+                    "street": "SW 5th Avenue"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703770645
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.677934,
+                        45.518255
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7646",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7646",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7646",
+                    "country_code": "US",
+                    "name": "Pioneer Place/SW 5th Ave MAX Station (TriMet Stop ID 7646)",
+                    "distance": 0.649,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "Pioneer Place/SW 5th Ave MAX Station (TriMet Stop ID 7646), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7646",
+                            "stop_code": "7646",
+                            "stop_description": "Southbound stop in Portland (Stop ID 7646)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7646",
+                            "direction": "South",
+                            "position": "Nearside",
+                            "mode": "TRAM"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.676586,
+                        45.520126
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:6160",
+                    "gid": "transit:trimet:stops:stops:TRIMET:6160",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:6160",
+                    "country_code": "US",
+                    "name": "SW Washington & 5th Ave (TriMet Stop ID 6160)",
+                    "distance": 0.514,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW Washington & 5th Ave (TriMet Stop ID 6160), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "6160",
+                            "stop_code": "6160",
+                            "stop_description": "Westbound stop in Portland (Stop ID 6160)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/6160",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.676134,
+                        45.521464
+                    ]
+                },
+                "properties": {
+                    "id": "37032",
+                    "gid": "transit:intersection:37032",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "37032",
+                    "country_code": "US",
+                    "name": "SW 5th Ave & SW Oak St",
+                    "street": "SW 5th Ave",
+                    "distance": 0.505,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW 5th Ave & SW Oak St, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.675774,
+                        45.522135
+                    ]
+                },
+                "properties": {
+                    "id": "81443",
+                    "gid": "transit:intersection:81443",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "81443",
+                    "country_code": "US",
+                    "name": "SW 5th Ave & SW Pine St",
+                    "street": "SW 5th Ave",
+                    "distance": 0.509,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW 5th Ave & SW Pine St, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.676485,
+                        45.520795
+                    ]
+                },
+                "properties": {
+                    "id": "11835",
+                    "gid": "transit:intersection:11835",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "11835",
+                    "country_code": "US",
+                    "name": "SW 5th Ave & SW Stark St",
+                    "street": "SW 5th Ave",
+                    "distance": 0.513,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW 5th Ave & SW Stark St, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.675557,
+                        45.522582
+                    ]
+                },
+                "properties": {
+                    "id": "95105",
+                    "gid": "transit:intersection:95105",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "95105",
+                    "country_code": "US",
+                    "name": "SW 5th Ave & SW Ankeny St",
+                    "street": "SW 5th Ave",
+                    "distance": 0.52,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW 5th Ave & SW Ankeny St, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.676843,
+                        45.52013
+                    ]
+                },
+                "properties": {
+                    "id": "32672",
+                    "gid": "transit:intersection:32672",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "32672",
+                    "country_code": "US",
+                    "name": "SW 5th Ave & SW Washington St",
+                    "street": "SW 5th Ave",
+                    "distance": 0.534,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW 5th Ave & SW Washington St, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.683752,
+                        45.506849
+                    ]
+                },
+                "properties": {
+                    "id": "39285",
+                    "gid": "transit:intersection:39285",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "39285",
+                    "country_code": "US",
+                    "name": "SW Broadway & SW 5th Ave",
+                    "street": "SW Broadway",
+                    "distance": 1.815,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "South Portland",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85849969",
+                    "label": "SW Broadway & SW 5th Ave, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.677211,
+                        45.519462
+                    ]
+                },
+                "properties": {
+                    "id": "5921",
+                    "gid": "transit:intersection:5921",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "5921",
+                    "country_code": "US",
+                    "name": "SW 5th Ave & SW Alder St",
+                    "street": "SW 5th Ave",
+                    "distance": 0.566,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW 5th Ave & SW Alder St, Portland, OR, USA"
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.677575,
+                        45.518806
+                    ]
+                },
+                "properties": {
+                    "id": "42149",
+                    "gid": "transit:intersection:42149",
+                    "layer": "intersection",
+                    "source": "transit",
+                    "source_id": "42149",
+                    "country_code": "US",
+                    "name": "SW 5th Ave & SW Morrison St",
+                    "street": "SW 5th Ave",
+                    "distance": 0.606,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Downtown",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867131",
+                    "label": "SW 5th Ave & SW Morrison St, Portland, OR, USA"
+                }
+            }
+        ],
+        "bbox": [
+            -122.683752,
+            45.506849,
+            -122.675557,
+            45.522582
+        ]
+    },
+    "99476": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "99476",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "99476",
+                    "postcode": "99476"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703770761
+        },
+        "type": "FeatureCollection",
+        "features": []
+    },
+    "32": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "32",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "32"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703770884
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.632699,
+                        45.53508
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:642",
+                    "gid": "transit:trimet:stops:stops:TRIMET:642",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:642",
+                    "country_code": "US",
+                    "name": "NE Broadway & 32nd (TriMet Stop ID 642)",
+                    "distance": 3.359,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Sullivan's Gulch",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871463",
+                    "label": "NE Broadway & 32nd (TriMet Stop ID 642), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "642",
+                            "stop_code": "642",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 642)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/642",
+                            "direction": "East",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.631984,
+                        45.522949
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:768",
+                    "gid": "transit:trimet:stops:stops:TRIMET:768",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:768",
+                    "country_code": "US",
+                    "name": "E Burnside & NE 32nd (TriMet Stop ID 768)",
+                    "distance": 2.983,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Kerns",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871495",
+                    "label": "E Burnside & NE 32nd (TriMet Stop ID 768), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "768",
+                            "stop_code": "768",
+                            "stop_description": "Westbound stop in Portland (Stop ID 768)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/768",
+                            "direction": "West",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.631813,
+                        45.522775
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:769",
+                    "gid": "transit:trimet:stops:stops:TRIMET:769",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:769",
+                    "country_code": "US",
+                    "name": "E Burnside & SE 32nd (TriMet Stop ID 769)",
+                    "distance": 2.994,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Laurelhurst",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85829959",
+                    "label": "E Burnside & SE 32nd (TriMet Stop ID 769), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "769",
+                            "stop_code": "769",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 769)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/769",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.631819,
+                        45.526374
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:2108",
+                    "gid": "transit:trimet:stops:stops:TRIMET:2108",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:2108",
+                    "country_code": "US",
+                    "name": "NE Glisan & 32nd (TriMet Stop ID 2108)",
+                    "distance": 3.061,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Kerns",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871495",
+                    "label": "NE Glisan & 32nd (TriMet Stop ID 2108), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "2108",
+                            "stop_code": "2108",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 2108)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/2108",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.631464,
+                        45.526526
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:2109",
+                    "gid": "transit:trimet:stops:stops:TRIMET:2109",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:2109",
+                    "country_code": "US",
+                    "name": "NE Glisan & 32nd (TriMet Stop ID 2109)",
+                    "distance": 3.092,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Laurelhurst",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85829959",
+                    "label": "NE Glisan & 32nd (TriMet Stop ID 2109), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "2109",
+                            "stop_code": "2109",
+                            "stop_description": "Westbound stop in Portland (Stop ID 2109)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/2109",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.714554,
+                        45.53597
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:5841",
+                    "gid": "transit:trimet:stops:stops:TRIMET:5841",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:5841",
+                    "country_code": "US",
+                    "name": "NW Thurman & 32nd (TriMet Stop ID 5841)",
+                    "distance": 3.903,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW Thurman & 32nd (TriMet Stop ID 5841), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "5841",
+                            "stop_code": "5841",
+                            "stop_description": "Westbound stop in Portland (Stop ID 5841)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/5841",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.714775,
+                        45.535859
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:5842",
+                    "gid": "transit:trimet:stops:stops:TRIMET:5842",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:5842",
+                    "country_code": "US",
+                    "name": "NW Thurman & 32nd (TriMet Stop ID 5842)",
+                    "distance": 3.913,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW Thurman & 32nd (TriMet Stop ID 5842), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "5842",
+                            "stop_code": "5842",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 5842)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/5842",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.632921,
+                        45.490537
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:2718",
+                    "gid": "transit:trimet:stops:stops:TRIMET:2718",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:2718",
+                    "country_code": "US",
+                    "name": "SE Holgate & 32nd (TriMet Stop ID 2718)",
+                    "distance": 4.373,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "label": "SE Holgate & 32nd (TriMet Stop ID 2718), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "2718",
+                            "stop_code": "2718",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 2718)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/2718",
+                            "direction": "East",
+                            "position": "Opposite",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.632334,
+                        45.490661
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:2719",
+                    "gid": "transit:trimet:stops:stops:TRIMET:2719",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:2719",
+                    "country_code": "US",
+                    "name": "SE Holgate & 32nd (TriMet Stop ID 2719)",
+                    "distance": 4.393,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Creston-Kenilworth",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:420536085",
+                    "label": "SE Holgate & 32nd (TriMet Stop ID 2719), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "2719",
+                            "stop_code": "2719",
+                            "stop_description": "Westbound stop in Portland (Stop ID 2719)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/2719",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.631794,
+                        45.484778
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:5518",
+                    "gid": "transit:trimet:stops:stops:TRIMET:5518",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:5518",
+                    "country_code": "US",
+                    "name": "SE Steele & 32nd (TriMet Stop ID 5518)",
+                    "distance": 4.925,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Reed",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871483",
+                    "label": "SE Steele & 32nd (TriMet Stop ID 5518), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "5518",
+                            "stop_code": "5518",
+                            "stop_description": "Westbound stop in Portland (Stop ID 5518)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/5518",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            }
+        ],
+        "bbox": [
+            -122.714775,
+            45.484778,
+            -122.631464,
+            45.53597
+        ]
+    },
+    "NW_Lovejoy_&_19th": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "NW Lovejoy",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "NW",
+                    "locality": "Lovejoy",
+                    "admin": "Lovejoy"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer",
+                "Invalid Parameter:  19th"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703771025
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.694475,
+                        45.530114
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7122",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7122",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7122",
+                    "country_code": "US",
+                    "name": "NW 21st & Lovejoy (TriMet Stop ID 7122)",
+                    "distance": 2.216,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 21st & Lovejoy (TriMet Stop ID 7122), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7122",
+                            "stop_code": "7122",
+                            "stop_description": "Northbound stop in Portland (Stop ID 7122)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7122",
+                            "direction": "North",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.694628,
+                        45.52997
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7121",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7121",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7121",
+                    "country_code": "US",
+                    "name": "NW 21st & Lovejoy (TriMet Stop ID 7121)",
+                    "distance": 2.218,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 21st & Lovejoy (TriMet Stop ID 7121), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7121",
+                            "stop_code": "7121",
+                            "stop_description": "Southbound stop in Portland (Stop ID 7121)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7121",
+                            "direction": "South",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.698522,
+                        45.529694
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7163",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7163",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7163",
+                    "country_code": "US",
+                    "name": "NW 23rd & Lovejoy (TriMet Stop ID 7163)",
+                    "distance": 2.472,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 23rd & Lovejoy (TriMet Stop ID 7163), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7163",
+                            "stop_code": "7163",
+                            "stop_description": "Northbound stop in Portland (Stop ID 7163)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7163",
+                            "direction": "North",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.70257,
+                        45.529636
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:9125",
+                    "gid": "transit:trimet:stops:stops:TRIMET:9125",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:9125",
+                    "country_code": "US",
+                    "name": "NW 25th & Lovejoy (TriMet Stop ID 9125)",
+                    "distance": 2.757,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 25th & Lovejoy (TriMet Stop ID 9125), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "9125",
+                            "stop_code": "9125",
+                            "stop_description": "Northbound stop in Portland (Stop ID 9125)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/9125",
+                            "direction": "North",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.694676,
+                        45.529833
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:3595",
+                    "gid": "transit:trimet:stops:stops:TRIMET:3595",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:3595",
+                    "country_code": "US",
+                    "name": "NW 21st & Lovejoy (Portland Streetcar Stop ID 3595)",
+                    "distance": 2.214,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 21st & Lovejoy (Portland Streetcar Stop ID 3595), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "PSC",
+                            "stop_id": "3595",
+                            "stop_code": "3595",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 3595)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/3595",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "TRAM"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.696698,
+                        45.529794
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:3596",
+                    "gid": "transit:trimet:stops:stops:TRIMET:3596",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:3596",
+                    "country_code": "US",
+                    "name": "NW 22nd & Lovejoy (Portland Streetcar Stop ID 3596)",
+                    "distance": 2.35,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 22nd & Lovejoy (Portland Streetcar Stop ID 3596), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "PSC",
+                            "stop_id": "3596",
+                            "stop_code": "3596",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 3596)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/3596",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "TRAM"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.6894,
+                        45.529825
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:14038",
+                    "gid": "transit:trimet:stops:stops:TRIMET:14038",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:14038",
+                    "country_code": "US",
+                    "name": "NW 18th & Lovejoy (TriMet Stop ID 14038)",
+                    "distance": 1.867,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 18th & Lovejoy (TriMet Stop ID 14038), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "14038",
+                            "stop_code": "14038",
+                            "stop_description": "Northbound stop in Portland (Stop ID 14038)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/14038",
+                            "direction": "North",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.684611,
+                        45.529997
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:10752",
+                    "gid": "transit:trimet:stops:stops:TRIMET:10752",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:10752",
+                    "country_code": "US",
+                    "name": "NW 13th & Lovejoy (Portland Streetcar Stop ID 10752)",
+                    "distance": 1.593,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Pearl",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867143",
+                    "label": "NW 13th & Lovejoy (Portland Streetcar Stop ID 10752), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "PSC",
+                            "stop_id": "10752",
+                            "stop_code": "10752",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 10752)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/10752",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "TRAM"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.689587,
+                        45.529925
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:10751",
+                    "gid": "transit:trimet:stops:stops:TRIMET:10751",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:10751",
+                    "country_code": "US",
+                    "name": "NW 18th & Lovejoy (Portland Streetcar Stop ID 10751)",
+                    "distance": 1.885,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Northwest District",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871509",
+                    "label": "NW 18th & Lovejoy (Portland Streetcar Stop ID 10751), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "PSC",
+                            "stop_id": "10751",
+                            "stop_code": "10751",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 10751)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/10751",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "TRAM"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.684576,
+                        45.530126
+                    ]
+                },
+                "properties": {
+                    "id": "stops:RIDECONNECTION:2577989",
+                    "gid": "transit:rideconnection:stops:stops:RIDECONNECTION:2577989",
+                    "layer": "rideconnection:stops",
+                    "source": "transit",
+                    "source_id": "stops:RIDECONNECTION:2577989",
+                    "country_code": "US",
+                    "name": "Safeway - Pearl (NW Lovejoy Street) ( Stop ID 2577989)",
+                    "distance": 1.601,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Pearl",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85867143",
+                    "label": "Safeway - Pearl (NW Lovejoy Street) ( Stop ID 2577989), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "RIDECONNECTION",
+                            "stop_id": "2577989",
+                            "stop_code": "2577989",
+                            "location_type": 0,
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            }
+        ],
+        "bbox": [
+            -122.70257,
+            45.529636,
+            -122.684576,
+            45.530126
+        ]
+    },
+    "8": {
+        "geocoding": {
+            "version": "0.2",
+            "attribution": "http://ws-st.trimet.org/attribution",
+            "query": {
+                "text": "8",
+                "parser": "pelias",
+                "parsed_text": {
+                    "subject": "8"
+                },
+                "size": 10,
+                "layers": [
+                    "venue",
+                    "street",
+                    "intersection",
+                    "trimet:stops",
+                    "ctran:stops",
+                    "school",
+                    "fare",
+                    "ctran_flex:stops",
+                    "hotel_motel",
+                    "bikeshare",
+                    "rideconnection:stops",
+                    "sam:stops",
+                    "tvm",
+                    "smart:stops",
+                    "fire_station",
+                    "mult:stops",
+                    "medical_clinic",
+                    "clackamas:stops",
+                    "station",
+                    "fare_outlet",
+                    "activity_center",
+                    "pr",
+                    "government_agency",
+                    "library",
+                    "community_center",
+                    "post_office",
+                    "shopping",
+                    "city_hall",
+                    "social_service",
+                    "facility",
+                    "major_employer",
+                    "hospital",
+                    "tc",
+                    "museum",
+                    "br",
+                    "transportation",
+                    "wapark:stops",
+                    "correctional_facility",
+                    "town_center",
+                    "airport",
+                    "locality",
+                    "postalcode",
+                    "neighbourhood",
+                    "county",
+                    "macrohood",
+                    "region",
+                    "country"
+                ],
+                "private": false,
+                "focus.point.lat": 45.52,
+                "focus.point.lon": -122.67,
+                "lang": {
+                    "name": "English",
+                    "iso6391": "en",
+                    "iso6393": "eng",
+                    "via": "default",
+                    "defaulted": true
+                },
+                "querySize": 20
+            },
+            "warnings": [
+                "performance optimization: excluding 'address' layer"
+            ],
+            "engine": {
+                "name": "Pelias",
+                "author": "Mapzen",
+                "version": "1.0"
+            },
+            "timestamp": 1764703771139
+        },
+        "type": "FeatureCollection",
+        "features": [
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.709812,
+                        45.514268
+                    ]
+                },
+                "properties": {
+                    "id": "stops:WAPARK:815449",
+                    "gid": "transit:wapark:stops:stops:WAPARK:815449",
+                    "layer": "wapark:stops",
+                    "source": "transit",
+                    "source_id": "stops:WAPARK:815449",
+                    "country_code": "US",
+                    "name": "Archery Range (Washington Park Shuttle Stop ID 8)",
+                    "distance": 3.17,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Arlington Heights",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871473",
+                    "label": "Archery Range (Washington Park Shuttle Stop ID 8), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "WAPARK",
+                            "agency_id": "501",
+                            "stop_id": "815449",
+                            "stop_code": "8",
+                            "stop_description": "Archery Range, Wildwood Trail",
+                            "location_type": 0,
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.593886,
+                        45.363509
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:8",
+                    "gid": "transit:trimet:stops:stops:TRIMET:8",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:8",
+                    "country_code": "US",
+                    "name": "900 Block Abernethy (TriMet Stop ID 8)",
+                    "distance": 18.407,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Clackamas County",
+                    "county_gid": "whosonfirst:county:102082213",
+                    "county_a": "CC",
+                    "locality": "Oregon City",
+                    "locality_gid": "whosonfirst:locality:101715863",
+                    "label": "900 Block Abernethy (TriMet Stop ID 8), Oregon City, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "8",
+                            "stop_code": "8",
+                            "stop_description": "Eastbound stop in Oregon City (Stop ID 8)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/8",
+                            "direction": "East",
+                            "position": "At",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.67268,
+                        45.420411
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:7",
+                    "gid": "transit:trimet:stops:stops:TRIMET:7",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:7",
+                    "country_code": "US",
+                    "name": "A Ave & 8th St (TriMet Stop ID 7)",
+                    "distance": 11.088,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Clackamas County",
+                    "county_gid": "whosonfirst:county:102082213",
+                    "county_a": "CC",
+                    "locality": "Lake Oswego",
+                    "locality_gid": "whosonfirst:locality:101715835",
+                    "label": "A Ave & 8th St (TriMet Stop ID 7), Lake Oswego, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "7",
+                            "stop_code": "7",
+                            "stop_description": "Westbound stop in Lake Oswego (Stop ID 7)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/7",
+                            "direction": "West",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.67307,
+                        45.420217
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:6",
+                    "gid": "transit:trimet:stops:stops:TRIMET:6",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:6",
+                    "country_code": "US",
+                    "name": "A Ave & 8th St (TriMet Stop ID 6)",
+                    "distance": 11.11,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Clackamas County",
+                    "county_gid": "whosonfirst:county:102082213",
+                    "county_a": "CC",
+                    "locality": "Lake Oswego",
+                    "locality_gid": "whosonfirst:locality:101715835",
+                    "label": "A Ave & 8th St (TriMet Stop ID 6), Lake Oswego, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "6",
+                            "stop_code": "6",
+                            "stop_description": "Eastbound stop in Lake Oswego (Stop ID 6)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/6",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.657843,
+                        45.522847
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:820",
+                    "gid": "transit:trimet:stops:stops:TRIMET:820",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:820",
+                    "country_code": "US",
+                    "name": "E Burnside & SE 8th Ave (TriMet Stop ID 820)",
+                    "distance": 1,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Buckman",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85871515",
+                    "label": "E Burnside & SE 8th Ave (TriMet Stop ID 820), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "820",
+                            "stop_code": "820",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 820)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/820",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.658157,
+                        45.506113
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:1496",
+                    "gid": "transit:trimet:stops:stops:TRIMET:1496",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:1496",
+                    "country_code": "US",
+                    "name": "SE Division & 8th (TriMet Stop ID 1496)",
+                    "distance": 1.801,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Hosford-Abernethy",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85893193",
+                    "label": "SE Division & 8th (TriMet Stop ID 1496), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "1496",
+                            "stop_code": "1496",
+                            "stop_description": "Westbound stop in Portland (Stop ID 1496)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/1496",
+                            "direction": "West",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.789581,
+                        45.308341
+                    ]
+                },
+                "properties": {
+                    "id": "stops:SMART:10248283",
+                    "gid": "transit:smart:stops:stops:SMART:10248283",
+                    "layer": "smart:stops",
+                    "source": "transit",
+                    "source_id": "stops:SMART:10248283",
+                    "country_code": "US",
+                    "name": "Barber Street @ San Miguel (SMART Stop ID 8)",
+                    "distance": 25.347,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Clackamas County",
+                    "county_gid": "whosonfirst:county:102082213",
+                    "county_a": "CC",
+                    "locality": "Wilsonville",
+                    "locality_gid": "whosonfirst:locality:101715819",
+                    "label": "Barber Street @ San Miguel (SMART Stop ID 8), Wilsonville, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "SMART",
+                            "agency_id": "214",
+                            "stop_id": "10248283",
+                            "stop_code": "8",
+                            "location_type": 0,
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.658124,
+                        45.504815
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:13778",
+                    "gid": "transit:trimet:stops:stops:TRIMET:13778",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:13778",
+                    "country_code": "US",
+                    "name": "SE Division Pl & 8th (TriMet Stop ID 13778)",
+                    "distance": 1.928,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Hosford-Abernethy",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85893193",
+                    "label": "SE Division Pl & 8th (TriMet Stop ID 13778), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "13778",
+                            "stop_code": "13778",
+                            "stop_description": "Eastbound stop in Portland (Stop ID 13778)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/13778",
+                            "direction": "East",
+                            "position": "Nearside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.671968,
+                        45.627134
+                    ]
+                },
+                "properties": {
+                    "id": "stops:CTRAN:638",
+                    "gid": "transit:ctran:stops:stops:CTRAN:638",
+                    "layer": "ctran:stops",
+                    "source": "transit",
+                    "source_id": "stops:CTRAN:638",
+                    "country_code": "US",
+                    "name": "W 8th Street & Main (C-TRAN Stop ID 638)",
+                    "distance": 11.927,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Washington",
+                    "region_gid": "whosonfirst:region:85688623",
+                    "region_a": "WA",
+                    "county": "Clark County",
+                    "county_gid": "whosonfirst:county:102084251",
+                    "county_a": "CR",
+                    "locality": "Vancouver",
+                    "locality_gid": "whosonfirst:locality:101730071",
+                    "label": "W 8th Street & Main (C-TRAN Stop ID 638), Vancouver, WA, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "CTRAN",
+                            "agency_id": "C-TRAN",
+                            "stop_id": "638",
+                            "stop_code": "638",
+                            "location_type": 0,
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            },
+            {
+                "type": "Feature",
+                "geometry": {
+                    "type": "Point",
+                    "coordinates": [
+                        -122.782735,
+                        45.594407
+                    ]
+                },
+                "properties": {
+                    "id": "stops:TRIMET:5333",
+                    "gid": "transit:trimet:stops:stops:TRIMET:5333",
+                    "layer": "trimet:stops",
+                    "source": "transit",
+                    "source_id": "stops:TRIMET:5333",
+                    "country_code": "US",
+                    "name": "NW St Helens & Milepost 8 (TriMet Stop ID 5333)",
+                    "distance": 12.076,
+                    "accuracy": "centroid",
+                    "country": "United States",
+                    "country_gid": "whosonfirst:country:85633793",
+                    "country_a": "USA",
+                    "region": "Oregon",
+                    "region_gid": "whosonfirst:region:85688513",
+                    "region_a": "OR",
+                    "county": "Multnomah County",
+                    "county_gid": "whosonfirst:county:102081631",
+                    "county_a": "MU",
+                    "locality": "Portland",
+                    "locality_gid": "whosonfirst:locality:101715829",
+                    "neighbourhood": "Linnton",
+                    "neighbourhood_gid": "whosonfirst:neighbourhood:85830793",
+                    "label": "NW St Helens & Milepost 8 (TriMet Stop ID 5333), Portland, OR, USA",
+                    "addendum": {
+                        "gtfs": {
+                            "feed_id": "TRIMET",
+                            "agency_id": "TRIMET",
+                            "stop_id": "5333",
+                            "stop_code": "5333",
+                            "stop_description": "Southbound stop in Portland (Stop ID 5333)",
+                            "location_type": 0,
+                            "url": "https://trimet.org/home/stop/5333",
+                            "direction": "South",
+                            "position": "Farside",
+                            "mode": "BUS"
+                        }
+                    }
+                }
+            }
+        ],
+        "bbox": [
+            -122.789581,
+            45.308341,
+            -122.593886,
+            45.627134
+        ]
+    }
+}

@@ -1,187 +1,118 @@
-import enum
-import re
-from typing import Literal, Optional
+from logging import getLogger
+from typing import Literal, Any
 
 from pyramid.encode import urlencode
+from pyramid.interfaces import IMultiDict, IRequest
 from pyramid.request import Request
 
 from pelias.adapter.service import pelias_service
+from pelias.adapter.service.util import is_address, remove_non_digits, prioritize_stops, \
+    is_intersection, remove_duplicate_features, prioritize_addresses, EvaluatesAs
+
+logger = getLogger(__name__)
 
 TRANSIT_LAYERS = (
-    "trimet:stops,ctran:stops,sam:stops,smart:stops,mult:stops,wapark:stops"
+    "trimet:stops,ctran:stops,sam:stops,smart:stops,mult:stops,wapark:stops,ctran_flex:stops"
 )
 
+DEFAULT_SIZE = 10
 
 
-class EvaluatesAs(enum.Enum):
-    STREET_ADDRESS = "street_address"
-    JUST_A_NUMBER = "just_a_number"
-    STOP_REQUEST = "stop_request"
-    UNKNOWN = "unknown"
+def get_response_and_features(request: Request,
+                              service: Literal["autocomplete", "search", "reverse"] = "autocomplete",
+                              is_rtp: bool = False) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    ret_val = pelias_service.get_pelias_response(service=service, request=request, is_rtp=is_rtp)
+    _features = ret_val.get("features", [])
+    return ret_val, _features
 
 
-def remove_non_digits(s: Optional[str]) -> str:
-    """Return only the digits from `s`. None -> ''."""
-    if not s:
-        return ""
-    return re.sub(r"\D+", "", s)
-
-
-
-
-def normalize_address(addr: str) -> str:
-    """Normalize common street abbreviations and directions in a U.S. address."""
-    if not addr:
-        return ""
-
-    addr = addr.lower().strip()
-
-    # Directional replacements
-    directions = {
-        r"\bn\b": "north",
-        r"\bs\b": "south",
-        r"\be\b": "east",
-        r"\bw\b": "west",
-        r"\bnw\b": "northwest",
-        r"\bne\b": "northeast",
-        r"\bsw\b": "southwest",
-        r"\bse\b": "southeast",
-    }
-
-    # Street type replacements
-    streets = {
-        r"\bst\b": "street",
-        r"\bstreet\b": "street",
-        r"\bave\b": "avenue",
-        r"\bav\b": "avenue",
-        r"\baven\b": "avenue",
-        r"\bavenue\b": "avenue",
-        r"\bblvd\b": "boulevard",
-        r"\brd\b": "road",
-        r"\bdr\b": "drive",
-        r"\bln\b": "lane",
-        r"\bct\b": "court",
-        r"\bcir\b": "circle",
-        r"\bhwy\b": "highway",
-        r"\bpl\b": "place",
-        r"\bter\b": "terrace",
-        r"\bpkwy\b": "parkway",
-    }
-
-    # Apply direction and street normalization
-    for pattern, repl in {**directions, **streets}.items():
-        addr = re.sub(pattern + r"\.?", repl, addr)
-
-    # Remove double spaces and capitalize properly
-    addr = re.sub(r"\s+", " ", addr).strip().title()
-    return addr
-
-
-def remove_duplicate_features(features):
+def adjust_layers_for_query(query_type: EvaluatesAs, query_params: dict) -> tuple[bool, dict]:
+    """Adjust Pelias query layers based on the detected query type.
+    
+    Args:
+        query_type: The evaluated type of the query (from EvaluatesAs enum)
+        query_params: Dictionary of query parameters to modify
+        
+    Returns:
+        tuple[bool, dict]: A tuple containing:
+            - bool: True if this is a stop request, False otherwise
+            - dict: Modified query parameters with appropriate layers set
+            
+    Notes:
+        - STOP_REQUEST: Sets layers to all transit stop layers
+        - STREET_ADDRESS: Sets layers to 'address'
+        - INTERSECTION: Sets layers to 'intersection'
+        - JUST_A_NUMBER: Returns early without modifying layers
     """
-    Best shot at normalizing and removing duplicate features from pelias response
-    """
-    refined = {
-        f["properties"]["name"].strip().lower(): f
-        for f in features
-        if isinstance(f, dict)
-           and "properties" in f
-           and isinstance(f["properties"], dict)
-           and "name" in f["properties"]
-           and isinstance(f["properties"]["name"], str)
-    }
-    normalized_addresses = {normalize_address(key): v for key, v in refined.items()}
-
-    return list(normalized_addresses.values())
-
-
-def adjust_layers_for_query(query_type, query_params) -> tuple[bool, dict]:
-    if query_type in (EvaluatesAs.STOP_REQUEST, EvaluatesAs.JUST_A_NUMBER):
+    if query_type is EvaluatesAs.STOP_REQUEST:
         query_params["layers"] = TRANSIT_LAYERS
         return True, query_params
     elif query_type is EvaluatesAs.STREET_ADDRESS:
         query_params["layers"] = "address"
+    elif query_type is EvaluatesAs.JUST_A_NUMBER:
+        return False, query_params
+    elif query_type is EvaluatesAs.INTERSECTION:
+        query_params["layers"] = "intersection"
     return False, query_params
 
 
-def is_street_address(text: str) -> bool:
-    return bool(
-        re.search(
-            r"\b\d{1,5}\s+\w+(?:\s+\w+)*\s+(?:st|street|ave|avenue|rd|road|blvd|boulevard|dr|drive|ln|lane|ct|court)\b",
-            text.lower(),
-        )
-    )
-
-
 def get_query_type(query: str) -> tuple[EvaluatesAs, int]:
+    """Analyze a query string and determine its type.
+    
+    Args:
+        query: The raw query string to analyze
+        
+    Returns:
+        tuple[EvaluatesAs, int]: A tuple containing:
+            - EvaluatesAs: The evaluated query type (STOP_REQUEST, STREET_ADDRESS, 
+              INTERSECTION, JUST_A_NUMBER, or UNKNOWN)
+            - int: The extracted stop_id if query is a number or stop request, 
+              otherwise -1
+              
+    Examples:
+        >>> get_query_type("stop 1234")
+        (EvaluatesAs.STOP_REQUEST, 1234)
+        >>> get_query_type("123 Main St")
+        (EvaluatesAs.STREET_ADDRESS, -1)
+        >>> get_query_type("5678")
+        (EvaluatesAs.JUST_A_NUMBER, 5678)
+    """
     query = query.lower().strip()
     stop_id = -1
+    query_type = EvaluatesAs.UNKNOWN
     try:
         stop_id = int(query)
+        query_type = EvaluatesAs.JUST_A_NUMBER
     except ValueError:
         # If parsing fails, stop_id remains -1, indicating the query is not a number.
         pass
-    if is_street_address(query):
-        query_type = EvaluatesAs.STREET_ADDRESS
-    elif (
-            query.startswith("stop")
-            or query.startswith("stopid")
-            or query.startswith("stop_id")
-    ):
+    if query and query.startswith(("stop", "stopid", "stop_id", "stop id")) and query[-1].isdigit():
         query_type = EvaluatesAs.STOP_REQUEST
-    elif stop_id > 0:
-        query_type = EvaluatesAs.JUST_A_NUMBER
-    else:
-        query_type = EvaluatesAs.UNKNOWN
-
+        stop_id = remove_non_digits(text=query, to_int=True)
+    elif query_type is EvaluatesAs.UNKNOWN and is_intersection(query)[0]:
+        query_type = EvaluatesAs.INTERSECTION
+    elif is_address(query):
+        query_type = EvaluatesAs.STREET_ADDRESS
     return query_type, stop_id
-
-def get_best_match(ret_val, text: str, is_stop_request=False):
-    """
-    from a pelias response, find the best match (first in list) and return it
-    :param ret_val: pelias response json
-    :param text: original query text
-    :param is_stop_request: whether this is a stop request
-    :return: first match from pelias response
-    """
-    features = ret_val.get("features", [])
-    if not features or len(features) == 1:
-        return ret_val
-    else:
-        features = remove_duplicate_features(features)
-        if is_stop_request:
-            # for stop requests, we expect exactly one match
-            stop_id = remove_non_digits(text)
-            if stop_id:
-                matches = [
-                    feat
-                    for feat in features
-                    if isinstance(feat.get("id"), str)
-                    and feat["id"].endswith(f":{stop_id}")
-                ]
-                ret_val["features"] = matches
-        else:
-            matches = [
-                f
-                for f in features
-                if text == f.get("properties", {}).get("name", "").lower().strip()
-            ]
-            if not matches:
-                matches = [
-                    f
-                    for f in features
-                    if text in f.get("properties", {}).get("name", "").lower().strip()
-                ]
-            if matches:
-                ret_val["features"] = matches
-    return ret_val
 
 
 def refactor_pelias_request(request: Request, new_params: dict) -> Request:
-    """update both request._query_params and the ASGI scope query_string,
-    and clear cached URL so request.url reflects the new params
-
-
+    """Update Pyramid request object with new query parameters.
+    
+    Updates the request's query string, clears cached properties, and ensures
+    the request reflects the new parameters for downstream processing.
+    
+    Args:
+        request: The Pyramid Request object to modify
+        new_params: Dictionary of new query parameters to apply
+        
+    Returns:
+        Request: The modified request object with updated query parameters
+        
+    Notes:
+        - Updates QUERY_STRING in request.environ
+        - Clears cached _query_params, _url, and _GET properties
+        - This ensures request.url and request.GET reflect the new parameters
     """
 
     request.environ["QUERY_STRING"] = urlencode(new_params, doseq=True)
@@ -198,77 +129,93 @@ def refactor_pelias_request(request: Request, new_params: dict) -> Request:
     return request
 
 
-
-def refine(request: Request,
+def refine(request: Request | IRequest,
            service: Literal["autocomplete", "search", "reverse"] = "autocomplete",
-           is_rtp: bool = False) -> Request:
+           is_rtp: bool = False) -> dict[str, Any]:
+    """Refine and enhance Pelias geocoding results based on query analysis.
+    
+    This function analyzes the query, adjusts Pelias parameters for better results,
+    removes duplicates, and prioritizes relevant features based on query type.
+    
+    Args:
+        request: Pyramid Request object containing query parameters
+        service: Pelias service endpoint to use ("autocomplete", "search", or "reverse")
+        is_rtp: If True, disables TriMet-specific prioritization for RTP requests
+        
+    Returns:
+        dict[str, Any]: Pelias GeoJSON response with refined and prioritized features
+        
+    Process:
+        1. Analyzes query to determine type (stop, address, intersection, number)
+        2. Adjusts Pelias layers parameter based on query type
+        3. Fetches results from Pelias service
+        4. Removes duplicate features
+        5. Prioritizes results (stops or addresses) based on query type
+        6. Limits results to originally requested size
+        7. Restores original request parameters
+        
+    Notes:
+        - Temporarily increases size to 10 if original request was smaller
+        - If refined query returns no results, retries without refinement
+        - Stop requests prioritize matching stop_id/stop_code
+        - Address/intersection queries prioritize best matches
     """
-            Do some data normalization here to eliminate duplicates and normalize addresses.
-            Try to get to a single result.
-            If query was ambiguous and we still end up with more than one result, return the first IF the query's size = 1
 
-            """
+    original_params: IMultiDict = request.GET
 
-    original_params = request.GET.copy()
+    new_params: IMultiDict = request.GET.copy()
 
-    new_params = request.GET.copy()
+    original_size = size = int(new_params.get("size", DEFAULT_SIZE))
 
-    size, text = (
-        int(new_params.get("size", 10)),
-        (new_params.get("text") or "").lower().strip(),
-    )
+    text: str = (new_params.get("text") or "").lower().strip()
+
+    if not text:
+        raise ValueError("Refine service requires 'text' query parameter")
+
     query_type, stop_id = get_query_type(text)
 
-    # pelias will just return first, so we'll get 10 and try to get a better first
-    if size == 1:
-        new_params["size"] = "10"
+    logger.debug(f"determined query_type: {query_type.value} for query: {text}")
 
-    # determine if this is a stop request and apply reset layers to STOPS_LAYERS
-    # or if determined an address "address", for request
+    # pelias will just return first, so we'll get 10 and try to get a better first
+    if size < DEFAULT_SIZE:
+        new_params["size"] = str(DEFAULT_SIZE)
+
     is_stop_request, new_params = adjust_layers_for_query(query_type, new_params)
 
-    # required to ensure new params and layers stick
-    request = refactor_pelias_request(request=request, new_params=new_params)
+    # if layers have been adjusted, we need to update the request object
+    if query_type is EvaluatesAs.STREET_ADDRESS or is_stop_request or query_type is EvaluatesAs.INTERSECTION:
+        request = refactor_pelias_request(request=request, new_params=new_params)
 
-    ret_val = pelias_service.get_pelias_response(service=service, request=request, is_rtp=is_rtp)
-
-    _features = ret_val.get("features", [])
+    ret_val, _features = get_response_and_features(service=service, request=request, is_rtp=is_rtp)
 
     # after the first request, we'll use feature.property.name to normalize
     # and remove dupes
-    features = (
-        remove_duplicate_features(_features)
-        if _features and len(_features) > 1
-        else _features
-    )
-
+    if _features and len(_features) >1:
+        features = remove_duplicate_features(_features, query_type)
+    else:
+        features = _features
     # if the custom layers query resulted in none, try again without the layers filter
-    if (
-            query_type
-            in (
-            EvaluatesAs.STOP_REQUEST,
-            EvaluatesAs.JUST_A_NUMBER,
-            EvaluatesAs.STREET_ADDRESS,
-    )
-            and not features
-    ):
-        # restore original params in scope and cached attrs
+
+    if not features:
+        # no features returned WITH refinement, let's try again WITHOUT refinement
+
         request = refactor_pelias_request(request, original_params)
 
-        ret_val = pelias_service.get_pelias_response(
-            service=service, request=request, is_rtp=is_rtp
-        )
-        features = ret_val.get("features", [])
+        ret_val, _features = get_response_and_features(service=service, request=request, is_rtp=is_rtp)
 
-    if len(features) > 1:
-        ret_val = get_best_match(
-            ret_val, text=text, is_stop_request=is_stop_request
-        )
-        if size == 1:
-            # if size=1, give them 1
-            features = ret_val.get("features", [])
-            if len(features) > 1:
-                ret_val["features"] = features[0:1]
+        features = remove_duplicate_features(_features, query_type)
+
+        ret_val["features"] = features
+
+    if len(features) > 1 and (query_type is EvaluatesAs.JUST_A_NUMBER or is_stop_request):
+        # sort and return
+        features = prioritize_stops(features=features, is_rtp=is_rtp, stop_id=stop_id, service=service, text=text)
+
+    elif len(features) > 1 and (query_type is EvaluatesAs.STREET_ADDRESS or query_type is EvaluatesAs.INTERSECTION):
+        features = prioritize_addresses(features=features, query=text, query_type=query_type, service=service)
+
+    if len(features) > original_size:
+        ret_val["features"] = features[:original_size]
     else:
         ret_val["features"] = features
 

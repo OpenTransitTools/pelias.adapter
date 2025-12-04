@@ -20,7 +20,8 @@ requires = [
 
 extras_require = dict(
     dev=[
-      '' if os.name == 'nt' or os.name == 'posix' else 'linesman'
+      '' if os.name == 'nt' or os.name == 'posix' else 'linesman',
+        'pytest'
     ],
 )
 

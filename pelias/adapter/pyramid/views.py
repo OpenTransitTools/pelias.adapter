@@ -1,9 +1,10 @@
 import logging
 
-from ott.utils import object_utils
+from ott.utils import object_utils, json_utils
 from ott.utils.svr.pyramid import globals
 from ott.utils.svr.pyramid import response_utils
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
+from pelias.adapter.control.pelias_wrapper import PeliasWrapper
 from pelias.adapter.service import refine_service, pelias_service
 from pyramid.view import view_config
 
@@ -39,7 +40,7 @@ def do_view_config(cfg):
     cfg.add_route('pelias_rtp', '/pelias/rtp/{service}')
     cfg.add_route('solr', '/solr')
     cfg.add_route('solr_select', '/solr/{select}')
-    cfg.add_route('pelias_refine', '/pelias/refine/{select}')
+    cfg.add_route('pelias_refine', '/pelias/refine/{service}')
 
 
 @view_config(route_name='solr', renderer='json', http_cache=globals.CACHE_LONG)
@@ -105,16 +106,34 @@ def pelias_services(request, is_rtp=False, refine=False):
     # import pdb; pdb.set_trace()
 
     # step 1: find the service based on pelias/{service}? ... default to autocomplete
-
     try:
         service = request.matchdict['service']
     except:
         service = "autocomplete"
 
+    # step 2: call the wrapper
     if refine:
-        return refine_service.refine(request=request, service=service)
+        ret_val = refine_service.refine(request, service=service, is_rtp=is_rtp)
+    elif service == "autocomplete":
+        ret_val = PeliasWrapper.wrapp(pelias_autocomplete_url, pelias_search_url, pelias_reverse_url, request.query_string, is_rtp=is_rtp)
+    elif service == "search":
+        ret_val = PeliasWrapper.wrapp(pelias_search_url, pelias_autocomplete_url, pelias_reverse_url, request.query_string, is_rtp=is_rtp)
+    elif service == "reverse":
+        ret_val = PeliasWrapper.reverse(pelias_reverse_url, request.query_string)
+    else:
+        ret_val = response_utils.sys_error_response()
 
-    return pelias_service.get_pelias_response(request=request, service=service, is_rtp=is_rtp)
+    # step 3: append the hostname to the response
+    json_utils.append_hostname_to_json(ret_val)
+
+    """
+    TODO: WIP find and add stops / in/out / etc... 
+    x = object_utils.find_elements('properties', ret_val)
+    for z in x:
+        z["XXXX"] = 'MMMMMMMMMMM'
+    import pdb; pdb.set_trace()
+    """
+    return ret_val
 
 
 @view_config(route_name='pelias', renderer='json', http_cache=globals.CACHE_LONG)

@@ -46,7 +46,7 @@ class PeliasWrapper(object):
         set the agency filter to SKIP, and all future requests should now work.
         """
         try:
-            if resp and resp.get('geocoding').get('errors'):
+           if resp and resp.get('geocoding').get('errors'):
                 err = resp.get('geocoding').get('errors')[0]
                 if "invalid layers parameter" in err:
                     log.warning("turning off the filter {} due to this error {}".format(cls._rtp_agency_filter, err))
@@ -63,9 +63,12 @@ class PeliasWrapper(object):
         size = html_utils.get_numeric_value_from_qs(query_string, 'size', def_size)
         text = html_utils.get_param_value_from_qs(query_string, 'text')
 
+        # don't filter (below) if request already includes its own layers param
+        has_layers = "layers" in query_string
+
         # step 1b: filter agencies if we're in single-agency (TriMet) exclusive mode
         #import pdb; pdb.set_trace()
-        if not is_rtp and cls._rtp_agency_filter != "SKIP" and "layers" not in query_string:
+        if not has_layers and not is_rtp and cls._rtp_agency_filter != "SKIP":
             query_string = "{}&layers={}".format(query_string, cls.rtp_agency_filter())
 
         # step 2 call reverse geocoder if we think text is a coord
@@ -94,8 +97,9 @@ class PeliasWrapper(object):
                 if alt_resp and 'features' in alt_resp:
                     ret_val = alt_resp
 
-        # step 3c: check that our filter (invalid layers) is not screwing up Pelias requests
-        cls.check_invalid_layers(ret_val)
+        # step 3c: prevent our filter (Pelias error 'invalid layers') from screwing up all Pelias requests
+        if not has_layers:
+            cls.check_invalid_layers(ret_val)
 
         # step 4: check whether the query result has something usable...
         if not in_recursion:

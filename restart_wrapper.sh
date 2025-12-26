@@ -17,7 +17,7 @@ fi
 
 # step 4: stop & restart wrapper
 pkill -9 -f -c local_pelias
-cmd="bin/pserve config/local_pelias.ini"
+cmd="poetry run pserve config/local_pelias.ini"
 eval "${cmd}" &>/dev/null & disown;
 
 # step 5: really done hopefully...

@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "pelias.adapter"
+version = "0.1.0"
+description = "Open Transit Tools - Web API / Controller"
+authors = ["Frank Purcell <fxpurcell@gmail.com>"]
+homepage = "http://opentransittools.com"
+license = "Mozella 2.x"
+readme = "README.md"
+classifiers = [
+  "Programming Language :: Python",
+	"Programming Language :: Python :: 3.9",
+	"Framework :: Pyramid",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Internet :: WWW/HTTP :: WSGI :: Application"
+]
+packages = [{include = "pelias"}]
+
+
+[tool.poetry.plugins."paste.app_factory"]
+main = "pelias.adapter.pyramid.app:main"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pyramid = "^2.0"
+pyramid_tm = "*"
+pyramid_exclog = "*"
+waitress = "*"
+requests = "*"
+
+#"ott.utils" = { path = "../utils/", develop = true }
+"ott.utils" = {git = "https://github.com/OpenTransitTools/utils.git", branch = "rtp"}
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+system-site-packages = true

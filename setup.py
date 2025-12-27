@@ -9,7 +9,7 @@ requires = [
     'ott.utils',
 
     'requests',
-    'venusian==1.1.0',
+    'venusian',
     'pyramid',
     'pyramid_tm',
     'pyramid_exclog',

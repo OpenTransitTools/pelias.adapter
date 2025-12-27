@@ -22,6 +22,7 @@ class PeliasToSolr(PeliasWrapper):
         :see: https://trimet.org/solr/select?q=3&rows=6
         :see: https://trimet.org/solr/select?q=3&rows=6&wt=json&fq=type:stop
         :see: https://ws-st.trimet.org/pelias/v1/autocomplete?text=13135&size=1&layers=address&sources=osm
+        :see: https://dv.trimet.org/solr/select?rows=6&wt=json&qt=dismax&fq=(-type%3A26+AND+-type%3Aroute)&q=3
         """
         ret_val = {}
 
@@ -35,20 +36,34 @@ class PeliasToSolr(PeliasWrapper):
         if format and format == "xml":
             ret_val['format'] = 'xml'
 
+        #import pdb; pdb.set_trace()
         layers = html_utils.get_first_param(solr_params, 'fq')
-        # TODO rtp
-        """
         if layers:
-            layers = layers.replace('%3A', ':')
-            if layers == 'type:stop':
-                ret_val['layers'] = 'trimet:stops'
-            elif layers == 'type:pr':
-                ret_val['layers'] = 'pr'
-        else:
-            # note: excludes all other
-            if not is_rtp:
-                ret_val['layers'] = cls.rtp_stop_filter()
-        """
+            l = ''
+            n = ''
+
+            # negation of layer type
+            if '-type' in layers:
+                n = '-'
+
+            if 'stop' in layers and cls._rtp_agency_filter != "SKIP":
+                # negate all stops layers ... only include trimet stops
+                if n == '-':
+                    l = "{}{},{},".format(l, cls.rtp_agency_filter(), '-trimet:stops')
+                else:
+                    l = "{}{}{},".format(l, n, 'trimet:stops')
+            if 'pr' in layers:
+                l = "{}{}{},".format(l, n, 'pr')
+            if 'tc' in layers:
+                l = "{}{}{},".format(l, n, 'tc')
+
+            if len(l) > 1:
+                ret_val['layers'] = l[:-1]  # trim off last ,comma,
+
+        # note: if no SOLR 'fq' layer (filter) param was mapped, then apply the rtp agency filter
+        if not ret_val.get('layers') and not is_rtp and cls._rtp_agency_filter != "SKIP":
+            ret_val['layers'] = cls.rtp_agency_filter()
+
         return ret_val
 
     @classmethod
@@ -98,6 +113,7 @@ class PeliasToSolr(PeliasWrapper):
     def call_pelias_parse_results(cls, solr_params, url):
         param_str = cls.solr_to_pelias_param_str(solr_params)
         json = json_utils.stream_json(url, param_str)
+        cls.check_invalid_layers(json)
         #cls.fix_venues_in_pelias_response(pelias_json=json)
         cls.fixup_response(json, is_calltaker=True, is_rtp=False)
         ret_val = cls.parse_json(json, solr_params)

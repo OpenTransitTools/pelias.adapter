@@ -14,6 +14,7 @@ class PeliasWrapper(object):
     rtp_agencies = [
         "clackamas",
         "ctran",
+        "ctran_flex",
         "mult",
         "rideconnection",
         "sam",
@@ -22,17 +23,36 @@ class PeliasWrapper(object):
     ]
 
     @classmethod
-    def rtp_stop_filter(cls):
+    def rtp_agency_filter(cls):
         """
-        cache up list of pelias stop filters
+        cache up list of agency filters before calling Pelias, so we only get TriMet data
         pelias/search?text=2&layers=-wapark:stops,-smart:stops,-ctran:stops
         -ctran:stops,-smart:stops,-sam:stops,-rideconnection:stops,-clackamas:stops,-mult:stops,-wapark:stops
         """
-        if not cls._rtp_stop_filter:
+        if not cls._rtp_agency_filter:
             f = ["-{}:stops".format(a) for a in cls.rtp_agencies]
-            cls._rtp_stop_filter = ','.join(f)
-        return cls._rtp_stop_filter
-    _rtp_stop_filter = None
+            cls._rtp_agency_filter = ','.join(f)
+        return cls._rtp_agency_filter
+    _rtp_agency_filter = None
+
+    @classmethod
+    def check_invalid_layers(cls, resp):
+        """
+        if Pelias doesn't like the layers parameter used for agency filtering, this will turn
+        off the filter for future requests
+
+        this is a bit of hackery to turn off the rtp_agency_filter for future requests so we 
+        don't hose the wrapper. So if we see that Pelias doesn't like our layers setting, we'll
+        set the agency filter to SKIP, and all future requests should now work.
+        """
+        try:
+           if resp and resp.get('geocoding').get('errors'):
+                err = resp.get('geocoding').get('errors')[0]
+                if "invalid layers parameter" in err:
+                    log.warning("turning off the filter {} due to this error {}".format(cls._rtp_agency_filter, err))
+                    cls._rtp_agency_filter = "SKIP"
+        except:
+            pass
 
     @classmethod
     def wrapp(cls, main_url, bkup_url, reverse_geo_url, query_string, def_size=10, in_recursion=False, is_calltaker=False, is_rtp=False):
@@ -43,11 +63,13 @@ class PeliasWrapper(object):
         size = html_utils.get_numeric_value_from_qs(query_string, 'size', def_size)
         text = html_utils.get_param_value_from_qs(query_string, 'text')
 
+        # don't filter (below) if request already includes its own layers param
+        has_layers = "layers" in query_string
+
         # step 1b: filter agencies if we're in single-agency (TriMet) exclusive mode
         #import pdb; pdb.set_trace()
-        if not is_rtp:
-            #query_string = "{}&layers={}".format(query_string, cls.rtp_stop_filter())
-            pass # TODO - RTP - not yet
+        if not has_layers and not is_rtp and cls._rtp_agency_filter != "SKIP":
+            query_string = "{}&layers={}".format(query_string, cls.rtp_agency_filter())
 
         # step 2 call reverse geocoder if we think text is a coord
         if geo_utils.is_coord(text):
@@ -68,11 +90,16 @@ class PeliasWrapper(object):
                     to = "text=TriMet%20HOP%20Admin%20Office"
                     query_string = query_string.replace(frm, to)
 
+            # step 3b: call Pelias..and if autocomplete / search doesn't work, try the other service
             ret_val = response_utils.proxy_json(main_url, query_string)
             if not cls.has_features(ret_val):
                 alt_resp = response_utils.proxy_json(bkup_url, query_string)
                 if alt_resp and 'features' in alt_resp:
                     ret_val = alt_resp
+
+        # step 3c: prevent our filter (Pelias error 'invalid layers') from screwing up all Pelias requests
+        if not has_layers:
+            cls.check_invalid_layers(ret_val)
 
         # step 4: check whether the query result has something usable...
         if not in_recursion:
@@ -229,9 +256,21 @@ class PeliasWrapper(object):
 
                     # 3a: if we're just a single agency (and TriMet), then strip off junk
                     if not is_rtp and "TRIMET" in p.get('id'):
-                         name = name.replace("TriMet Stop ", "")
+                        name = name.replace("TriMet Stop ", "")
 
-                    # 3b: remove state and country from the label
+                        # backward compatible for old TORA id formatting of id::TRIMET::stops
+                        # a stop page (https://trimet.org/home/stop/4) via geocoder https://trimet.org/home/search
+                        # TODO: should probably remove this eventually
+                        if "stops:TRIMET" in p.get('id'):
+                            idz = p.get('id').replace("stops:TRIMET:", "")
+                            p['id'] = "{}::TRIMET::stops".format(idz)
+
+                    # 3b: remove "stops:" from ID to get TORA RTP to work properly
+                    #     TODO: should probably remove this eventually
+                    if is_rtp and "stops:" in p.get('id'):
+                        p['id'] = p.get('id').replace("stops:", "")
+
+                    # 3c: remove state and country from the label
                     if name and len(name) > 10:
                         city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                         rename = pelias_json_queries.append(name, city)

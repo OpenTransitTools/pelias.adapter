@@ -199,7 +199,7 @@ optional = false
 python-versions = "*"
 groups = ["main"]
 files = []
-develop = false
+develop = true
 
 [package.dependencies]
 future = "*"
@@ -208,10 +208,8 @@ simplejson = "*"
 validators = "*"
 
 [package.source]
-type = "git"
-url = "https://github.com/OpenTransitTools/utils.git"
-reference = "rtp"
-resolved_reference = "cf8f65412ac7640d083d355d8457b526fda06feb"
+type = "directory"
+url = "../utils"
 
 [[package]]
 name = "pastedeploy"
@@ -680,4 +678,4 @@ testing = ["coverage[toml]", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.9"
-content-hash = "773564d6df271a00a790015a103d899560d1bebdf4e3853e74eeab7ad4a0b0a0"
+content-hash = "1207c2edc04bc43fcfd339f3ca092d41543009bef2f0ecb81a4fdcd1b0013654"

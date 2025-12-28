@@ -15,7 +15,6 @@ classifiers = [
 ]
 packages = [{include = "pelias"}]
 
-
 [tool.poetry.plugins."paste.app_factory"]
 main = "pelias.adapter.pyramid.app:main"
 
@@ -27,8 +26,11 @@ pyramid_exclog = "*"
 waitress = "*"
 requests = "*"
 
-#"ott.utils" = { path = "../utils/", develop = true }
-"ott.utils" = {git = "https://github.com/OpenTransitTools/utils.git", branch = "rtp"}
+"ott.utils" = { path = "../utils/", develop = true }
+#"ott.utils" = {git = "https://github.com/OpenTransitTools/utils.git", branch = "rtp"}
+
+[tool.poetry.scripts]
+stress_test = "ott.utils.tests.stress:main"
 
 [build-system]
 requires = ["poetry-core"]

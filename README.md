@@ -6,10 +6,10 @@ Python wrapper to make Pelias look like SOLR (geosearch instance)
 
 build:
 ------
-  1. install python 3.x, along easy_install, zc.buildout ("zc.buildout==1.5.2") and git
+  1. install python 3.x, poetry and git
   1. git clone https://github.com/OpenTransitTools/pelias.adapter.git
   1. cd pelias.adapter
-  1. buildout
+  1. poetry install
 
 run:
 ----

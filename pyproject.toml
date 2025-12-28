@@ -26,8 +26,8 @@ pyramid_exclog = "*"
 waitress = "*"
 requests = "*"
 
-"ott.utils" = { path = "../utils/", develop = true }
-#"ott.utils" = {git = "https://github.com/OpenTransitTools/utils.git", branch = "rtp"}
+#"ott.utils" = { path = "../utils/", develop = true }
+"ott.utils" = {git = "https://github.com/OpenTransitTools/utils.git", branch = "rtp"}
 
 [tool.poetry.scripts]
 stress_test = "pelias.adapter.tests.stress:main"

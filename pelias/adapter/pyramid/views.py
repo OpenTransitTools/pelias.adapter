@@ -1,3 +1,4 @@
+import ast
 import logging
 
 from ott.utils import object_utils, json_utils
@@ -21,11 +22,13 @@ def config_globals(cfg):
     """
     :see: config/base.ini for configured url strings
     """
+    #import pdb; pdb.set_trace()
     global pelias_autocomplete_url
     global pelias_search_url
     global pelias_reverse_url
     global route_stop_str_url
 
+    PeliasWrapper.rtp_agencies = ast.literal_eval(cfg.registry.settings.get('agencies'))
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
     pelias_reverse_url = cfg.registry.settings.get('pelias_reverse_url')
@@ -79,7 +82,6 @@ def solr_json(request):
         ret_val = PeliasToSolr.call_pelias(solr_params, pelias_autocomplete_url, pelias_search_url)
         return ret_val
 
-    # import pdb; pdb.set_trace()
     ret_val = None
 
     try:

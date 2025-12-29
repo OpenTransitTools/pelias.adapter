@@ -3,24 +3,18 @@ from ott.utils import html_utils
 from ott.utils import geo_utils
 
 from . import pelias_json_queries
+from . import pelias_json_queries
 
 import logging
 log = logging.getLogger(__file__)
 
+SKIP="SKIP"
+
 
 class PeliasWrapper(object):
-
-    # TODO: configure this list
-    rtp_agencies = [
-        "clackamas",
-        "ctran",
-        "ctran_flex",
-        "mult",
-        "rideconnection",
-        "sam",
-        "smart",
-        "wapark"
-    ]
+    # note: agencies are defined in config/base.ini, and set here pyramid.view
+    rtp_agencies = []
+    _rtp_agency_filter = None
 
     @classmethod
     def rtp_agency_filter(cls):
@@ -29,11 +23,14 @@ class PeliasWrapper(object):
         pelias/search?text=2&layers=-wapark:stops,-smart:stops,-ctran:stops
         -ctran:stops,-smart:stops,-sam:stops,-rideconnection:stops,-clackamas:stops,-mult:stops,-wapark:stops
         """
+        if len(cls.rtp_agencies) < 1:
+            cls._rtp_agency_filter = SKIP
+
         if not cls._rtp_agency_filter:
             f = ["-{}:stops".format(a) for a in cls.rtp_agencies]
             cls._rtp_agency_filter = ','.join(f)
+
         return cls._rtp_agency_filter
-    _rtp_agency_filter = None
 
     @classmethod
     def check_invalid_layers(cls, resp):
@@ -50,7 +47,7 @@ class PeliasWrapper(object):
                 err = resp.get('geocoding').get('errors')[0]
                 if "invalid layers parameter" in err:
                     log.warning("turning off the filter {} due to this error {}".format(cls._rtp_agency_filter, err))
-                    cls._rtp_agency_filter = "SKIP"
+                    cls._rtp_agency_filter = SKIP
         except:
             pass
 
@@ -68,7 +65,7 @@ class PeliasWrapper(object):
 
         # step 1b: filter agencies if we're in single-agency (TriMet) exclusive mode
         #import pdb; pdb.set_trace()
-        if not has_layers and not is_rtp and cls._rtp_agency_filter != "SKIP":
+        if not has_layers and not is_rtp and cls._rtp_agency_filter != SKIP:
             query_string = "{}&layers={}".format(query_string, cls.rtp_agency_filter())
 
         # step 2 call reverse geocoder if we think text is a coord

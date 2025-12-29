@@ -7,12 +7,6 @@ if [ $LATEST == "YES" ]; then
   # step 2: force get latest and greatest code
   git reset --hard HEAD
   git pull
-
-  # step 3: remove (potentially) outdated dependencies and buildout to get latest / greatest
-  RM_DEPS="rm -rf *egg*/ott.utils* nohup.out *~"
-  echo $RM_DEPS
-  eval $RM_DEPS
-  buildout
 fi
 
 # step 4: stop & restart wrapper

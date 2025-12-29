@@ -280,7 +280,7 @@ validators = "*"
 type = "git"
 url = "https://github.com/OpenTransitTools/utils.git"
 reference = "rtp"
-resolved_reference = "a0da2a46e3a26c79ac972009965b78b35cbe9e2f"
+resolved_reference = "47e459025fea5f43957eda8320022b6f11f1f375"
 
 [[package]]
 name = "packaging"

@@ -29,6 +29,11 @@ requests = "*"
 #"ott.utils" = { path = "../utils/", develop = true }
 "ott.utils" = {git = "https://github.com/OpenTransitTools/utils.git", branch = "rtp"}
 
+[tool.poetry.group.test.dependencies]
+# poetry run pytest -v -s
+pytest-randomly = "^3.15.0"
+pytest = "^8.2.0"
+
 [tool.poetry.scripts]
 stress_test = "pelias.adapter.tests.stress:main"
 

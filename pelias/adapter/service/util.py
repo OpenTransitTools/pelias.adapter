@@ -15,7 +15,7 @@ from typing import Optional, Any, Literal
 logger = getLogger(__name__)
 
 
-def remove_non_digits(text: Optional[str], to_int: bool = False) -> str | int:
+def remove_non_digits(text: Optional[str], to_int: bool = False):
     """Extract only digits from a string.
     
     Args:
@@ -112,7 +112,7 @@ def normalize_address(addr: str) -> str:
     
     return addr
 
-def intersection_parts(query: str) -> tuple[str, str] | tuple[None, None]:
+def intersection_parts(query: str):
     """Extract the two street names from an intersection query.
     
     Looks for separators like '&' or 'and' to split the query into two parts.
@@ -146,7 +146,7 @@ def intersection_parts(query: str) -> tuple[str, str] | tuple[None, None]:
     return None, None
 
 
-def is_intersection(text: str) -> tuple[bool, tuple[Any, Any]] | tuple[bool, tuple[()]]:
+def is_intersection(text: str):
     """Detect if the query represents a street intersection.
     
     Args:

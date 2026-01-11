@@ -213,7 +213,7 @@ class PeliasWrapper(object):
 
     @classmethod
     def fixup_response(cls, pelias_json, size=10, ele='label', is_calltaker=False, is_rtp=False):
-        """ will loop thru results, cleaning up / renaming / relabeling the specified element """
+        """ will loop thru results, cleaning up / renaming / relabeling the specified element .. """
 
         # step 1: loop thru the records in the Pelias response
         if cls.has_features(pelias_json):

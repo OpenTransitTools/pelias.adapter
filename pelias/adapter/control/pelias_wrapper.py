@@ -165,13 +165,11 @@ class PeliasWrapper(object):
     @classmethod
     def dedup_addresses(cls, pelias_json):
         """
-        TODO needs work and testing
-
-        this mucks with the pelias_json to filter out (dedup) matching named 'features'
+        this mucks with the pelias_json to filter out (dedup) matching address 'features'
         if filtering is applied, then the pelias_json['features'] array will be altered 
 
         examples:
-            1114 Cesar Chavez Blvd
+            1114 SE Cesar Chavez Blvd and 1114 SE Cesar Chavez Boulevard
             1505 NW 118th Ct
         """
         features = pelias_json.get('features', [])
@@ -180,47 +178,38 @@ class PeliasWrapper(object):
         if len(features) < 2:
             return
 
-        # step 1: sort addresses from other records
-        adds = []
-        new_other = []
+        def are_very_near(plist, feat):
+            ret_val = False
+            if len(plist) > 0:
+                for p in plist:
+                    # compare distances between p and feat
+                    if p == feat:
+                        # ret_val = True
+                        break
+                    pass
+
+            return ret_val
+
+        filtered = []
+        prev = []
+
+        # step a: loop thru all features
         for f in features:
             p = f.get('properties')
-            if p is None:
-                continue
+
+            # step b: treat address features differently
             if p.get('layer') in ('address'):
-                adds.append(f)
+                # step c: if this address feature is near other seen features, filter it
+                if are_very_near(prev, f):
+                    log.info("filter this feature")
+                else:
+                    prev.append(f)
+                    filtered.append(f)
             else:
-                new_other.append(f)
+                filtered.append(f)
 
-        # step 2: make sure we have at least 2 addresses (eg addresses to dedupe)
-        if len(adds) < 2:
-            return
-
-        # step 3: filter duplicate (adjacent) named address records
-        new_adds = []
-        num_addresses = len(adds)
-        if num_addresses > 0:
-            new_adds.append(adds[0])
-            if num_addresses >= 2:  # make sure we have multiple addresses (eg duplicates to potentially dedup)
-                #import pdb; pdb.set_trace()
-                i=1
-                while i < num_addresses:
-                    n1 = adds[i].get('properties').get('name', "").lower().replace('.', '').replace('boulevard','blvd').replace('court','ct')
-                    n2 = adds[i-1].get('properties').get('name', "").lower().replace('.', '').replace('boulevard','blvd').replace('court','ct')
-                    l1 = len(n1)
-                    l2 = len(n2)
-                    d  = abs(l1 - l2)
-                    #import pdb; pdb.set_trace()
-                    # filter out if address names are similar (e.g., same or majority subset of one another)
-                    if l1 > 5 and l2 > 5 and d <= 6 and (n1 in n2 or n2 in n1):
-                        i += 1
-                        continue
-                    else:
-                        new_adds.append(features[i])
-                        i += 1
-
-        pelias_json['features'] = new_adds + new_other
-        return
+        pelias_json['features'] = filtered
+        return filtered
 
     @classmethod
     def fixup_response(cls, pelias_json, size=10, ele='label', is_calltaker=False, is_rtp=False):

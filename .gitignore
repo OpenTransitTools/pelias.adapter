@@ -11,6 +11,7 @@ nohup.out
 *.log
 logs/*
 *.tar
+*.out
 *.gz
 .git
 .git/*

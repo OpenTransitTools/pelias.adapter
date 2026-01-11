@@ -1,4 +1,4 @@
-from ott.utils.tests.base_unit import BaseUnit
+]from ott.utils.tests.base_unit import BaseUnit
 
 from pelias.adapter.control.pelias_to_solr import PeliasToSolr
 from pelias.adapter.model.solr.solr_stop_record import SolrStopRecord

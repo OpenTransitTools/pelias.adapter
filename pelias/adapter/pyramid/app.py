@@ -7,10 +7,8 @@ import logging
 log = logging.getLogger(__file__)
 
 
-
 def main(global_config, **settings):
-    """ This function returns a Pyramid WSGI application.
-    """
+    """ return a Pyramid WSGI application """
     #import pdb; pdb.set_trace()
     config = Configurator(settings=settings)
 

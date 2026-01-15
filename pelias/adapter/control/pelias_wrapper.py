@@ -1,6 +1,7 @@
 from ott.utils.svr.pyramid import response_utils
 from ott.utils import html_utils
 from ott.utils import geo_utils
+from ott.utils import string_diff
 
 from . import pelias_json_queries
 from . import pelias_json_queries
@@ -46,7 +47,8 @@ class PeliasWrapper(object):
            if resp and resp.get('geocoding').get('errors'):
                 err = resp.get('geocoding').get('errors')[0]
                 if "invalid layers parameter" in err:
-                    log.warning("turning off the filter {} due to this error {}".format(cls._rtp_agency_filter, err))
+                    #print(f"******************** check the filter {cls._rtp_agency_filter}")
+                    log.info(f"****************** turning off the filter {cls._rtp_agency_filter} due to this error {err} ******************")
                     cls._rtp_agency_filter = SKIP
         except:
             pass
@@ -64,7 +66,6 @@ class PeliasWrapper(object):
         has_layers = "layers" in query_string
 
         # step 1b: filter agencies if we're in single-agency (TriMet) exclusive mode
-        #import pdb; pdb.set_trace()
         if not has_layers and not is_rtp and cls._rtp_agency_filter != SKIP:
             query_string = "{}&layers={}".format(query_string, cls.rtp_agency_filter())
 
@@ -79,7 +80,6 @@ class PeliasWrapper(object):
         if ret_val is None:
             # step 3a: special query string handling
             if text and len(text) > 1:
-                # import pdb; pdb.set_trace()
                 # convert searches for trimet (and sub-strings) to "TriMet Admin"
                 # TODO: make this generic and configurable ... not specific to TriMet
                 if len(text) <= 7 and text.lower() in "trimet":
@@ -163,7 +163,7 @@ class PeliasWrapper(object):
         return pelias_json_queries.get_element_value(rec, *names)
 
     @classmethod
-    def dedup_addresses(cls, pelias_json):
+    def dedup_addresses(cls, features):
         """
         this mucks with the pelias_json to filter out (dedup) matching address 'features'
         if filtering is applied, then the pelias_json['features'] array will be altered 
@@ -172,43 +172,42 @@ class PeliasWrapper(object):
             1114 SE Cesar Chavez Blvd and 1114 SE Cesar Chavez Boulevard
             1505 NW 118th Ct
         """
-        features = pelias_json.get('features', [])
+        filtered = []
 
         # step 0: make sure there are 2+ records (eg something to dedupe)
-        if len(features) < 2:
-            return
+        if features is None or len(features) < 2:
+            return features
 
-        def are_very_near(plist, feat):
-            ret_val = False
-            if len(plist) > 0:
-                for p in plist:
-                    # compare distances between p and feat
-                    if p == feat:
-                        # ret_val = True
-                        break
-                    pass
-
-            return ret_val
-
-        filtered = []
+        # step a: loop thru all features, looking to cull
         prev = []
-
-        # step a: loop thru all features
         for f in features:
-            p = f.get('properties')
+            fprops = f.get('properties')
+            fname = fprops.get('name')
 
             # step b: treat address features differently
-            if p.get('layer') in ('address'):
-                # step c: if this address feature is near other seen features, filter it
-                if are_very_near(prev, f):
-                    log.info("filter this feature")
-                else:
+            if fprops and fprops.get('layer') in ('address'):
+                do_filter = False
+
+                if len(prev) > 0:
+                    #import pdb; pdb.set_trace()
+                    for p in prev:
+                        # step c: if the name of our feature looks a bit (60%) like a previous feature...
+                        pname = p.get('properties').get('name')
+                        name_likeness = string_diff.compare(fname, pname)
+                        if name_likeness > 0.60:
+                            # step d: and if our feature is very close to that previous feature, then filter it
+                            if geo_utils.are_points_nearby(f, p, decimal_diff=0.00025):
+                                msg = f"filter {fname}, as it looks like a dupe of {pname}\n\n"
+                                log.info(msg)
+                                do_filter = True
+                                break
+
+                if not do_filter:
                     prev.append(f)
                     filtered.append(f)
             else:
                 filtered.append(f)
 
-        pelias_json['features'] = filtered
         return filtered
 
     @classmethod
@@ -217,8 +216,12 @@ class PeliasWrapper(object):
 
         # step 1: loop thru the records in the Pelias response
         if cls.has_features(pelias_json):
-            #cls.dedup_addresses(pelias_json)
+            # step 2: dedup similar records (eg: OSM and OA duplicates)
+            dedupd = cls.dedup_addresses(pelias_json.get('features'))
+            if dedupd and len(dedupd) > 0:
+                pelias_json['features'] = dedupd
 
+            # step 3: fixup records records that we'll be responding with
             for i, f in enumerate(pelias_json.get('features')):
                 if i >= size:
                     break
@@ -229,18 +232,18 @@ class PeliasWrapper(object):
 
                 rename = None
 
-                # step 2: for venues, rename the venue with the neighborhood & city
+                # step 4: for venues, rename the venue with the neighborhood & city
                 if p.get('layer') in ('venue', 'major_employer', 'fare', 'fare_outlet'):
                     name = cls.get_property_value(p, 'name', 'label')
                     street = pelias_json_queries.street_name(p, include_number=False)
                     city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                     rename = pelias_json_queries.append3(name, street, city)
 
-                # step 3: for stops, possibly reduce the size of the string
+                # step 5: for stops, possibly reduce the size of the string
                 if "stops" in p.get('layer'):
                     name = cls.get_property_value(p, 'name', 'label')
 
-                    # 3a: if we're just a single agency (and TriMet), then strip off junk
+                    # 5a: if we're just a single agency (and TriMet), then strip off junk
                     if not is_rtp and "TRIMET" in p.get('id'):
                         name = name.replace("TriMet Stop ", "")
 
@@ -251,47 +254,45 @@ class PeliasWrapper(object):
                             idz = p.get('id').replace("stops:TRIMET:", "")
                             p['id'] = "{}::TRIMET::stops".format(idz)
 
-                    # 3b: remove "stops:" from ID to get TORA RTP to work properly
-                    #     TODO: should probably remove this eventually
+                    # 5b: remove "stops:" from ID to get TORA RTP to work properly
+                    #     TODO: should probably remove this and have TORA use addendum
                     if is_rtp and "stops:" in p.get('id'):
                         p['id'] = p.get('id').replace("stops:", "")
 
-                    # 3c: remove state and country from the label
+                    # 5c: remove state and country from the label
                     if name and len(name) > 10:
                         city = pelias_json_queries.neighborhood_and_city(p, sep=' - ')
                         rename = pelias_json_queries.append(name, city)
 
-                # step 4: rename routes
+                # step 6: rename routes
                 elif p.get('layer') == 'routes':
                     name = cls.get_property_value(p, 'name', 'label')
                     route_lbl = "Transit Route"
                     if "TRIMET" in p.get('id'):
                         route_lbl = "TriMet Route" 
-                    rename = "{} ({})".format(name, route_lbl)
+                    rename = f"{name} ({route_lbl})"
                     
-                # step 5: Post Office ... add zipcode to label
+                # step 6: Post Office ... add zipcode to label
                 elif p.get('layer') == 'post_office':
                     name = cls.get_property_value(p, 'name', 'label')
                     zipcode = cls.get_property_value(p, 'postalcode')
                     rename = pelias_json_queries.append3(name, 'Post Office', zipcode, sep1=' ')
 
-                # step 6: default rename is to add city or region, etc...
+                # step 7: default rename is to add city or region, etc...
                 else:
                     name = cls.get_property_value(p, 'name', 'label')
                     city = pelias_json_queries.city_neighborhood_or_county(p)
                     rename = pelias_json_queries.append(name, city)
 
-                # step 6: append '*' to any calltaker response when dealing with  interpolated recs
+                # step 8: append '*' to any calltaker response when dealing with  interpolated recs
                 if is_calltaker and p.get('match_type') == "interpolated":
                     rename = "*" + rename 
 
-                # step 7: apply the rename to this record's properties dict
+                # step 9: apply the rename to this record's properties dict
                 if rename:
                     p[ele] = rename
 
-
     #### TODO -- replace the routines below with 'fixup_response' above ???
-
     @classmethod
     def rename(cls, pelias_json, def_val=None):
         ret_val = def_val

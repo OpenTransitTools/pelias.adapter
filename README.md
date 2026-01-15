@@ -20,7 +20,7 @@ run:
 test:
 -----
   1. run the server (see above)
-  1. bin/test
+  1. poetry run pytest
 
 rules:
 -----

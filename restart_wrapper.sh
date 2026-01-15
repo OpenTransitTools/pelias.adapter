@@ -2,17 +2,20 @@
 WRAPDIR=$(dirname "$0")
 cd $WRAPDIR
 
-LATEST=${1:-"NOPE"}
+LOG=${1:-"pserve.out"}
+LATEST=${2:-"NOPE"}
+
+# step 2: optionally force get latest and greatest code
 if [ $LATEST == "YES" ]; then
-  # step 2: force get latest and greatest code
   git reset --hard HEAD
   git pull
 fi
 
-# step 4: stop & restart wrapper
+# step 3: stop existing wrapper process(s)
 pkill -9 -f -c local_pelias
-LOG="$WRAPDIR/pserve.out"
 rm -f $LOG
+
+# step 4: start new wrapper process
 cmd="$HOME/venv/bin/poetry run pserve config/local_pelias.ini"
 echo "${cmd}"
 eval "${cmd} > $LOG 2>&1 & disown;"

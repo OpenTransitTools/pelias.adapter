@@ -8,6 +8,7 @@ url_path="http://localhost:45554/pelias"
 
 urls = [
     f"{url_path}/autocomplete?text=834%20SE%20Lamb",
+    f"{url_path}/rtp/search?text=1931%20NE%20Sandy",
     f"{url_path}/search?text=pdx",
     f"{url_path}/rtp/autocomplete?text=14606",
     f"{url_path}/rtp/autocomplete?text=5",

@@ -12,18 +12,19 @@ if [ $LATEST == "YES" ]; then
 fi
 
 # step 3: stop existing wrapper process(s)
-pkill -9 -f -c local_pelias
+pkill -9 -f -c local_pelias > /dev/null
 rm -f $LOG
 
 # step 4: start new wrapper process
-cmd="$HOME/venv/bin/poetry run pserve config/local_pelias.ini"
+cmd="poetry run pserve config/local_pelias.ini"
 echo "${cmd}"
 eval "${cmd} > $LOG 2>&1 & disown;"
 echo
 
 # step 5: really done hopefully...
-sleep 2
+sleep 1
+echo "pserve should be running now: http://$HOSTNAME:45554/pelias/rtp/autocomplete?text=9"
 echo
-echo "pserve should be running now:"
-ps -ef | grep pserve | grep -v grep
+sleep 1
+  ps -ef | grep pserve | grep -v grep
 echo

@@ -6,7 +6,6 @@ PORT="45554"
 
 class TestAgenciess(BaseUnit):
     def setUp(self):
-        #import pdb; pdb.set_trace()
         self.url_tmpl = f"http://localhost:{PORT}/pelias/autocomplete?text=a&layers="
         self.config = ConfigUtil.factory(section="app:main")
         self.rtp_agencies = self.config.get_typed('agencies')
@@ -16,14 +15,14 @@ class TestAgenciess(BaseUnit):
 
     def test_expected_agencies_exist_in_pelias(self):
         """ make sure trimet:stops, ctran:stops, etc... """
-        ret_val = True
+        #import pdb; pdb.set_trace()
         for a in self.rtp_agencies:
-            #import pdb; pdb.set_trace()
-            l = f"{a}:stops"
-            url = self.url_tmpl + l
+            layer = f"{a}:stops"
+            url = self.url_tmpl + layer
             jsn = json_utils.stream_json(url)
             errors = jsn.get('geocoding').get('errors')
             features = jsn.get('features')
-            print(f"{url} - errors: {errors}\n")
+            #print(f"{url} - errors: {errors}\n")
             #print(f"     - features: {features}")
-            self.assertTrue(jsn and errors is None and features is not None and len(features) > 0)
+            self.assertTrue(jsn and errors is None, layer)
+            self.assertTrue(features is not None and len(features) > 0)

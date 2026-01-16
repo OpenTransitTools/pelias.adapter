@@ -2,7 +2,6 @@ from cProfile import run
 from ott.utils.tests.base_unit import BaseUnit
 from ott.utils import file_utils
 from ott.utils import json_utils
-from ott.utils import string_diff
 import requests
 
 PORT="45554"
@@ -45,13 +44,13 @@ class TestStops(BaseUnit):
 
     def test_dedupe(self):
         """ test that we get one record back """
-        ret_val = True
         for s in ["101 SW Main", "101 SW Main&focus.point.lat=45.52&focus.point.lon=-122.671", "834 SE Lamb", "834 SE Sandy", "1931 NE Sandy"]:
             url = self.url_tmpl + s
             jsn = json_utils.stream_json(url)
             errors = jsn.get('geocoding').get('errors')
             features = jsn.get('features')
-            self.assertTrue(jsn and errors is None and len(features) is not None and len(features) == 1)
+            self.assertTrue(jsn and errors is None, url)
+            self.assertTrue(len(features) is not None and len(features) == 1)
 
     def test_dedupe_distance(self):
         """
@@ -59,13 +58,13 @@ class TestStops(BaseUnit):
         note: this test is more to generate logs/app.log content, to shows which stops are getting dedup'd
         cmdline: echo "" > logs/app.log; poetry run pytest pelias/adapter/tests/test_stops.py ; cat logs/app.log
         """
-        ret_val = True
         for s in ["834 NE E", "834 NE R", "834 NE S", "834 NE Sha", "834 NE Ha"]:
             url = self.url_tmpl + s
             jsn = json_utils.stream_json(url)
             errors = jsn.get('geocoding').get('errors')
             features = jsn.get('features')
-            self.assertTrue(jsn and errors is None and len(features) is not None and len(features) >= 1)
+            self.assertTrue(jsn and errors is None, url)
+            self.assertTrue(len(features) is not None and len(features) >= 1)
 
     def test_autocomplete(self):
         print("\n\nTODO - broken AUTOCOMPLETE test")

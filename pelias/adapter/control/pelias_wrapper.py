@@ -129,14 +129,28 @@ class PeliasWrapper(object):
     def reverse(cls, reverse_geo_url, query_string):
         """
         call the reverse geocoder
-        :note: pelias does not (seemingly) talk to the stops or other custom layers (just OSM layer)
+        :note: pelias does not (seemingly) talk to the stops or other custom layers (just OSM, OA, etc...)
         :url: /reverse?point.lat=45.51423467680257&point.lon=-122.7097523397708
         """
-        # import pdb; pdb.set_trace()
-        #pelias_json_queries.spec_check(query_string)
+        #import pdb; pdb.set_trace()
+        ret_val = None
 
-        ret_val = response_utils.proxy_json(reverse_geo_url, query_string)
-        cls.fixup_response(ret_val)
+        # step 1: to get consistent results, we'll query just OSM data first (unless request of another source)
+        if "sources" not in query_string:
+            qs = f"{query_string}&sources=openstreetmap"
+            ret_val = response_utils.proxy_json(reverse_geo_url, qs)
+
+        # step 2: yet to find a result, then call the reverse geocoder without specifying openstreetmap
+        features = ret_val.get('features') if ret_val else None
+        if features is None or len(features) < 1:
+            ret_val = response_utils.proxy_json(reverse_geo_url, query_string)
+            features = ret_val.get('features')
+
+        # step 3 & 4: sort addresses to the top, then fix things up
+        if features:
+            ret_val['features'] = cls.sort_features(features)
+            cls.fixup_response(ret_val)
+
         return ret_val
 
     @classmethod
@@ -146,7 +160,6 @@ class PeliasWrapper(object):
         if we have a single region record, then see if we have normalized address elements
         (e.g., 'number' and 'street' in the parsed_text record)
         """
-        # import pdb; pdb.set_trace()
         ret_val = False
         features = response.get('features')
         if features and len(features) == 1 and pelias_json_queries.is_region_record(features[0]):
@@ -158,6 +171,21 @@ class PeliasWrapper(object):
     @classmethod
     def has_features(cls, rec):
         return pelias_json_queries.has_features(rec)
+
+    @classmethod
+    def sort_features(cls, features, on_top="address"):
+        """ will sort to put select layer on top """
+        #import pdb; pdb.set_trace()
+        top = []
+        others = []
+        for f in features:
+            p = f.get('properties')
+            if p.get('layer') == on_top:
+                top.append(f)
+            else:
+                others.append(f)
+        ret_val = top + others
+        return ret_val
 
     @classmethod
     def get_property_value(cls, rec, *names):

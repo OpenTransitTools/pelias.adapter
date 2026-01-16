@@ -46,7 +46,7 @@ class TestStops(BaseUnit):
     def test_dedupe(self):
         """ test that we get one record back """
         ret_val = True
-        for s in ["101 SW Main", "834 SE Lamb", "834 SE Sandy", "1931 NE Sandy"]:
+        for s in ["101 SW Main", "101 SW Main&focus.point.lat=45.52&focus.point.lon=-122.671", "834 SE Lamb", "834 SE Sandy", "1931 NE Sandy"]:
             url = self.url_tmpl + s
             jsn = json_utils.stream_json(url)
             errors = jsn.get('geocoding').get('errors')
@@ -60,7 +60,7 @@ class TestStops(BaseUnit):
         cmdline: echo "" > logs/app.log; poetry run pytest pelias/adapter/tests/test_stops.py ; cat logs/app.log
         """
         ret_val = True
-        for s in ["834 NE S", "834 NE Sha", "834 NE Ha"]:
+        for s in ["834 NE E", "834 NE R", "834 NE S", "834 NE Sha", "834 NE Ha"]:
             url = self.url_tmpl + s
             jsn = json_utils.stream_json(url)
             errors = jsn.get('geocoding').get('errors')

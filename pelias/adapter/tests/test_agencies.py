@@ -4,7 +4,6 @@ from ott.utils import json_utils
 
 PORT="45554"
 
-
 class TestAgenciess(BaseUnit):
     def setUp(self):
         #import pdb; pdb.set_trace()
@@ -15,7 +14,8 @@ class TestAgenciess(BaseUnit):
     def tearDown(self):
         pass
 
-    def test_autocomplete(self):        
+    def test_expected_agencies_exist_in_pelias(self):
+        """ make sure trimet:stops, ctran:stops, etc... """
         ret_val = True
         for a in self.rtp_agencies:
             #import pdb; pdb.set_trace()

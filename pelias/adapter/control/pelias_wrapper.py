@@ -133,7 +133,8 @@ class PeliasWrapper(object):
         :url: /reverse?point.lat=45.51423467680257&point.lon=-122.7097523397708
         """
         # import pdb; pdb.set_trace()
-        pelias_json_queries.spec_check(query_string)
+        #pelias_json_queries.spec_check(query_string)
+
         ret_val = response_utils.proxy_json(reverse_geo_url, query_string)
         cls.fixup_response(ret_val)
         return ret_val
@@ -196,7 +197,7 @@ class PeliasWrapper(object):
                         name_likeness = string_diff.compare(fname, pname)
                         if name_likeness > 0.60:
                             # step d: and if our feature is very close to that previous feature, then filter it
-                            if geo_utils.are_points_nearby(f, p, decimal_diff=0.00025):
+                            if geo_utils.are_points_nearby(f, p, decimal_diff=0.0006):
                                 msg = f"filter {fname}, as it looks like a dupe of {pname}\n\n"
                                 log.info(msg)
                                 do_filter = True

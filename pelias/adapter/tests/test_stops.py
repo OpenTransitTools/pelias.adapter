@@ -44,13 +44,13 @@ class TestStops(BaseUnit):
 
     def test_dedupe(self):
         """ test that we get one record back """
-        for s in ["101 SW Main", "101 SW Main&focus.point.lat=45.52&focus.point.lon=-122.671", "834 SE Lamb", "834 SE Sandy", "1931 NE Sandy"]:
+        for s in ["101 SW Main", "101 SW Main&focus.point.lat=45.52&focus.point.lon=-122.671", "834 SE Lamb", "834 SE Sandy", "1931 NE Sandy", "16784 Roos"]:
             url = self.url_tmpl + s
             jsn = json_utils.stream_json(url)
             errors = jsn.get('geocoding').get('errors')
             features = jsn.get('features')
             self.assertTrue(jsn and errors is None, url)
-            self.assertTrue(len(features) is not None and len(features) == 1)
+            self.assertTrue(len(features) is not None and len(features) == 1, s)
 
     def test_dedupe_distance(self):
         """

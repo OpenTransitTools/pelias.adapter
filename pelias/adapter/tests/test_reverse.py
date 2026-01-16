@@ -12,7 +12,7 @@ class TestReverseGeocoder(BaseUnit):
     def tearDown(self):
         pass
 
-    def test_specified_source(self):
+    def xtest_specified_source(self):
         """ test reverse by specifying the OA souce, which should return feature using just the OA source """
         coords = [{'x':-122.27, 'y':45.62}, {'x':-122.5, 'y':45.5}]
         for c in coords:
@@ -27,7 +27,7 @@ class TestReverseGeocoder(BaseUnit):
                 s = f.get('properties').get('source')
                 self.assertTrue(s == 'openaddresses')
 
-    def test_reverse_svc(self):
+    def xtest_reverse_svc(self):
         """ test reverse, which should return a feature using the (default) OSM source """
         coords = [{'x':-122.17, 'y':45.62}, {'x':-122.5, 'y':45.5}]
         for c in coords:

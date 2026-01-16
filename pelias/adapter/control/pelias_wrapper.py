@@ -47,8 +47,7 @@ class PeliasWrapper(object):
            if resp and resp.get('geocoding').get('errors'):
                 err = resp.get('geocoding').get('errors')[0]
                 if "invalid layers parameter" in err:
-                    #print(f"******************** check the filter {cls._rtp_agency_filter}")
-                    log.info(f"****************** turning off the filter {cls._rtp_agency_filter} due to this error {err} ******************")
+                    log.warning(f"******** turning off the filter {cls._rtp_agency_filter} due to this error {err} **********")
                     cls._rtp_agency_filter = SKIP
         except:
             pass
@@ -220,15 +219,15 @@ class PeliasWrapper(object):
                 if len(prev) > 0:
                     #import pdb; pdb.set_trace()
                     for p in prev:
-                        # step c: if the name of our feature looks a bit (60%) like a previous feature...
+                        # step c: if the name of our feature looks a bit (50%) like a previous feature...
                         pname = p.get('properties').get('name')
                         name_likeness = string_diff.compare(fname, pname)
-                        if name_likeness > 0.60:
-                            # step d: and if our feature is very close to that previous feature, then filter it
-                            dist = 0.00075 
+                        if name_likeness > 0.55:
+                            # step d: ...and if our feature is very close to that previous feature, then filter it
+                            dist = 0.0007
                             if geo_utils.are_points_nearby(f, p, decimal_diff=dist):
-                                msg = f"filter {fname}, as it looks like a dupe of {pname}\n\n"
-                                log.info(msg)
+                                msg = f"filter {fname}, as it looks like a dupe of {pname}"
+                                log.debug(msg)
                                 do_filter = True
                                 break
 

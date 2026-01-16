@@ -58,13 +58,13 @@ class TestStops(BaseUnit):
         note: this test is more to generate logs/app.log content, to shows which stops are getting dedup'd
         cmdline: echo "" > logs/app.log; poetry run pytest pelias/adapter/tests/test_stops.py ; cat logs/app.log
         """
-        for s in ["834 NE E", "834 NE R", "834 NE S", "834 NE Sha", "834 NE Ha"]:
+        for s in ["101 Main", "834 NE E", "834 NE R", "834 NE S", "834 NE Sha", "834 NE Ha"]:
             url = self.url_tmpl + s
             jsn = json_utils.stream_json(url)
             errors = jsn.get('geocoding').get('errors')
             features = jsn.get('features')
             self.assertTrue(jsn and errors is None, url)
-            self.assertTrue(len(features) is not None and len(features) >= 1)
+            self.assertTrue(len(features) is not None and len(features) >= 1, s)
 
     def test_autocomplete(self):
         print("\n\nTODO - broken AUTOCOMPLETE test")

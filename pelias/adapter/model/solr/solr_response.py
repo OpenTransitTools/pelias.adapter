@@ -6,6 +6,8 @@ from ott.utils.dao.base import BaseDao
 from .solr_record import SolrRecord
 from .solr_stop_record import SolrStopRecord
 
+from pelias.adapter.service import boundary
+
 import logging
 log = logging.getLogger(__file__)
 
@@ -61,7 +63,7 @@ class Response(MinimalDao):
         self.maxScore = 0
         self.docs = []
 
-    def parse_pelias(self, json, add_routes=False):
+    def parse_pelias(self, json, add_routes=False, do_boundary=True):
         #import pdb; pdb.set_trace()
         try:
             # step 1: get pelias records
@@ -85,6 +87,10 @@ class Response(MinimalDao):
 
                     # step 4: if we get a good record, add it to the response
                     if solr_rec:
+                        if do_boundary:
+                            boundary.ada(solr_rec)
+                            boundary.district(solr_rec)
+
                         self.docs.append(solr_rec)
                         self.numFound += 1
         except Exception as e:

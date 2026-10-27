@@ -19,13 +19,14 @@ packages = [{include = "pelias"}]
 main = "pelias.adapter.pyramid.app:main"
 
 [tool.poetry.dependencies]
-python = "^3.9"
+python = "^3.12"
 urllib3 = "1.26.6"  # older mapgeo servers need urllib3 v1.x (lower than v2 ala OpenSSL 1.1.1+), mapgeo has 'OpenSSL 1.0.2k-fips  26 Jan 2017'
-pyramid = "^2.0"
+pyramid = "*"
 pyramid_tm = "*"
 pyramid_exclog = "*"
 waitress = "*"
 requests = "*"
+schedule = "*"
 
 #"ott.utils" = { path = "../utils/", develop = true }
 "ott.utils" = {git = "https://github.com/OpenTransitTools/utils.git", branch = "rtp"}

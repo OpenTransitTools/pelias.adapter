@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from ott.utils.dao.base import MinimalDao
 from ott.utils import geo_utils
 
@@ -35,11 +36,12 @@ class SolrRecord(MinimalDao):
         self.lon = -122.67371
         self.lat = 45.523335
 
-        self.timestamp = "2018-02-03T07:47:45.045Z"
+        self.timestamp = datetime.now(timezone.utc).isoformat(timespec='milliseconds').replace('+00:00', 'Z')
         self.score = 0.0
 
+    # TODO: move this to https://github.com/OpenTransitTools/utils/blob/master/ott/utils/dao/base.py
     def set_value(self, name, val):
-        pass
+        setattr(self, name, val)
 
     def parse_pelias(self, json):
         try:

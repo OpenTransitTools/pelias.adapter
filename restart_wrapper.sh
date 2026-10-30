@@ -3,7 +3,8 @@ WRAPDIR=$(dirname "$0")
 cd $WRAPDIR
 
 LOG=${1:-"pserve.out"}
-LATEST=${2:-"NOPE"}
+INI=${2:-"config/local_pelias.ini"}
+LATEST=${3:-"NOPE"}
 
 # step 2: optionally force get latest and greatest code
 if [ $LATEST == "YES" ]; then
@@ -16,7 +17,7 @@ pkill -9 -f -c local_pelias > /dev/null
 rm -f $LOG
 
 # step 4: start new wrapper process
-cmd="poetry run pserve config/local_pelias.ini"
+cmd="poetry run pserve ${INI}"
 echo "${cmd}"
 eval "${cmd} > $LOG 2>&1 & disown;"
 echo

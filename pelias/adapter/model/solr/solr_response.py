@@ -13,6 +13,14 @@ log = logging.getLogger(__file__)
 
 
 class RouteStopRecords(object):
+    """
+    TODO: explain this ... or delete it
+     - https://maps.trimet.org/ti/index/stops/3291
+     - https://maps.trimet.org/ti/index/stops/3291/routes/str ("63:63:Washington Park/SW 6th:")
+     - is it this?: routes": "37:37:Lake Grove:;78:78:Denney/Kerr Pkwy:snow",
+     - where is this needed (what apps)?
+     - can see below that this is not used atm
+    """
     cache = {}
     _url = None
 
@@ -57,13 +65,14 @@ class ResponseHeader(MinimalDao):
 
 
 class Response(MinimalDao):
-    def __init__(self):
+    def __init__(self, geoserver_domain=None):
         self.numFound = 0
         self.start = 0
         self.maxScore = 0
         self.docs = []
+        self.geoserver_domain = geoserver_domain
 
-    def parse_pelias(self, json, add_routes=False, do_boundary=True):
+    def parse_pelias(self, json, do_boundary=True, add_routes=False):
         #import pdb; pdb.set_trace()
         try:
             # step 1: get pelias records
@@ -88,8 +97,8 @@ class Response(MinimalDao):
                     # step 4: if we get a good record, add it to the response
                     if solr_rec:
                         if do_boundary:
-                            boundary.ada(solr_rec)
-                            boundary.district(solr_rec)
+                            boundary.ada(solr_rec, self.geoserver_domain)
+                            boundary.district(solr_rec, self.geoserver_domain)
 
                         self.docs.append(solr_rec)
                         self.numFound += 1
@@ -104,9 +113,10 @@ class SolrResponse(BaseDao):
       routes": "37:37:Lake Grove:;78:78:Denney/Kerr Pkwy:snow",
     """
     def __init__(self):
+        from pelias.adapter.pyramid.views import geoserver_domain
         super(SolrResponse, self).__init__()
         self.responseHeader = ResponseHeader()
-        self.response = Response()
+        self.response = Response(geoserver_domain)
 
     def parse_pelias(self, json, solr_params=None):
         self.responseHeader.parse_pelias(json)

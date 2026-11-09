@@ -30,33 +30,34 @@ def check_layer(rec, layer, domain=def_domain, def_val=False):
     call geoserver WFS to see if this geocord result is in/out of a given layer
 
     in testing the WFS result, we should see (at least part of) the layer name in the response,
-    ala WFS on layer "ott:trimet_service_distrct" returns "id": "trimet_service_distrct.1" in the
+    ala WFS on layer "ott:trimet_service_district" returns "id": "trimet_service_district.1" in the
     response whenever the given point is cointained in that service district layer
     """
+    import pdb; pdb.set_trace()
     global time_out
     ret_val = def_val
     try:
-        uri = f"{domain}/geoserver/ott/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName={layer}&propertyName=id&outputFormat=application/json&CQL_FILTER=CONTAINS(geom,POINT({rec.lon}%20{rec.lat}))"
-        rs = requests.get(uri, timeout=time_out)
-        simple_layer_name = get_right_part(layer, ":")  # e.g., "trimet_service_distrct" (drop the "ott:")
+        gs_url = f"{domain}/ott/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName={layer}&propertyName=id&outputFormat=application/json&CQL_FILTER=CONTAINS(geom,POINT({rec.lon}%20{rec.lat}))"
+        rs = requests.get(gs_url, timeout=time_out)
+        simple_layer_name = get_right_part(layer, ":")  # e.g., "trimet_service_district" (drop the "ott:")
         if simple_layer_name in rs.text:
             ret_val = True
     except Exception as e:
-        log.warning(e)
+        log.warning(f"{e}\n{gs_url}")
         time_out = time_out * 0.9 + 0.01
         schedule.run_pending()
     return ret_val
 
 
-def district(rec, layer="ott:trimet_service_distrct"):
-    val = check_layer(rec, layer)
+def district(rec, domain=def_domain, layer="ott:trimet_service_district"):
+    val = check_layer(rec, layer, domain)
     setattr(rec, get_right_part(layer, ":"), val)
     if "trimet" in layer:
         setattr(rec, "trimet_boundary", val)  # old SOLR element name for backwards compatability
 
 
-def ada(rec, layer="ott:trimet_ada"):
-    val = check_layer(rec, layer)
+def ada(rec, domain=def_domain, layer="ott:trimet_ada"):
+    val = check_layer(rec, layer, domain)
     setattr(rec, get_right_part(layer, ":"), val)
     if "trimet" in layer:
         setattr(rec, "ada_boundary", val)  # old SOLR element name

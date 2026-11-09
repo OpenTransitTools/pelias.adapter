@@ -15,6 +15,7 @@ log = logging.getLogger(__file__)
 pelias_autocomplete_url = None
 pelias_search_url = None
 pelias_reverse_url = None
+geoserver_domain = None
 route_stop_str_url = None
 
 
@@ -22,18 +23,20 @@ def config_globals(cfg):
     """
     :see: config/base.ini for configured url strings
     """
-    #import pdb; pdb.set_trace()
     global pelias_autocomplete_url
     global pelias_search_url
     global pelias_reverse_url
+    global geoserver_domain
     global route_stop_str_url
+
 
     PeliasWrapper.rtp_agencies = ast.literal_eval(cfg.registry.settings.get('agencies'))
     pelias_autocomplete_url = cfg.registry.settings.get('pelias_autocomplete_url')
     pelias_search_url = cfg.registry.settings.get('pelias_search_url')
     pelias_reverse_url = cfg.registry.settings.get('pelias_reverse_url')
+    geoserver_domain = cfg.registry.settings.get('geoserver_domain')
     route_stop_str_url = cfg.registry.settings.get('route_stop_str_url')
-
+    #import pdb; pdb.set_trace()
 
 def do_view_config(cfg):
     config_globals(cfg)

@@ -33,14 +33,16 @@ def check_layer(rec, layer, domain=def_domain, def_val=False):
     ala WFS on layer "ott:trimet_service_district" returns "id": "trimet_service_district.1" in the
     response whenever the given point is cointained in that service district layer
     """
-    import pdb; pdb.set_trace()
     global time_out
+    #import pdb; pdb.set_trace()
+    #print(".", end="")
+
     ret_val = def_val
     try:
         gs_url = f"{domain}/ott/wfs?service=WFS&version=1.0.0&request=GetFeature&typeName={layer}&propertyName=id&outputFormat=application/json&CQL_FILTER=CONTAINS(geom,POINT({rec.lon}%20{rec.lat}))"
         rs = requests.get(gs_url, timeout=time_out)
         simple_layer_name = get_right_part(layer, ":")  # e.g., "trimet_service_district" (drop the "ott:")
-        if simple_layer_name in rs.text:
+        if "ServiceException" not in rs.text and simple_layer_name in rs.text:
             ret_val = True
     except Exception as e:
         log.warning(f"{e}\n{gs_url}")

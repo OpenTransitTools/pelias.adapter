@@ -12,48 +12,6 @@ import logging
 log = logging.getLogger(__file__)
 
 
-class RouteStopRecords(object):
-    """
-    TODO: explain this ... or delete it
-     - https://maps.trimet.org/ti/index/stops/3291
-     - https://maps.trimet.org/ti/index/stops/3291/routes/str ("63:63:Washington Park/SW 6th:")
-     - is it this?: routes": "37:37:Lake Grove:;78:78:Denney/Kerr Pkwy:snow",
-     - where is this needed (what apps)?
-     - can see below that this is not used atm
-    """
-    cache = {}
-    _url = None
-
-    @classmethod
-    def url(cls):
-        """ get route stops as string """
-        if cls._url is None:
-            from pelias.adapter.pyramid.views import route_stop_str_url
-            if route_stop_str_url and len(route_stop_str_url) > 5:
-                cls._url = route_stop_str_url
-            else:
-                cls._url = "http://maps.trimet.org/ti/index/stops"
-        return cls._url
-
-    @classmethod
-    def find_record(cls, id):
-        """ see requests_cache: https://requests-cache.readthedocs.io/en/latest/user_guide.html """
-        ret_val = None
-        try:
-            ret_val = cls.cache.get(id)
-            if ret_val is None:
-                # step 1: query route stop service
-                rs = requests.get("{}/{}/routes/str".format(cls.url(), id))
-
-                # step 2: cache record
-                if rs and len(rs.text):
-                    #cls.cache.update()
-                    ret_val = rs.text
-        except Exception as e:
-            log.warning(e)
-        return ret_val
-
-
 class ResponseHeader(MinimalDao):
     def __init__(self):
         self.status = 0
@@ -72,7 +30,7 @@ class Response(MinimalDao):
         self.docs = []
         self.geoserver_domain = geoserver_domain
 
-    def parse_pelias(self, json, do_boundary=True, add_routes=False):
+    def parse_pelias(self, json, do_boundary=True):
         #import pdb; pdb.set_trace()
         try:
             # step 1: get pelias records
@@ -85,12 +43,6 @@ class Response(MinimalDao):
                 if layer:
                     if ':stops' in layer:
                         solr_rec = SolrStopRecord.pelias_to_solr(f)
-                        """
-                        if add_routes and hasattr(solr_rec, 'stop_id'):
-                            rs = RouteStopRecords.find_record(solr_rec.stop_id)
-                            solr_rec.routes = rs
-                            pass
-                        """
                     else:
                         solr_rec = SolrRecord.pelias_to_solr(f)
 
@@ -121,9 +73,7 @@ class SolrResponse(BaseDao):
     def parse_pelias(self, json, solr_params=None):
         self.responseHeader.parse_pelias(json)
         self.fix_headers(solr_params)
-
-        add_routes = True  # object_utils.safe_get('')
-        self.response.parse_pelias(json, add_routes)
+        self.response.parse_pelias(json)
 
     def num_records(self):
         return len(self.response.docs)
